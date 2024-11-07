@@ -24,7 +24,7 @@ let ProdCard = () => {
               <div className="p-4 text-center">
                 <strong className="text-xl font-medium text-gray-900">
                   {" "}
-                  Aloe Vera{" "}
+                  Minecraft{" "}
                 </strong>
 
                 <p className="mt-2 text-pretty text-gray-700">
