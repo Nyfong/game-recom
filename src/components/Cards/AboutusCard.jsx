@@ -8,7 +8,7 @@ let AboutUsCard = () => {
   return (
     <>
       <div className="py-3">
-        <span className="font-bold underline text-2xl">Our Team</span>
+        <span className="font-bold underline text-2xl">Developer</span>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
         {pic.map((el) => (

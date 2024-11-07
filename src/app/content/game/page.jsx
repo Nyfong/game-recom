@@ -1,5 +1,6 @@
 import CarouselComponent from "@/components/Home/banner/Swiper";
 import ProdCard from "@/components/Home/prod/Card";
+import HomeSection from "@/components/Home/section/Section";
 import Pagenation from "@/components/common/Pagenation";
 import SearchBar from "@/components/common/SearchBar";
 let GamePgae = () => {
@@ -10,7 +11,9 @@ let GamePgae = () => {
         <SearchBar />
         <ProdCard />
         <ProdCard />
+
         <Pagenation />
+        <HomeSection />
       </main>
     </>
   );

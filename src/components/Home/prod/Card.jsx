@@ -12,7 +12,7 @@ let ProdCard = () => {
               className="relative block rounded-tr-3xl border border-gray-100"
             >
               <span className="absolute -right-px -top-px rounded-bl-3xl rounded-tr-3xl bg-rose-600 px-6 py-4 font-medium uppercase tracking-widest text-white">
-                Free 100%
+                Free Game
               </span>
 
               <img

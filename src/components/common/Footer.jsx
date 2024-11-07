@@ -1,13 +1,6 @@
 let Footer = () => {
   return (
     <>
-      {/*
-  Heads up! 👋
-
-  Plugins:
-    - @tailwindcss/forms
-*/}
-
       <footer className="bg-white">
         <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
           <div className="lg:flex lg:items-start lg:gap-8">
@@ -46,15 +39,15 @@ let Footer = () => {
                     Email{" "}
                   </label>
 
-                  <div className="border border-gray-100 p-2 focus-within:ring sm:flex sm:items-center sm:gap-4">
+                  <div className="border rounded-lg border-gray-100 p-2 focus-within:ring sm:flex sm:items-center sm:gap-4">
                     <input
                       type="email"
                       id="UserEmail"
                       placeholder="john@rhcp.com"
-                      className="w-full border-none focus:border-transparent focus:ring-transparent sm:text-sm"
+                      className="w-full   sm:text-sm"
                     />
 
-                    <button className="mt-1 w-full bg-blue-800 px-6 py-3 text-sm font-bold uppercase tracking-wide text-white transition-none hover:bg-blue-900   sm:mt-0 sm:w-auto sm:shrink-0">
+                    <button className=" rounded-lg mt-1 w-full bg-blue-800 px-6 py-3 text-sm font-bold uppercase tracking-wide text-white transition-none hover:bg-blue-900   sm:mt-0 sm:w-auto sm:shrink-0">
                       Sign Up
                     </button>
                   </div>

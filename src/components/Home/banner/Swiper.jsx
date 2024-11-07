@@ -35,10 +35,10 @@ const CarouselComponent = () => {
   ];
 
   return (
-    <div className="carousel-container">
+    <div className="grid grid-cols-1 p-5">
       <Slider {...settings}>
         {slides.map((slide) => (
-          <div key={slide.id} className="slide">
+          <div key={slide.id} className="slide ">
             <img
               src={slide.image}
               alt={slide.title}
