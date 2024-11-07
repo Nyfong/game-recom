@@ -1,6 +1,14 @@
+"use client";
+import { useState } from "react";
 import Link from "next/link";
 
-let Navbar = () => {
+const Navbar = () => {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const toggleDrawer = () => {
+    setIsDrawerOpen(!isDrawerOpen);
+  };
+
   return (
     <>
       <header className="bg-blue-800 sticky top-0 z-10">
@@ -31,48 +39,39 @@ let Navbar = () => {
                       className="text-white transition hover:text-white/75"
                       href="/content/game"
                     >
-                      {" "}
-                      Games{" "}
+                      Games
                     </Link>
                   </li>
-
                   <li>
                     <a
                       className="text-white transition hover:text-white/75"
                       href="#"
                     >
-                      {" "}
-                      Community{" "}
+                      Community
                     </a>
                   </li>
-
                   <li>
                     <Link
                       className="text-white transition hover:text-white/75"
                       href="/content/aboutus"
                     >
-                      {" "}
-                      Aboutus{" "}
+                      About Us
                     </Link>
                   </li>
-
                   <li>
                     <a
                       className="text-white transition hover:text-white/75"
                       href="#"
                     >
-                      {" "}
-                      Pay coffee{" "}
+                      Pay coffee
                     </a>
                   </li>
-
                   <li>
                     <a
                       className="text-white transition hover:text-white/75"
                       href="#"
                     >
-                      {" "}
-                      Blog{" "}
+                      Blog
                     </a>
                   </li>
                 </ul>
@@ -80,14 +79,13 @@ let Navbar = () => {
             </div>
 
             <div className="flex items-center gap-4">
-              <div className="sm:flex sm:gap-4">
+              <div className="hidden sm:flex sm:gap-4">
                 <a
-                  className="rounded-md bg-orange-500  px-5 py-2.5 text-sm font-medium text-white shadow"
+                  className="rounded-md bg-orange-500 px-5 py-2.5 text-sm font-medium text-white shadow"
                   href="#"
                 >
                   Login
                 </a>
-
                 <div className="hidden sm:flex">
                   <a
                     className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600"
@@ -99,10 +97,13 @@ let Navbar = () => {
               </div>
 
               <div className="block md:hidden">
-                <button className="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75">
+                <button
+                  onClick={toggleDrawer}
+                  className="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="size-5"
+                    className="h-5 w-5"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -119,6 +120,58 @@ let Navbar = () => {
             </div>
           </div>
         </div>
+
+        {/* Drawer for mobile */}
+        {isDrawerOpen && (
+          <div className="md:hidden bg-blue-800 text-white p-10 z-20 flex flex-col items-start justify-center pt-16 space-y-6">
+            <button
+              onClick={toggleDrawer}
+              className="text-white absolute top-[15%] right-5"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+            <Link href="/content/game" onClick={toggleDrawer}>
+              Games
+            </Link>
+            <a href="#" onClick={toggleDrawer}>
+              Community
+            </a>
+            <Link href="/content/aboutus" onClick={toggleDrawer}>
+              About Us
+            </Link>
+            <a href="#" onClick={toggleDrawer}>
+              Pay coffee
+            </a>
+            <a href="#" onClick={toggleDrawer}>
+              Blog
+            </a>
+            <a
+              className="rounded-md bg-orange-500 px-5 py-2 text-sm font-medium text-white shadow mt-4"
+              href="#"
+            >
+              Login
+            </a>
+            <a
+              className="rounded-md bg-gray-100 px-5 py-2 text-sm font-medium text-teal-600"
+              href="#"
+            >
+              Register
+            </a>
+          </div>
+        )}
       </header>
     </>
   );
