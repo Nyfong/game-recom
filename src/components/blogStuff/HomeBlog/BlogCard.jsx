@@ -1,5 +1,5 @@
 let BlogCard = () => {
-  const arrTest = [1, 1, 1, 1, 1, 1]; // Simply loop over this array to create 10 cards
+  const arrTest = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; // Simply loop over this array to create 10 cards
   return (
     <>
       <section className="grid grid-cols-1 gap-2">
@@ -35,7 +35,7 @@ let BlogCard = () => {
                 </div>
                 {/* DESCRIPTION */}
                 <div>
-                  <p className="mt-2 line-clamp-3 md:line-clamp-none text-sm/relaxed text-gray-500">
+                  <p className=" line-clamp-3 md:line-clamp-none text-sm/relaxed text-gray-500">
                     Seasonal Collectible Albums have seemingly got everyone on
                     mobile in a twist, or should we say a tangle? Last month,
                     Rollic’s Twisted Tangle became the first hybrid casual title
