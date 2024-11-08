@@ -1,10 +1,11 @@
 import Kaiseng from "@/assets/kaiseng.png";
 import Nyfong from "@/assets/fong.png";
-import Vy from "@/assets/vy.png";
+import Vy from "@/assets/yu.png";
+import Vyy from "@/assets/vy.png";
 import Image from "next/image";
 
 let AboutUsCard = () => {
-  const pic = [Kaiseng, Nyfong, Vy, Vy];
+  const pic = [Kaiseng, Nyfong, Vy, Vyy];
   return (
     <>
       <div className="py-3">
@@ -12,8 +13,11 @@ let AboutUsCard = () => {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
         {pic.map((el) => (
-          <div className="relative group cursor-pointer overflow-hidden duration-500  h-80 bg-zinc-800 text-gray-50 p-5 rounded-lg">
-            <div className="">
+          <div
+            key={el}
+            className="relative group cursor-pointer overflow-hidden duration-500  h-80 bg-zinc-800 text-gray-50 p-5 rounded-lg"
+          >
+            <div>
               <div className="group-hover:scale-110 w-full rounded-lg h-60  duration-500">
                 <Image
                   src={el}

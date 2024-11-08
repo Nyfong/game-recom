@@ -11,9 +11,9 @@ let GamePgae = () => {
         <SearchBar />
         <ProdCard />
         <ProdCard />
-
+        <ProdCard />
+        <ProdCard />
         <Pagenation />
-        <HomeSection />
       </main>
     </>
   );
