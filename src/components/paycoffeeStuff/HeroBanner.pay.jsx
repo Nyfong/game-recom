@@ -1,3 +1,4 @@
+import Link from "next/link";
 let HeroPayCoffee = () => {
   return (
     <>
@@ -20,12 +21,12 @@ let HeroPayCoffee = () => {
               </p>
 
               <div className="mt-4 md:mt-8">
-                <a
+                <Link
                   href="#"
-                  className="inline-block rounded bg-emerald-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-emerald-700 focus:outline-none focus:ring focus:ring-yellow-400"
+                  className="inline-block rounded bg-blue-800 px-12 py-3 text-sm font-medium text-white transition hover:bg-emerald-700 focus:outline-none focus:ring focus:ring-yellow-400"
                 >
                   CONTACT
-                </a>
+                </Link>
               </div>
             </div>
           </div>

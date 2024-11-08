@@ -12,6 +12,12 @@ let PayMeCoffee = () => {
     <>
       <main className="p-5 md:p-3 lg:p-0  gap-5 md:gap-3 max-w-screen-xl min-w-screen-80 mx-auto my-10">
         <HeroPayCoffee />
+        <section className="my-5">
+          <div>
+            <p className="font-bold underline">Support Us By</p>
+          </div>
+        </section>
+        <PayCard />
         <section className="my-10 ">
           <CardPayCoffee p={null} />
         </section>
@@ -24,12 +30,6 @@ let PayMeCoffee = () => {
             </>
           ))}
         </section>
-        <section className="my-5">
-          <div>
-            <p className="font-bold underline">Support Us By</p>
-          </div>
-        </section>
-        <PayCard />
       </main>
     </>
   );

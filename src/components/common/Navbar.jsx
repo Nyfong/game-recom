@@ -58,21 +58,14 @@ const Navbar = () => {
                       About Us
                     </Link>
                   </li>
+
                   <li>
-                    <a
-                      className="text-white transition hover:text-white/75"
-                      href="/content/paycoffee"
-                    >
-                      Pay coffee
-                    </a>
-                  </li>
-                  <li>
-                    <a
+                    <Link
                       className="text-white transition hover:text-white/75"
                       href="/content/blog"
                     >
                       Blog
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </nav>
@@ -80,19 +73,19 @@ const Navbar = () => {
 
             <div className="flex items-center gap-4">
               <div className="hidden sm:flex sm:gap-4">
-                <a
+                <Link
                   className="rounded-md bg-black px-5 py-2.5 text-sm font-medium text-white shadow"
                   href="#"
                 >
                   Login
-                </a>
+                </Link>
                 <div className="hidden sm:flex">
-                  <a
+                  <Link
                     className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600"
                     href="#"
                   >
                     Register
-                  </a>
+                  </Link>
                 </div>
               </div>
 
@@ -146,30 +139,28 @@ const Navbar = () => {
             <Link href="/content/game" onClick={toggleDrawer}>
               Games
             </Link>
-            <a href="#" onClick={toggleDrawer}>
+            <Link href="#" onClick={toggleDrawer}>
               Community
-            </a>
+            </Link>
             <Link href="/content/aboutus" onClick={toggleDrawer}>
               About Us
             </Link>
-            <a href="/content/paycoffee" onClick={toggleDrawer}>
-              Pay coffee
-            </a>
-            <a href="/content/blog" onClick={toggleDrawer}>
+
+            <Link href="/content/blog" onClick={toggleDrawer}>
               Blog
-            </a>
-            <a
+            </Link>
+            <Link
               className="rounded-md bg-black px-5 py-2 text-sm font-medium text-white shadow mt-4"
               href="#"
             >
               Login
-            </a>
-            <a
+            </Link>
+            <Link
               className="rounded-md bg-gray-100 px-5 py-2 text-sm font-medium text-teal-600"
               href="#"
             >
               Register
-            </a>
+            </Link>
           </div>
         )}
       </header>
