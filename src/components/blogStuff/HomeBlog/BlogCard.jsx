@@ -3,11 +3,11 @@ let BlogCard = () => {
   return (
     <>
       <section className="grid grid-cols-1 gap-2">
-        {arrTest.map((el) => {
+        {arrTest.map((b) => {
           return (
             <>
               <article
-                key={el}
+                key={b}
                 className="overflow-hidden rounded-lg shadow transition hover:shadow-lg grid  grid-cols-1 md:grid-cols-2 gap-2 p-2"
               >
                 <div>
