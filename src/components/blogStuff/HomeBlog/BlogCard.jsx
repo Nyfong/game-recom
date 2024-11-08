@@ -6,15 +6,15 @@ let BlogCard = () => {
         {arrTest.map((el) => {
           return (
             <>
-              <div className="grid grid-cols-2 gap-2 p-2">
-                <article
-                  key={el}
-                  className="overflow-hidden rounded-lg shadow transition hover:shadow-lg"
-                >
+              <article
+                key={el}
+                className="overflow-hidden rounded-lg shadow transition hover:shadow-lg grid  grid-cols-1 md:grid-cols-2 gap-2 p-2"
+              >
+                <div>
                   <img
                     alt=""
-                    src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
-                    className="h-56 w-full object-cover"
+                    src="https://www.gamerefinery.com/wp-content/uploads/2024/08/analyst-bulletin-july-2024.png"
+                    className="h-56 w-full object-cover rounded-lg  opacity-70 duration-100	 hover:opacity-100"
                   />
 
                   <div className="bg-white p-4 sm:p-6">
@@ -27,22 +27,36 @@ let BlogCard = () => {
                     </time>
 
                     <a href="#">
-                      <h3 className="mt-0.5 text-lg text-gray-900">
-                        How to position your furniture for positivity
+                      <h3 className="mt-0.5 text-lg text-gray-900 font-bold">
+                        Analyst Bulletin: Mobile Game Market Review July 2024
                       </h3>
                     </a>
-
-                    <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      Recusandae dolores, possimus pariatur animi temporibus
-                      nesciunt praesentium dolore sed nulla ipsum eveniet
-                      corporis quidem, mollitia itaque minus soluta, voluptates
-                      neque explicabo tempora nisi culpa eius atque dignissimos.
-                      Molestias explicabo corporis voluptatem?
-                    </p>
                   </div>
-                </article>
-              </div>
+                </div>
+                {/* DESCRIPTION */}
+                <div>
+                  <p className="mt-2 line-clamp-3 md:line-clamp-none text-sm/relaxed text-gray-500">
+                    Seasonal Collectible Albums have seemingly got everyone on
+                    mobile in a twist, or should we say a tangle? Last month,
+                    Rollic’s Twisted Tangle became the first hybrid casual title
+                    to ever implement the feature, showing this trending feature
+                    knows no bounds. But this isn’t the only reason to take note
+                    of Rollic. The studio’s wider portfolio of hybrid casual
+                    puzzle games—including Seat Away and Screw Jam—are all
+                    lighting up the US grossing charts too, fueled by a mixture
+                    of monetization and a busy LiveOps calendar. Seasonal
+                    Collectible Albums have seemingly got everyone on mobile in
+                    a twist, or should we say a tangle? Last month, Rollic’s
+                    Twisted Tangle became the first hybrid casual title to ever
+                    implement the feature, showing this trending feature knows
+                    no bounds. But this isn’t the only reason to take note of
+                    Rollic. The studio’s wider portfolio of hybrid casual puzzle
+                    games—including Seat Away and Screw Jam—are all lighting up
+                    the US grossing charts too, fueled by a mixture of
+                    monetization and a busy LiveOps calendar.
+                  </p>
+                </div>
+              </article>
             </>
           );
         })}
