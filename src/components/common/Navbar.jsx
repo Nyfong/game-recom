@@ -61,7 +61,7 @@ const Navbar = () => {
                   <li>
                     <a
                       className="text-white transition hover:text-white/75"
-                      href="#"
+                      href="/content/paycoffee"
                     >
                       Pay coffee
                     </a>
@@ -152,7 +152,7 @@ const Navbar = () => {
             <Link href="/content/aboutus" onClick={toggleDrawer}>
               About Us
             </Link>
-            <a href="#" onClick={toggleDrawer}>
+            <a href="/content/paycoffee" onClick={toggleDrawer}>
               Pay coffee
             </a>
             <a href="/content/blog" onClick={toggleDrawer}>
