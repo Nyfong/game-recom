@@ -1,14 +1,14 @@
 let ProdCard = () => {
-  const arrTest = [1, 1, 1, 1]; // Simply loop over this array to create 10 cards
+  const arrTest1 = [1, 1, 1, 1]; // Simply loop over this array to create 10 cards
 
   return (
     <>
       {/* grid display product */}
       <section className="my-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
-          {arrTest.map((c, index) => (
+          {arrTest1.map((c, index) => (
             <div
-              key={c} // Use index as key since this is a simple array
+              key={index}
               className="relative block rounded-tr-3xl border border-gray-100"
             >
               <span className="absolute -right-px -top-px rounded-bl-3xl rounded-tr-3xl bg-rose-600 px-6 py-4 font-medium uppercase tracking-widest text-white">

@@ -5,6 +5,7 @@ import Kaiseng from "@/assets/kaiseng.png";
 import Nyfong from "@/assets/fong.png";
 import Vy from "@/assets/yu.png";
 import Kot from "@/assets/kot.png";
+import PayCard from "@/components/paycoffeeStuff/PayCard.pay";
 let PayMeCoffee = () => {
   const pic = [Kaiseng, Nyfong, Vy, Kot];
   return (
@@ -17,10 +18,18 @@ let PayMeCoffee = () => {
         <section className="my-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
           {pic.map((p) => (
             <>
-              <CardPayCoffee p={p} />
+              <div key={p}>
+                <CardPayCoffee p={p} />
+              </div>
             </>
           ))}
         </section>
+        <section className="my-5">
+          <div>
+            <p className="font-bold underline">Support Us By</p>
+          </div>
+        </section>
+        <PayCard />
       </main>
     </>
   );
