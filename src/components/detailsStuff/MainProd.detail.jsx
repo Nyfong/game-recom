@@ -1,6 +1,5 @@
 import { FaDownload } from "react-icons/fa";
 import { PiCoffeeBold } from "react-icons/pi";
-
 import Link from "next/link";
 let MainProdDetail = () => {
   return (
