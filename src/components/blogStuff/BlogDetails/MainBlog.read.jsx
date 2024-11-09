@@ -95,21 +95,36 @@ let MainBlogRead = () => {
                 <h3 className="text-lg font-bold mb-2">Categories</h3>
                 <ul className="list-disc list-inside">
                   <li>
-                    <a href="#" className="text-gray-700 hover:text-gray-900">
+                    <Link
+                      href="#"
+                      className="text-gray-700 hover:text-gray-900"
+                    >
                       Technology
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a href="#" className="text-gray-700 hover:text-gray-900">
+                    <Link
+                      href="#"
+                      className="text-gray-700 hover:text-gray-900"
+                    >
                       Travel
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a href="#" className="text-gray-700 hover:text-gray-900">
+                    <Link
+                      href="#"
+                      className="text-gray-700 hover:text-gray-900"
+                    >
                       Food
-                    </a>
+                    </Link>
                   </li>
                 </ul>
+              </div>
+              <div className=" my-10  rounded-lg p-2">
+                <img
+                  src="https://static.semrush.com/blog/uploads/media/8b/06/8b063f735e2192a61c6861f4755ffc5d/what-is-digital-advertising.svg"
+                  alt=""
+                />
               </div>
             </div>
           </div>

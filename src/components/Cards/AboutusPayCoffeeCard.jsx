@@ -3,10 +3,10 @@ import Link from "next/link";
 let AboutUsPayCard = () => {
   return (
     <>
-      <section>
+      <section className="">
         <Link href="/content/paycoffee">
           <div className="flex flex-col justify-center bg-white">
-            <div data-theme="teal" className="mx-auto max-w-6xl">
+            <div data-theme="teal" className="mx-auto ">
               <h2 className="sr-only">Featured case study</h2>
               <section className="font-sans text-black">
                 <div className="[ lg:flex lg:items-center ] [ fancy-corners fancy-corners--large fancy-corners--top-left fancy-corners--bottom-right ]">
@@ -32,15 +32,15 @@ let AboutUsPayCard = () => {
                   </div>
                   <div className="p-6 bg-grey">
                     <div className="leading-relaxed">
-                      <div className=" flex gap-3 items-center">
+                      <div className=" flex flex-row gap-3 items-center">
                         <p className="leading-tight text-4xl font-bold">
                           {" "}
                           Pay us a cup of coffee
-                          <span>
-                            {" "}
-                            <LiaCoffeeSolid className="text-2xl" />
-                          </span>
                         </p>
+                        <span>
+                          {" "}
+                          <LiaCoffeeSolid className="text-2xl" />
+                        </span>
                       </div>
 
                       <p className="mt-4">

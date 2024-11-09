@@ -1,3 +1,4 @@
+import Link from "next/link";
 let Banner = () => {
   return (
     <>
@@ -26,19 +27,19 @@ let Banner = () => {
             </p>
 
             <div className="mt-8 flex flex-wrap gap-4 text-center">
-              <a
-                href="#"
+              <Link
+                href="/content/game"
                 className="block w-full rounded bg-blue-800 px-12 py-3 text-sm font-medium text-white shadow hover:bg-blue-500 focus:outline-none focus:ring active:bg-rose-500 sm:w-auto"
               >
                 Get Started
-              </a>
+              </Link>
 
-              <a
+              <Link
                 href="#"
                 className="block w-full rounded bg-white px-12 py-3 text-sm font-medium text-blue-600 shadow hover:text-rose-700 focus:outline-none focus:ring active:text-rose-500 sm:w-auto"
               >
                 Learn More
-              </a>
+              </Link>
             </div>
           </div>
         </div>
