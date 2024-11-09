@@ -1,4 +1,5 @@
 import { FaDownload } from "react-icons/fa";
+import { PiCoffeeBold } from "react-icons/pi";
 
 import Link from "next/link";
 let MainProdDetail = () => {
@@ -8,14 +9,13 @@ let MainProdDetail = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
           {/* main product image*/}
           <div>
-            <Link href="#" className="group relative block">
+            <div className="group relative block">
               <div className="relative h-[350px] sm:h-[450px] rounded-lg overflow-hidden">
                 <img
                   src="https://www.minecraft.net/content/dam/games/minecraft/key-art/Vanilla-PMP_Collection-Carousel-0_Update-Aquatic_1280x768.jpg"
                   alt=""
                   className="absolute inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
                 />
-
                 <img
                   src="https://www.minecraft.net/content/dam/games/minecraft/key-art/Vanilla-PMP_Collection-Carousel-0_The-Wild-Update_1280x768.jpg"
                   alt=""
@@ -23,25 +23,21 @@ let MainProdDetail = () => {
                 />
               </div>
 
-              <div className="absolute inset-0 flex flex-col items-start justify-end p-6">
-                <h3 className="text-xl font-medium text-white">
-                  Skinny Jeans Blue
-                </h3>
-
-                <p className="mt-1.5 text-pretty text-xs text-white">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Dignissimos sequi dicta impedit aperiam ipsum!
-                </p>
-
+              <div className="absolute bottom-0 flex flex-col md:flex-row  gap-2 items-start justify-end p-6">
                 <Link href="#">
                   <div className="mt-3 inline-block bg-blue-800 rounded-lg px-5 py-3 text-xs font-medium uppercase tracking-wide text-white flex gap-2 hover:bg-blue-400">
-                    <p>Download Now </p>
-
+                    <p>Download Now</p>
                     <FaDownload />
                   </div>
                 </Link>
+                <Link href="/content/paycoffee">
+                  <div className="mt-3 inline-block bg-blue-800 rounded-lg px-5 py-3 text-xs font-medium uppercase tracking-wide text-white flex gap-2 hover:bg-blue-400">
+                    <p>support us now</p>
+                    <PiCoffeeBold />
+                  </div>
+                </Link>
               </div>
-            </Link>
+            </div>
           </div>
           {/* main product description*/}
 

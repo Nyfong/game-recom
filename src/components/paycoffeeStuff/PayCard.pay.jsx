@@ -4,9 +4,9 @@ import Image from "next/image";
 let PayCard = () => {
   return (
     <>
-      <section className="p-10 flex items-center justify-center">
+      <section className="p-10 w-full ">
         <div>
-          <a
+          <div
             href="#"
             className="relative block rounded-tr-3xl border border-gray-100"
           >
@@ -36,7 +36,7 @@ let PayCard = () => {
                 Download ABA BARKONG
               </span>
             </div>
-          </a>
+          </div>
         </div>
       </section>
     </>
