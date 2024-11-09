@@ -1,3 +1,4 @@
+import Link from "next/link";
 let BlogCard = () => {
   const arrTest = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; // Simply loop over this array to create 10 cards
   return (
@@ -5,8 +6,8 @@ let BlogCard = () => {
       <section className="grid grid-cols-1 gap-2">
         {arrTest.map((b) => {
           return (
-            <>
-              <article
+            <Link href="#">
+              <div
                 key={b}
                 className="overflow-hidden rounded-lg shadow transition hover:shadow-lg grid  grid-cols-1 md:grid-cols-2 gap-2 p-2"
               >
@@ -26,11 +27,9 @@ let BlogCard = () => {
                       10th Oct 2022{" "}
                     </time>
 
-                    <a href="#">
-                      <h3 className="mt-0.5 text-lg text-gray-900 font-bold">
-                        Analyst Bulletin: Mobile Game Market Review July 2024
-                      </h3>
-                    </a>
+                    <h3 className="mt-0.5 text-lg text-gray-900 font-bold">
+                      Analyst Bulletin: Mobile Game Market Review July 2024
+                    </h3>
                   </div>
                 </div>
                 {/* DESCRIPTION */}
@@ -56,8 +55,8 @@ let BlogCard = () => {
                     monetization and a busy LiveOps calendar.
                   </p>
                 </div>
-              </article>
-            </>
+              </div>
+            </Link>
           );
         })}
       </section>

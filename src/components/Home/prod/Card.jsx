@@ -1,3 +1,4 @@
+import Link from "next/link";
 let ProdCard = () => {
   const arrTest1 = [1, 1, 1, 1]; // Simply loop over this array to create 10 cards
 
@@ -32,10 +33,11 @@ let ProdCard = () => {
                   officia rem vel voluptatum in eum vitae aliquid at sed
                   dignissimos.
                 </p>
-
-                <span className="mt-4 block rounded-md border border-indigo-900 bg-indigo-900 px-5 py-3 text-sm font-medium uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-indigo-900">
-                  About Game
-                </span>
+                <Link href="/content/detailgame">
+                  <span className="mt-4 block rounded-md border border-indigo-900 bg-indigo-900 px-5 py-3 text-sm font-medium uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-indigo-900">
+                    About Game
+                  </span>
+                </Link>
               </div>
             </div>
           ))}
