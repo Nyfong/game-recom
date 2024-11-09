@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 let CardPayCoffee = ({ p }) => {
   return (
     <>
@@ -27,10 +28,10 @@ let CardPayCoffee = ({ p }) => {
                 </li>
 
                 <li className="p-1 leading-none">
-                  <a href="#" className="text-xs font-medium text-gray-300">
+                  <Link href="#" className="text-xs font-medium text-gray-300">
                     {" "}
                     GitHub{" "}
-                  </a>
+                  </Link>
                 </li>
 
                 <li className="p-1 leading-none">
@@ -45,7 +46,7 @@ let CardPayCoffee = ({ p }) => {
 
         <ul className="mt-4 space-y-2">
           <li>
-            <a
+            <Link
               href="#"
               className="block h-full rounded-lg border border-gray-700 p-4 hover:border-pink-600"
             >
@@ -55,7 +56,7 @@ let CardPayCoffee = ({ p }) => {
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime
                 consequuntur deleniti, unde ab ut in!
               </p>
-            </a>
+            </Link>
           </li>
 
           <li>

@@ -6,7 +6,7 @@ let MainProdDetail = () => {
   return (
     <>
       <section>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 gap-4  md:grid-cols-2 md:gap-2">
           {/* main product image*/}
           <div>
             <div className="group relative block">
@@ -40,7 +40,6 @@ let MainProdDetail = () => {
             </div>
           </div>
           {/* main product description*/}
-
           <div className="grid grid-cols-1">
             <div>
               <div className="flow-root rounded-lg border border-gray-100 py-3 shadow-sm">
