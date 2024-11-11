@@ -75,7 +75,7 @@ const Navbar = () => {
               <div className="hidden sm:flex sm:gap-4">
                 <Link
                   className="rounded-md bg-black px-5 py-2.5 text-sm font-medium text-white shadow"
-                  href="#"
+                  href="/auth/login"
                 >
                   Login
                 </Link>
@@ -151,7 +151,7 @@ const Navbar = () => {
             </Link>
             <Link
               className="rounded-md bg-black px-5 py-2 text-sm font-medium text-white shadow mt-4"
-              href="#"
+              href="/auth/login"
             >
               Login
             </Link>
