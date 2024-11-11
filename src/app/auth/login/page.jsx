@@ -1,8 +1,9 @@
+import Link from "next/link";
 let LoginPage = () => {
   return (
     <>
       <main>
-        <section className="grid grid-cols-1 md:grid-cols-2">
+        <section className="grid grid-cols-1 lg:grid-cols-2">
           <div className="">
             <div className="h-screen  flex justify-center items-center dark:bg-gray-900">
               <div className="grid gap-8">
@@ -60,14 +61,14 @@ let LoginPage = () => {
                     <div className="flex flex-col mt-4 items-center justify-center text-sm">
                       <h3 className="dark:text-gray-300">
                         Don't have an account?
-                        <a
+                        <Link
                           className="group text-blue-400 transition-all duration-100 ease-in-out"
-                          href="#"
+                          href="/auth/signup"
                         >
                           <span className="bg-left-bottom bg-gradient-to-r from-blue-400 to-blue-400 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">
                             Sign Up
                           </span>
-                        </a>
+                        </Link>
                       </h3>
                     </div>
 
