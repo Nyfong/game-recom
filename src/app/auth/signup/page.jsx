@@ -4,9 +4,9 @@ let SignupPage = () => {
     <>
       <main className="">
         <section className="grid grid-cols-1 lg:grid-cols-2">
-          <div className="relative h-screen flex items-center py-3 sm:max-w-xl sm:mx-auto ">
+          <div className="relative md:h-screen flex items-center py-3 sm:max-w-xl sm:mx-auto ">
             <div className="p-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-[26px] m-4">
-              <div className="relative px-4 py-10 bg-white mx-8 md:mx-0 shadow rounded-3xl sm:p-10 ">
+              <div className="relative px-4 py-10 bg-white mx-0 shadow rounded-3xl sm:p-10 ">
                 <div className="max-w-md mx-auto ">
                   <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-5 ">
                     <div>
