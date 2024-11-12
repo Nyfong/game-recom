@@ -34,12 +34,12 @@ const Navbar = () => {
                     </Link>
                   </li>
                   <li>
-                    <a
+                    <Link
                       className="text-white transition hover:text-white/75"
                       href="/content/commu"
                     >
                       Community
-                    </a>
+                    </Link>
                   </li>
                   <li>
                     <Link

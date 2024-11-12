@@ -17,107 +17,12 @@ let CommunityPage = () => {
 
           <div className="md:w-1/3 flex flex-col gap-2 md:sticky md:top-[170px] h-max 	">
             {/* children */}
-            {/* card */}
-            <div className="flex justify-center flex-wrap gap-3 lg:gap-2  bg-white p-4 rounded-lg shadow-lg">
-              {/* image */}
-              <div>
-                <img
-                  src="https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/b3e6bdce-1eaf-4660-90e4-9d2949cd6cfd/width=450/03882-2197440833-cureglowing_(skill%20icon_),1dragon,glowing,monochrome.jpeg"
-                  className="w-20 h-20 lg:h-24 lg:w-24 rounded-full"
-                  alt=""
-                />
-              </div>
-              {/* image */}
-              <div>
-                <img
-                  src="https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/b3e6bdce-1eaf-4660-90e4-9d2949cd6cfd/width=450/03882-2197440833-cureglowing_(skill%20icon_),1dragon,glowing,monochrome.jpeg"
-                  className="w-20 h-20 lg:h-24 lg:w-24 rounded-full"
-                  alt=""
-                />
-              </div>
-              {/* image */}
-              <div>
-                <img
-                  src="https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/b3e6bdce-1eaf-4660-90e4-9d2949cd6cfd/width=450/03882-2197440833-cureglowing_(skill%20icon_),1dragon,glowing,monochrome.jpeg"
-                  className="w-20 h-20 lg:h-24 lg:w-24 rounded-full"
-                  alt=""
-                />
-              </div>
-              {/* image */}
-              <div>
-                <img
-                  src="https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/b3e6bdce-1eaf-4660-90e4-9d2949cd6cfd/width=450/03882-2197440833-cureglowing_(skill%20icon_),1dragon,glowing,monochrome.jpeg"
-                  className="w-20 h-20 lg:h-24 lg:w-24 rounded-full"
-                  alt=""
-                />
-              </div>
-              {/* image */}
-              <div>
-                <img
-                  src="https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/b3e6bdce-1eaf-4660-90e4-9d2949cd6cfd/width=450/03882-2197440833-cureglowing_(skill%20icon_),1dragon,glowing,monochrome.jpeg"
-                  className="w-20 h-20 lg:h-24 lg:w-24 rounded-full"
-                  alt=""
-                />
-              </div>
-              {/* image */}
-              <div>
-                <img
-                  src="https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/b3e6bdce-1eaf-4660-90e4-9d2949cd6cfd/width=450/03882-2197440833-cureglowing_(skill%20icon_),1dragon,glowing,monochrome.jpeg"
-                  className="w-20 h-20 lg:h-24 lg:w-24 rounded-full"
-                  alt=""
-                />
-              </div>
-            </div>
-            {/* card */}
-            <div className="flex justify-center flex-wrap gap-3 lg:gap-2  bg-white p-4 rounded-lg shadow-lg">
-              {/* image */}
-              <div>
-                <img
-                  src="https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/b3e6bdce-1eaf-4660-90e4-9d2949cd6cfd/width=450/03882-2197440833-cureglowing_(skill%20icon_),1dragon,glowing,monochrome.jpeg"
-                  className="w-20 h-20 lg:h-24 lg:w-24 rounded-full"
-                  alt=""
-                />
-              </div>
-              {/* image */}
-              <div>
-                <img
-                  src="https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/b3e6bdce-1eaf-4660-90e4-9d2949cd6cfd/width=450/03882-2197440833-cureglowing_(skill%20icon_),1dragon,glowing,monochrome.jpeg"
-                  className="w-20 h-20 lg:h-24 lg:w-24 rounded-full"
-                  alt=""
-                />
-              </div>
-              {/* image */}
-              <div>
-                <img
-                  src="https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/b3e6bdce-1eaf-4660-90e4-9d2949cd6cfd/width=450/03882-2197440833-cureglowing_(skill%20icon_),1dragon,glowing,monochrome.jpeg"
-                  className="w-20 h-20 lg:h-24 lg:w-24 rounded-full"
-                  alt=""
-                />
-              </div>
-              {/* image */}
-              <div>
-                <img
-                  src="https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/b3e6bdce-1eaf-4660-90e4-9d2949cd6cfd/width=450/03882-2197440833-cureglowing_(skill%20icon_),1dragon,glowing,monochrome.jpeg"
-                  className="w-20 h-20 lg:h-24 lg:w-24 rounded-full"
-                  alt=""
-                />
-              </div>
-              {/* image */}
-              <div>
-                <img
-                  src="https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/b3e6bdce-1eaf-4660-90e4-9d2949cd6cfd/width=450/03882-2197440833-cureglowing_(skill%20icon_),1dragon,glowing,monochrome.jpeg"
-                  className="w-20 h-20 lg:h-24 lg:w-24 rounded-full"
-                  alt=""
-                />
-              </div>
-              {/* image */}
-              <div>
-                <img
-                  src="https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/b3e6bdce-1eaf-4660-90e4-9d2949cd6cfd/width=450/03882-2197440833-cureglowing_(skill%20icon_),1dragon,glowing,monochrome.jpeg"
-                  className="w-20 h-20 lg:h-24 lg:w-24 rounded-full"
-                  alt=""
-                />
-              </div>
+
+            <div>
+              <img
+                src="https://www.ecommjuice.com/wp-content/uploads/2021/07/GIF-ADS.gif"
+                alt=""
+              />
             </div>
           </div>
 

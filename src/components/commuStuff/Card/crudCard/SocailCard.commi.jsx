@@ -13,7 +13,7 @@ let SocailCardCommu = () => {
       <section className="flex flex-col  gap-4 ">
         {arrTest.map((b, i) => {
           return (
-            <Link href={`/content/blog/${i + 1}`} key={i}>
+            <Link href={`/auth/login`} key={i}>
               <div className="overflow-hidden rounded-lg shadow transition hover:shadow-lg grid  grid-cols-1  gap-2 p-2">
                 <div>
                   <img
