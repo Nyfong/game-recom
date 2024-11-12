@@ -1,6 +1,8 @@
 "use client";
 import { useState } from "react";
-
+import Image from "next/image";
+import Logo2 from "@/assets/icon/fav.png";
+// import Logo2 from "@/assets/fong.png";
 let CommunityPage = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   // Toggle function
@@ -323,6 +325,8 @@ let CommunityPage = () => {
             </div>
           </div>
         </section> */}
+
+        {/* <Image src={Logo2} alt="" /> */}
       </main>
     </>
   );
