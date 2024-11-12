@@ -15,12 +15,13 @@ let CommunityPage = () => {
         <div className="flex flex-col-reverse md:flex-row gap-4 h-full ">
           {/* Sticky Card */}
 
-          <div className="md:w-1/3 flex flex-col gap-2 md:sticky md:top-[170px] h-max 	">
+          <div className="md:w-1/3 flex items-center flex-col gap-2 md:sticky md:top-[170px] h-max 	">
             {/* children */}
 
+            {/* google ads block */}
             <div>
               <img
-                src="https://www.ecommjuice.com/wp-content/uploads/2021/07/GIF-ADS.gif"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyBrD5uqC2lt-OJQOPSjBOYna4g2-QGJTgfg&s"
                 alt=""
               />
             </div>
