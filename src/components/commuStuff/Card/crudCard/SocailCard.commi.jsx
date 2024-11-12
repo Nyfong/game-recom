@@ -1,13 +1,20 @@
+import { GrLike } from "react-icons/gr";
+import { GrDislike } from "react-icons/gr";
+import { CiShare1 } from "react-icons/ci";
+import { FaRegComment } from "react-icons/fa";
+
 import Link from "next/link";
-let BlogCard = () => {
+let SocailCardCommu = () => {
+  const dataLike = 10;
+  const dataComment = 0;
   const arrTest = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; // Simply loop over this array to create 10 cards
   return (
     <>
-      <section className="grid grid-cols-1 gap-2">
+      <section className="flex flex-col  gap-4">
         {arrTest.map((b, i) => {
           return (
             <Link href={`/content/blog/${i + 1}`} key={i}>
-              <div className="overflow-hidden rounded-lg shadow transition hover:shadow-lg grid  grid-cols-1 lg:grid-cols-2 gap-2 p-2">
+              <div className="overflow-hidden rounded-lg shadow transition hover:shadow-lg grid  grid-cols-1  gap-2 p-2">
                 <div>
                   <img
                     alt=""
@@ -36,21 +43,25 @@ let BlogCard = () => {
                     mobile in a twist, or should we say a tangle? Last month,
                     Rollic’s Twisted Tangle became the first hybrid casual title
                     to ever implement the feature, showing this trending feature
-                    knows no bounds. But this isn’t the only reason to take note
-                    of Rollic. The studio’s wider portfolio of hybrid casual
-                    puzzle games—including Seat Away and Screw Jam—are all
-                    lighting up the US grossing charts too, fueled by a mixture
-                    of monetization and a busy LiveOps calendar. Seasonal
-                    Collectible Albums have seemingly got everyone on mobile in
-                    a twist, or should we say a tangle? Last month, Rollic’s
-                    Twisted Tangle became the first hybrid casual title to ever
-                    implement the feature, showing this trending feature knows
-                    no bounds. But this isn’t the only reason to take note of
-                    Rollic. The studio’s wider portfolio of hybrid casual puzzle
-                    games—including Seat Away and Screw Jam—are all lighting up
-                    the US grossing charts too, fueled by a mixture of
-                    monetization and a busy LiveOps calendar.
+                    knows no bounds.
                   </p>
+                  {/* socail button */}
+                  <div className="flex gap-2 items-center p-2 ">
+                    <div className="flex gap-2 items-center p-2 ">
+                      <span>{dataLike} Likes</span>
+                      <GrLike />
+                    </div>
+                    <div className="flex gap-2 items-center p-2 ">
+                      <GrDislike />
+                    </div>
+                    <div className="flex gap-2 items-center p-2 ">
+                      <CiShare1 />
+                    </div>
+                    <div className="flex gap-2 items-center p-2 ">
+                      <span>{dataComment} comments</span>
+                      <FaRegComment />
+                    </div>
+                  </div>
                 </div>
               </div>
             </Link>
@@ -60,4 +71,4 @@ let BlogCard = () => {
     </>
   );
 };
-export default BlogCard;
+export default SocailCardCommu;
