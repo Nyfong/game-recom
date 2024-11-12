@@ -10,7 +10,7 @@ let SocailCardCommu = () => {
   const arrTest = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; // Simply loop over this array to create 10 cards
   return (
     <>
-      <section className="flex flex-col  gap-4">
+      <section className="flex flex-col  gap-4 ">
         {arrTest.map((b, i) => {
           return (
             <Link href={`/content/blog/${i + 1}`} key={i}>
@@ -46,20 +46,21 @@ let SocailCardCommu = () => {
                     knows no bounds.
                   </p>
                   {/* socail button */}
-                  <div className="flex gap-2 items-center p-2 ">
+                  <div className="flex  flex-wrap gap-2 items-center p-2 ">
                     <div className="flex gap-2 items-center p-2 ">
                       <span>{dataLike} Likes</span>
                       <GrLike />
                     </div>
-                    <div className="flex gap-2 items-center p-2 ">
+                    {/* <div className="flex gap-2 items-center p-2 ">
                       <GrDislike />
-                    </div>
-                    <div className="flex gap-2 items-center p-2 ">
-                      <CiShare1 />
-                    </div>
+                    </div> */}
+
                     <div className="flex gap-2 items-center p-2 ">
                       <span>{dataComment} comments</span>
                       <FaRegComment />
+                    </div>
+                    <div className="flex gap-2 items-center p-2 ">
+                      <CiShare1 />
                     </div>
                   </div>
                 </div>

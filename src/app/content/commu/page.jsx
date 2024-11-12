@@ -12,7 +12,7 @@ let CommunityPage = () => {
     <>
       <HeroBannerCommu />
       <main className="p-5 md:p-3 lg:p-0  gap-5 md:gap-3 max-w-screen-xl min-w-screen-80 mx-auto my-10">
-        <div className="flex flex-col-reverse md:flex-row gap-4 h-full p-4">
+        <div className="flex flex-col-reverse md:flex-row gap-4 h-full ">
           {/* Sticky Card */}
 
           <div className="md:w-1/3 flex flex-col gap-2 md:sticky md:top-[170px] h-max 	">
@@ -122,9 +122,8 @@ let CommunityPage = () => {
           </div>
 
           {/* Main Scrollable Content */}
-          <div className="md:w-2/3 bg-white p-4 rounded-lg shadow-lg">
-            <h2 className="text-xl font-semibold mb-2">Scrollable Content</h2>
-            <div className="space-y-4">
+          <div className="md:w-2/3">
+            <div className="my-4">
               <SocailCardCommu />
             </div>
           </div>
