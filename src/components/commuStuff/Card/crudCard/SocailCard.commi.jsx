@@ -5,7 +5,7 @@ import { FaRegComment } from "react-icons/fa";
 
 import Link from "next/link";
 let SocailCardCommu = () => {
-  const dataLike = 10;
+  const dataLike = 90;
   const dataComment = 0;
   const arrTest = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; // Simply loop over this array to create 10 cards
   return (
@@ -15,6 +15,17 @@ let SocailCardCommu = () => {
           return (
             <Link href={`/auth/login`} key={i}>
               <div className="overflow-hidden rounded-lg shadow transition hover:shadow-lg grid  grid-cols-1  gap-2 p-2">
+                <div className=" flex gap-2 items-center p-2 ">
+                  <img
+                    src="https://media.licdn.com/dms/image/v2/C5603AQHDZgdQ5sRTaQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1566531738983?e=2147483647&v=beta&t=dSsMLxrTZTBhHTPwynhcvyU7fmnV-snEchMbnRT56Oc"
+                    className="w-16 h-16 rounded-full"
+                    alt=""
+                  />
+                  <div className="flex flex-col">
+                    <span>M.megamind</span>
+                    <time className="text-sm text-gray-300">22/Nov/2024</time>
+                  </div>
+                </div>
                 <div>
                   <img
                     alt=""
@@ -23,14 +34,6 @@ let SocailCardCommu = () => {
                   />
 
                   <div className="bg-white p-4 sm:p-6">
-                    <time
-                      dateTime="2022-10-10"
-                      className="block text-xs text-gray-500"
-                    >
-                      {" "}
-                      10th Oct 2022{" "}
-                    </time>
-
                     <h3 className="mt-0.5 text-lg text-gray-900 font-bold">
                       Analyst Bulletin: Mobile Game Market Review July 2024
                     </h3>
@@ -46,7 +49,7 @@ let SocailCardCommu = () => {
                     knows no bounds.
                   </p>
                   {/* socail button */}
-                  <div className="flex  flex-wrap gap-2 items-center p-2 ">
+                  <div className="flex  flex-wrap gap-2 items-center p-2 text-sm md:text-md ">
                     <div className="flex gap-2 items-center p-2 ">
                       <span>{dataLike} Likes</span>
                       <GrLike />
@@ -60,6 +63,7 @@ let SocailCardCommu = () => {
                       <FaRegComment />
                     </div>
                     <div className="flex gap-2 items-center p-2 ">
+                      <span>shares</span>
                       <CiShare1 />
                     </div>
                   </div>
