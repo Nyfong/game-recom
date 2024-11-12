@@ -23,19 +23,19 @@ let SocailCardCommu = () => {
                   />
                   <div className="flex flex-col">
                     <span>M.megamind</span>
-                    <time className="text-sm text-gray-300">22/Nov/2024</time>
+                    <time className="text-sm text-gray-300">02 Nov 2024</time>
                   </div>
                 </div>
                 <div>
                   <img
                     alt=""
-                    src="https://www.gamerefinery.com/wp-content/uploads/2024/08/analyst-bulletin-july-2024.png"
-                    className="h-56 w-full object-cover rounded-lg  opacity-70 duration-100	 hover:opacity-100"
+                    src="https://i.ytimg.com/vi/QQNgmQKK7XE/maxresdefault.jpg"
+                    className="h-52 lg:h-96 w-full object-cover rounded-lg  opacity-70 duration-100	 hover:opacity-100"
                   />
 
                   <div className="bg-white p-4 sm:p-6">
                     <h3 className="mt-0.5 text-lg text-gray-900 font-bold">
-                      Analyst Bulletin: Mobile Game Market Review July 2024
+                      Cambodian Gambling Gods
                     </h3>
                   </div>
                 </div>
