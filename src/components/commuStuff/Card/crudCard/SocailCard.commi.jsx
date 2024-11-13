@@ -6,7 +6,7 @@ import { FaRegComment } from "react-icons/fa";
 import Link from "next/link";
 let SocailCardCommu = () => {
   const dataLike = 90;
-  const dataComment = 0;
+  const dataComment = 22;
   const arrTest = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; // Simply loop over this array to create 10 cards
   return (
     <>
