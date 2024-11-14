@@ -3,14 +3,15 @@ import Nyfong from "@/assets/fong.png";
 import Vy from "@/assets/yu.png";
 import Kot from "@/assets/kot.png";
 import Image from "next/image";
-
+import logo from "@/assets/icon/favBlue.png";
 let AboutUsCard = () => {
   const pic = [Kaiseng, Nyfong, Vy, Kot];
   return (
     <>
       <div className="py-3">
-        <span className="font-bold underline text-2xl">Developer</span>
+        <span className="font-bold  text-2xl">Developer</span>
       </div>
+
       <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
         {pic.map((e) => (
           <div
@@ -35,6 +36,13 @@ let AboutUsCard = () => {
             </div>
           </div>
         ))}
+      </div>
+      <div className="flex justify-center items-center p-4 md:p-2 lg:p-0">
+        <Image
+          src={logo}
+          className="h-full w-full md:h-72 md:object-contain  object-cover"
+          alt="logo"
+        />
       </div>
     </>
   );
