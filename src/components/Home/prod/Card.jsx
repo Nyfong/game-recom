@@ -23,12 +23,12 @@ let ProdCard = async ({ slice }) => {
                 <img
                   src={c.thumbnail}
                   alt=""
-                  className="h-80 w-full rounded-tr-3xl object-cover"
+                  className="h-32 md:h-80 w-full rounded-tr-3xl object-cover"
                 />
               </div>
               <div className="p-4 text-center  ">
                 <div>
-                  <strong className="text-xl font-medium text-gray-900">
+                  <strong className=" text-sm md:text-xl font-medium text-gray-900">
                     {" "}
                     {c.title}{" "}
                   </strong>
@@ -40,7 +40,7 @@ let ProdCard = async ({ slice }) => {
                   </p>
                 </div>
                 <div>
-                  <Link href="/">
+                  <Link href="/content/detailgame">
                     <span className="mt-4 block rounded-md border border-indigo-900 bg-indigo-900 px-5 py-3 text-sm font-medium uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-indigo-900">
                       About Game
                     </span>
