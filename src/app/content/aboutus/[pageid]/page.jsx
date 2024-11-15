@@ -4,11 +4,12 @@ import Kaiseng from "@/assets/kaiseng.png";
 import Nyfong from "@/assets/fong.png";
 import Vy from "@/assets/yu.png";
 import Kot from "@/assets/kot.png";
+import logo from "@/assets/icon/favBlue.png";
 import Image from "next/image";
 let PersonalAboutus = async ({ params }) => {
   const pic = [Kaiseng, Nyfong, Vy, Kot];
-  const { pageid } = await params;
-  const pageIdInt = parseInt(pageid, 10);
+  const { pageid } = await params; // fetching the params using async and await
+  const pageIdInt = parseInt(pageid, 10); //convert from string to an integer
 
   return (
     <>
@@ -234,6 +235,14 @@ let PersonalAboutus = async ({ params }) => {
                   </div>
                 </div>
               </div>
+            </div>
+            {/* sayba logo */}
+            <div className="flex justify-center items-center p-4 md:p-2 lg:p-0">
+              <Image
+                src={logo}
+                className="h-full w-full md:h-72 md:object-contain  object-cover"
+                alt="logo"
+              />
             </div>
           </div>
         </section>
