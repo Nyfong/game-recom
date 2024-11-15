@@ -3,12 +3,9 @@ let TrendingCard = () => {
   return (
     <>
       <section className="grid grid-cols-1 md:grid-cols-2 gap-2 my-10">
-        {arrTest.map((a) => (
-          <>
-            <article
-              key={a}
-              className="relative overflow-hidden rounded-lg shadow transition hover:shadow-lg"
-            >
+        {arrTest.map((a, i) => (
+          <div key={i}>
+            <article className="relative overflow-hidden rounded-lg shadow transition hover:shadow-lg">
               <img
                 alt=""
                 src="https://www.gamerefinery.com/wp-content/uploads/2023/08/shooter-market-review-update-june-2024.png"
@@ -42,7 +39,7 @@ let TrendingCard = () => {
                 </div>
               </div>
             </article>
-          </>
+          </div>
         ))}
       </section>
     </>

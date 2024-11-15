@@ -1,23 +1,21 @@
 import HomeSection from "@/components/Home/section/Section";
 import CardPayCoffee from "@/components/paycoffeeStuff/Card.pay";
-import Kaiseng from "@/assets/kaiseng.png";
-import Nyfong from "@/assets/fong.png";
-import Vy from "@/assets/yu.png";
-import Kot from "@/assets/kot.png";
+import FElogo from "@/assets/logoITE.png";
 import logo from "@/assets/icon/favBlue.png";
 import Image from "next/image";
+import { detailTeam } from "@/lib/teamdata";
 let PersonalAboutus = async ({ params }) => {
-  const pic = [Kaiseng, Nyfong, Vy, Kot];
+  const details = detailTeam;
   const { pageid } = await params; // fetching the params using async and await
   const pageIdInt = parseInt(pageid, 10); //convert from string to an integer
-
+  const update = details[pageIdInt - 1];
   return (
     <>
       <main className="p-5 md:p-3 lg:p-0  gap-5 md:gap-3 max-w-screen-xl min-w-screen-80 mx-auto my-10">
         {/* avatar */}
         <section className="flex flex-col-reverse md:flex-row bg-gray-100 rounded-md gap-10 md:gap-4 p-10">
           {/* one side */}
-          <div className="flex flex-col  items-center justify-center gap-5">
+          <div className=" md:w-2/4	 flex flex-col  items-center justify-center gap-5">
             {/* summary */}
             <div>
               <div className="space-y-4">
@@ -140,33 +138,43 @@ let PersonalAboutus = async ({ params }) => {
             </div>
           </div>
           {/* another side */}
-          <div className=" flex flex-col gap-5 items-center  pt-10">
+          <div className=" md:w-2/4	 flex flex-col gap-5 items-center  pt-10">
             <div className="relative mt-1  ">
               <div className="rounded overflow-hidden shadow-md bg-white">
                 <div className="absolute -mt-20 w-full flex justify-center">
                   <div className="h-32 w-32">
                     <Image
-                      src={pic[pageIdInt - 1] || null}
+                      src={update.image || null}
                       alt="profile picture"
                       className="rounded-full object-cover h-full w-full shadow-md"
                     />
                   </div>
                 </div>
                 <div className="px-6 mt-16">
-                  <h1 className="font-bold text-3xl text-center mb-1">
-                    Pu KDET
-                  </h1>
+                  <div className="flex flex-col my-4 md:flex-row gap-4 items-center justify-center">
+                    <p className="font-bold text-3xl text-center mb-1">
+                      {update.name}
+                    </p>
+                    <Image
+                      src={FElogo}
+                      className="h-6 w-6 object-contain"
+                      alt=""
+                    />
+                  </div>
+
                   <p className="text-gray-800 text-sm text-center">
-                    Web Developer
+                    {update.position}
+                  </p>
+                  <hr />
+                  <p className="text-gray-800 text-sm text-center">
+                    {update.university} | {update.major}
+                  </p>
+
+                  <p className="text-gray-800 text-sm pl-4 md:text-center md:pl-0 font-bold mt-5 underline">
+                    Short description about me
                   </p>
                   <p className="text-center text-gray-600 text-base pt-3 font-normal">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Aperiam, nulla ad optio nesciunt rem omnis deserunt! Iure
-                    nulla magni quia ullam aliquam at voluptates possimus.
-                    Repellendus qui pariatur tenetur deserunt molestiae quidem
-                    numquam quaerat sapiente necessitatibus tempore, vel ratione
-                    ipsam obcaecati nisi, maxime quasi deleniti eos quae amet
-                    id. Expedita.
+                    {update.description}
                   </p>
                   <div className="w-full flex justify-center pt-5 pb-5">
                     <a href="#" className="mx-5">
@@ -237,7 +245,7 @@ let PersonalAboutus = async ({ params }) => {
               </div>
             </div>
             {/* sayba logo */}
-            <div className="flex justify-center items-center p-4 md:p-2 lg:p-0">
+            <div className="flex flex-col justify-center items-center p-4 md:p-2 lg:p-0">
               <Image
                 src={logo}
                 className="h-full w-full md:h-72 md:object-contain  object-cover"
