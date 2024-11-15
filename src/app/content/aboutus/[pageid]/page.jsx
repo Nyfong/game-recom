@@ -15,9 +15,9 @@ let PersonalAboutus = async ({ params }) => {
     <>
       <main className="p-5 md:p-3 lg:p-0  gap-5 md:gap-3 max-w-screen-xl min-w-screen-80 mx-auto my-10">
         {/* avatar */}
-        <section className="grid grid-cols-1 md:grid-cols-2 bg-gray-100 rounded-md gap-10 md:gap-4 p-10">
+        <section className="flex flex-col-reverse md:flex-row bg-gray-100 rounded-md gap-10 md:gap-4 p-10">
           {/* one side */}
-          <div className="flex flex-col items-center justify-center gap-5">
+          <div className="flex flex-col  items-center justify-center gap-5">
             {/* summary */}
             <div>
               <div className="space-y-4">
@@ -140,7 +140,7 @@ let PersonalAboutus = async ({ params }) => {
             </div>
           </div>
           {/* another side */}
-          <div className="w-full flex flex-col gap-5 items-center  pt-10">
+          <div className=" flex flex-col gap-5 items-center  pt-10">
             <div className="relative mt-1  ">
               <div className="rounded overflow-hidden shadow-md bg-white">
                 <div className="absolute -mt-20 w-full flex justify-center">
