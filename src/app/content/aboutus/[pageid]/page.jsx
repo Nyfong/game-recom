@@ -3,7 +3,7 @@ import CardPayCoffee from "@/components/paycoffeeStuff/Card.pay";
 import FElogo from "@/assets/logoITE.png";
 import logo from "@/assets/icon/favBlue.png";
 import Image from "next/image";
-import { detailTeam } from "@/lib/teamdata";
+import { detailTeam } from "@/lib/teamData";
 let PersonalAboutus = async ({ params }) => {
   const details = detailTeam;
   const { pageid } = await params; // fetching the params using async and await
