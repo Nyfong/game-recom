@@ -158,7 +158,7 @@ let PersonalAboutus = async ({ params }) => {
                     <Image
                       src={FElogo}
                       className="h-6 w-6 object-contain"
-                      alt=""
+                      alt="logoFE"
                     />
                   </div>
 
