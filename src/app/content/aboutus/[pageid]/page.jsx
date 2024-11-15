@@ -1,8 +1,15 @@
-import Nyfong from "@/assets/fong.png";
 import HomeSection from "@/components/Home/section/Section";
 import CardPayCoffee from "@/components/paycoffeeStuff/Card.pay";
+import Kaiseng from "@/assets/kaiseng.png";
+import Nyfong from "@/assets/fong.png";
+import Vy from "@/assets/yu.png";
+import Kot from "@/assets/kot.png";
 import Image from "next/image";
-let PersonalAboutus = () => {
+let PersonalAboutus = async ({ params }) => {
+  const pic = [Kaiseng, Nyfong, Vy, Kot];
+  const { pageid } = await params;
+  const pageIdInt = parseInt(pageid, 10);
+
   return (
     <>
       <main className="p-5 md:p-3 lg:p-0  gap-5 md:gap-3 max-w-screen-xl min-w-screen-80 mx-auto my-10">
@@ -138,7 +145,7 @@ let PersonalAboutus = () => {
                 <div className="absolute -mt-20 w-full flex justify-center">
                   <div className="h-32 w-32">
                     <Image
-                      src={Nyfong}
+                      src={pic[pageIdInt - 1] || null}
                       alt="profile picture"
                       className="rounded-full object-cover h-full w-full shadow-md"
                     />
@@ -146,10 +153,10 @@ let PersonalAboutus = () => {
                 </div>
                 <div className="px-6 mt-16">
                   <h1 className="font-bold text-3xl text-center mb-1">
-                    Carole Steward
+                    Pu KDET
                   </h1>
                   <p className="text-gray-800 text-sm text-center">
-                    Chief Executive Officer
+                    Web Developer
                   </p>
                   <p className="text-center text-gray-600 text-base pt-3 font-normal">
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit.
