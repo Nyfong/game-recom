@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ProdCard from "../Home/prod/Card";
+import ProdPage from "../Home/prod/FetchCard";
 
 const SuggestDetailScroll = () => {
   const settings = {

@@ -10,7 +10,7 @@ let ProdCard = async ({ slice }) => {
       {/* grid display product */}
       <section className="my-10">
         <div className="grid  grid-cols-2  md:grid-cols-3  lg:grid-cols-4 gap-2">
-          {api.slice(0, 32).map((c, index) => (
+          {api.slice(0, 30).map((c, index) => (
             <div
               key={index}
               className="relative flex flex-col justify-between block rounded-tr-3xl border border-gray-100"
@@ -40,7 +40,7 @@ let ProdCard = async ({ slice }) => {
                   </p>
                 </div>
                 <div>
-                  <Link href="/">
+                  <Link href={`/content/detailgame/${index + 1}`}>
                     <span className="mt-4 block rounded-md border border-indigo-900 bg-indigo-900 px-5 py-3 text-sm font-medium uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-indigo-900">
                       About Game
                     </span>

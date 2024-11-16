@@ -1,7 +1,13 @@
 import { FaDownload } from "react-icons/fa";
 import { PiCoffeeBold } from "react-icons/pi";
 import Link from "next/link";
-let MainProdDetail = () => {
+import { get } from "@/lib/gameData";
+let MainProdDetail = async ({ detialsPropId }) => {
+  const fetchData = await get();
+  console.log(detialsPropId);
+  console.log(fetchData);
+  const detailData = fetchData[detialsPropId];
+  console.log("first", detailData.title);
   return (
     <>
       <section>
@@ -11,12 +17,18 @@ let MainProdDetail = () => {
             <div className="group relative block">
               <div className="relative h-[350px] sm:h-[450px] rounded-lg overflow-hidden">
                 <img
-                  src="https://www.minecraft.net/content/dam/games/minecraft/key-art/Vanilla-PMP_Collection-Carousel-0_Update-Aquatic_1280x768.jpg"
+                  src={
+                    detailData.thumb ||
+                    "https://www.minecraft.net/content/dam/games/minecraft/key-art/Vanilla-PMP_Collection-Carousel-0_Update-Aquatic_1280x768.jpg"
+                  }
                   alt=""
                   className="absolute inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
                 />
                 <img
-                  src="https://www.minecraft.net/content/dam/games/minecraft/key-art/Vanilla-PMP_Collection-Carousel-0_The-Wild-Update_1280x768.jpg"
+                  src={
+                    detailData.thumb ||
+                    "https://www.minecraft.net/content/dam/games/minecraft/key-art/Vanilla-PMP_Collection-Carousel-0_Update-Aquatic_1280x768.jpg"
+                  }
                   alt=""
                   className="absolute inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
                 />
@@ -45,7 +57,9 @@ let MainProdDetail = () => {
                 <dl className="-my-3 divide-y divide-gray-100 text-sm">
                   <div className="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
                     <dt className="font-medium text-gray-900">Title</dt>
-                    <dd className="text-gray-700 sm:col-span-2">MMO RPG</dd>
+                    <dd className="text-gray-700 sm:col-span-2">
+                      {detailData.title}
+                    </dd>
                   </div>
 
                   <div className="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
@@ -66,11 +80,8 @@ let MainProdDetail = () => {
                   <div className="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
                     <dt className="font-medium text-gray-900">Description</dt>
                     <dd className="text-gray-700 sm:col-span-2">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                      Et facilis debitis explicabo doloremque impedit nesciunt
-                      dolorem facere, dolor quasi veritatis quia fugit aperiam
-                      aspernatur neque molestiae labore aliquam soluta
-                      architecto?
+                      {detailData.description ||
+                        "  Lorem ipsum dolor, sit amet consectetur adipisicing elit.Et facilis debitis explicabo doloremque impedit nesciuntdolorem facere, dolor quasi veritatis quia fugit aperiamaspernatur neque molestiae labore aliquam solutaarchitecto?"}
                     </dd>
                   </div>
                 </dl>

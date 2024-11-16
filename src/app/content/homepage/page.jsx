@@ -16,8 +16,6 @@ let Homepage = () => {
         <CarouselComponent />
         {/* grid display product */}
         <ProdCard />
-        <ProdCard />
-        <ProdCard />
 
         <HomeSection />
       </main>
