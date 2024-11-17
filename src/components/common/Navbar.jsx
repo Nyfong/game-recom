@@ -58,6 +58,14 @@ const Navbar = () => {
                       Blog
                     </Link>
                   </li>
+                  <li>
+                    <Link
+                      className="text-white transition hover:text-white/75"
+                      href=""
+                    >
+                      Profile Test
+                    </Link>
+                  </li>
                 </ul>
               </nav>
             </div>
