@@ -40,7 +40,8 @@ let ProdCard = async ({ slice }) => {
                   </p>
                 </div>
                 <div>
-                  <Link href={`/content/detailgame/${index + 1}`}>
+                  <Link href={`/content/detailgame/`}>
+                    {/* href={`/content/detailgame/${index + 1}`} */}
                     <span className="mt-4 block rounded-md border border-indigo-900 bg-indigo-900 px-5 py-3 text-sm font-medium uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-indigo-900">
                       About Game
                     </span>
