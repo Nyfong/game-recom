@@ -9,6 +9,8 @@ let PersonalAboutus = async ({ params }) => {
   const { pageid } = await params; // fetching the params using async and await
   const pageIdInt = parseInt(pageid, 10); //convert from string to an integer
   const update = details[pageIdInt - 1];
+  const picLogoSkill = update.logo;
+  console.log("pictre", picLogoSkill);
   return (
     <>
       <main className="p-5 md:p-3 lg:p-0  gap-5 md:gap-3 max-w-screen-xl min-w-screen-80 mx-auto my-10">
@@ -162,11 +164,23 @@ let PersonalAboutus = async ({ params }) => {
                     />
                   </div>
 
-                  <p className="text-gray-800 text-sm text-center">
+                  <p className="text-gray-800 text-sm text-center pb-4">
                     {update.position}
                   </p>
                   <hr />
-                  <p className="text-gray-800 text-sm text-center">
+                  <div className="flex gap items-center justify-evenly p-2 md:p-4">
+                    {picLogoSkill.map((el) => (
+                      <>
+                        <Image
+                          src={el}
+                          className=" w-6 md:w-20 h-8  object-contain  "
+                          alt="logo"
+                        />
+                      </>
+                    ))}
+                  </div>
+                  <hr />
+                  <p className="text-gray-800 text-sm text-center pt-4">
                     {update.university} | {update.major}
                   </p>
 
@@ -176,6 +190,7 @@ let PersonalAboutus = async ({ params }) => {
                   <p className="text-center text-gray-600 text-base pt-3 font-normal">
                     {update.description}
                   </p>
+
                   <div className="w-full flex justify-center pt-5 pb-5">
                     <a href="#" className="mx-5">
                       <div aria-label="Github">
