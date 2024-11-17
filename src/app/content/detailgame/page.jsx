@@ -12,7 +12,9 @@ let DetailGame = () => {
         <SuggestDetailScroll /> */}
         <div className=" h-auto md:h-[400px] justify-center flex flex-col md:flex-row gap-5 items-center justify-center p-5">
           <div className=" flex  flex-col md:flex-row gap-4 items-center">
-            <p className="text-3xl">hello we are on developing mode</p>
+            <p className="text-sm md:text-3xl">
+              hello we are on developing mode
+            </p>
             <DiGit className="text-3xl" />
             <VscVscode className="text-3xl" />
           </div>
