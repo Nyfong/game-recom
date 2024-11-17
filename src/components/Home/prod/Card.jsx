@@ -15,7 +15,7 @@ let ProdCard = async ({ slice }) => {
               key={index}
               className="relative flex flex-col justify-between block rounded-tr-3xl border border-gray-100"
             >
-              <span className="absolute -right-px -top-px rounded-bl-3xl rounded-tr-3xl bg-rose-600 px-6 py-4 font-medium uppercase tracking-widest text-white">
+              <span className="absolute -right-px -top-px rounded-bl-3xl text-xs md:text-md rounded-tr-3xl bg-rose-600 px-6 py-4 font-medium uppercase tracking-widest text-white">
                 Free Game
               </span>
 
@@ -26,19 +26,21 @@ let ProdCard = async ({ slice }) => {
                   className="h-32 md:h-80 w-full rounded-tr-3xl object-cover"
                 />
               </div>
-              <div className="p-4 text-center  ">
+              <div className="flex flex-col justify-between h-[260px] p-4 text-center ">
+                {/* ttitle */}
                 <div>
-                  <strong className=" text-sm md:text-xl font-medium text-gray-900">
+                  <strong className=" text-sm md:text-xl font-bold font-medium text-gray-900">
                     {" "}
                     {c.title}{" "}
                   </strong>
                 </div>
-
+                {/* description */}
                 <div>
-                  <p className="mt-2 text-pretty text-gray-700">
+                  <p className="mt-2 line-clamp-3 text-pretty text-gray-700">
                     {c.short_description}
                   </p>
                 </div>
+                {/* btn */}
                 <div>
                   <Link href={`/content/detailgame/`}>
                     {/* href={`/content/detailgame/${index + 1}`} */}

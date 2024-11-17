@@ -3,6 +3,12 @@ import { useState } from "react";
 import Link from "next/link";
 import logo from "@/assets/icon/fav.png";
 import Image from "next/image";
+import { FaUserCircle } from "react-icons/fa";
+import { LiaGamepadSolid } from "react-icons/lia";
+import { AiFillGift } from "react-icons/ai";
+import { IoGlasses } from "react-icons/io5";
+import { BiAtom } from "react-icons/bi";
+
 const Navbar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -27,43 +33,49 @@ const Navbar = () => {
                 <ul className="flex items-center gap-6 text-sm">
                   <li>
                     <Link
-                      className="text-white transition hover:text-white/75"
+                      className="text-white flex items-center gap-2 transition hover:text-white/75"
                       href="/content/game"
                     >
-                      Games
+                      <LiaGamepadSolid />
+
+                      <span>Games</span>
                     </Link>
                   </li>
                   <li>
                     <Link
-                      className="text-white transition hover:text-white/75"
+                      className="text-white flex items-center gap-2 transition hover:text-white/75"
                       href="/content/commu"
                     >
-                      Community
+                      <AiFillGift />
+                      <span> Community</span>
                     </Link>
                   </li>
                   <li>
                     <Link
-                      className="text-white transition hover:text-white/75"
+                      className="text-white flex items-center gap-2 transition hover:text-white/75"
                       href="/content/aboutus"
                     >
-                      About Us
+                      <IoGlasses />
+                      <span> About Us</span>
                     </Link>
                   </li>
 
                   <li>
                     <Link
-                      className="text-white transition hover:text-white/75"
+                      className="text-white flex items-center gap-2 transition hover:text-white/75"
                       href="/content/blog"
                     >
-                      Blog
+                      <BiAtom />
+                      <span> Blog</span>
                     </Link>
                   </li>
                   <li>
                     <Link
-                      className="text-white transition hover:text-white/75"
+                      className="text-white flex items-center gap-2 transition hover:text-white/75"
                       href="/account"
                     >
-                      Profile Test
+                      <FaUserCircle />
+                      <span>Profile Test</span>
                     </Link>
                   </li>
                 </ul>
@@ -137,18 +149,40 @@ const Navbar = () => {
                 />
               </svg>
             </button>
-            <Link href="/content/game" onClick={toggleDrawer}>
-              Games
+            <Link
+              className="text-white flex items-center gap-2 transition hover:text-white/75"
+              href="/content/game"
+            >
+              <LiaGamepadSolid />
+              <span>Games</span>
             </Link>
-            <Link href="/content/commu" onClick={toggleDrawer}>
-              Community
+            <Link
+              className="text-white flex items-center gap-2 transition hover:text-white/75"
+              href="/content/commu"
+            >
+              <AiFillGift />
+              <span> Community</span>
             </Link>
-            <Link href="/content/aboutus" onClick={toggleDrawer}>
-              About Us
+            <Link
+              className="text-white flex items-center gap-2 transition hover:text-white/75"
+              href="/content/aboutus"
+            >
+              <IoGlasses />
+              <span> About Us</span>
             </Link>
-
-            <Link href="/content/blog" onClick={toggleDrawer}>
-              Blog
+            <Link
+              className="text-white flex items-center gap-2 transition hover:text-white/75"
+              href="/content/blog"
+            >
+              <BiAtom />
+              <span> Blog</span>
+            </Link>
+            <Link
+              className="text-white flex items-center gap-2 transition hover:text-white/75"
+              href="/account"
+            >
+              <FaUserCircle />
+              <span>Profile Test</span>
             </Link>
             <Link
               className="font-sans flex justify-center gap-2 items-center mx-auto shadow-xl text-lg text-gray-50 bg-[#0A0D2D] backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-[#FFFFFF] hover:text-black before:-z-10 before:aspect-square before:hover:scale-200 before:hover:duration-500 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group"
