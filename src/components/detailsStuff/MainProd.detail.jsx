@@ -7,7 +7,7 @@ let MainProdDetail = async ({ detialsPropId }) => {
   console.log(detialsPropId);
   console.log(fetchData);
   const detailData = fetchData[detialsPropId];
-  console.log("first", detailData.title);
+
   return (
     <>
       <section>

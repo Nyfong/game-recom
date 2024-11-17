@@ -61,7 +61,7 @@ const Navbar = () => {
                   <li>
                     <Link
                       className="text-white transition hover:text-white/75"
-                      href=""
+                      href="/account"
                     >
                       Profile Test
                     </Link>
