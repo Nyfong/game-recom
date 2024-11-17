@@ -21,7 +21,6 @@ let CommunityPage = () => {
             </div>
           </div>
           {/* Sticky Card */}
-
           <div className="md:w-1/3 flex items-center flex-col gap-2 md:sticky md:top-[170px] h-max 	">
             {/* children */}
 
