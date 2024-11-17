@@ -4,13 +4,15 @@ import FElogo from "@/assets/logoITE.png";
 import logo from "@/assets/icon/favBlue.png";
 import SideBarProfile from "@/components/profileStuff/sideBar";
 import Nyfong from "@/assets/fong.png";
+import CardPayCoffee from "@/components/paycoffeeStuff/Card.pay";
 let AccountPage = () => {
   const loopDiv = [1, 2, 2, 2];
   return (
     <>
       <div className="flex flex-col md:flex-row gap-2 h-full ">
         <SideBarProfile />
-        <div className="w-full md:w-4/6 lg:w-5/6 bg-pink-100  h-[4000px]">
+
+        <div className="w-full md:w-4/6 lg:w-5/6 bg-stone-50  h-[4000px] p-5 md:p-3 lg:p-0  ">
           {/*vertical container */}
           <div className=" flex flex-col mt-10 p-4 gap-10">
             <div className=" w-full	 flex flex-col gap-5 items-center  pt-10">
@@ -45,7 +47,17 @@ let AccountPage = () => {
                       Short description about me
                     </p>
                     <p className="text-center text-gray-600 text-base pt-3 font-normal">
-                      dddd
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Vero sit laborum odit quod tempore labore repudiandae a
+                      quos nisi nulla veritatis id dolore officiis eius delectus
+                      tempora nemo temporibus consequatur error, eaque doloribus
+                      non officia at molestias. Accusamus eos voluptas sed
+                      cumque facilis dicta, saepe voluptatem natus non omnis,
+                      nesciunt, perspiciatis exercitationem. Cum excepturi
+                      voluptatum eos laudantium vel itaque rerum quos dicta
+                      dolores, maxime deleniti fugiat praesentium ipsam minima
+                      veritatis quod! Animi aut consequatur dolore similique,
+                      voluptates at cumque qui.
                     </p>
                     <div className="w-full flex justify-center pt-5 pb-5">
                       <a href="#" className="mx-5">
@@ -116,6 +128,11 @@ let AccountPage = () => {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="flex flex-col gap-4">
+            <CardPayCoffee />
+            <CardPayCoffee />
+            <CardPayCoffee />
           </div>
         </div>
       </div>
