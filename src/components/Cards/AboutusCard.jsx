@@ -41,7 +41,7 @@ let AboutUsCard = () => {
           </>
         ))}
       </div>
-      <div className="flex justify-center items-center p-4 md:p-2 lg:p-0">
+      <div className="flex justify-center items-center p-5 md:p-2 lg:p-0">
         <Image
           src={logo}
           className="h-full w-full md:h-72 md:object-contain  object-cover"
