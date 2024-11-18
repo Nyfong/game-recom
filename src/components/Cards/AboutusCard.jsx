@@ -10,10 +10,10 @@ let AboutUsCard = () => {
   return (
     <>
       <div className="py-3">
-        <span className="font-bold  text-2xl">Developer</span>
+        <span className="font-bold  text-2xl">Developers</span>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-2 p-4">
         {pic.map((e, i) => (
           <>
             <div key={e}>

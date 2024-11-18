@@ -27,7 +27,7 @@ let PersonalAboutus = async ({ params }) => {
                 >
                   <summary className="flex cursor-pointer  items-center justify-between gap-1.5 w-full">
                     <h2 className="text-lg font-medium text-gray-900">
-                      Lorem ipsum dolor sit amet consectetur adipisicing?
+                      Learning Mindset?
                     </h2>
 
                     <span className="shrink-0 rounded-full bg-white p-1.5 text-gray-900 sm:p-3">
@@ -47,17 +47,16 @@ let PersonalAboutus = async ({ params }) => {
                   </summary>
 
                   <p className="mt-4 leading-relaxed text-gray-700">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab
-                    hic veritatis molestias culpa in, recusandae laboriosam
-                    neque aliquid libero nesciunt voluptate dicta quo officiis
-                    explicabo consequuntur distinctio corporis earum similique!
+                    Learning Mindset: Continuously exploring new tools,
+                    technologies, and best practices in software development to
+                    stay updated in the rapidly evolving tech industry.
                   </p>
                 </details>
 
                 <details className="group border-s-4 border-green-500 bg-gray-50 p-6 [&_summary::-webkit-details-marker]:hidden">
                   <summary className="flex cursor-pointer items-center justify-between gap-1.5">
                     <h2 className="text-lg font-medium text-gray-900">
-                      Lorem ipsum dolor sit amet consectetur adipisicing?
+                      Career Goals?
                     </h2>
 
                     <span className="shrink-0 rounded-full bg-white p-1.5 text-gray-900 sm:p-3">
@@ -77,10 +76,10 @@ let PersonalAboutus = async ({ params }) => {
                   </summary>
 
                   <p className="mt-4 leading-relaxed text-gray-700">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab
-                    hic veritatis molestias culpa in, recusandae laboriosam
-                    neque aliquid libero nesciunt voluptate dicta quo officiis
-                    explicabo consequuntur distinctio corporis earum similique!
+                    Career Goals: Aspires to join a dynamic team where they can
+                    contribute to meaningful projects while growing as a full
+                    stack developer capable of handling end-to-end development
+                    processes.!
                   </p>
                 </details>
               </div>

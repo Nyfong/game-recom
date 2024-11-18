@@ -6,13 +6,13 @@ import SideBarProfile from "@/components/profileStuff/sideBar";
 import Nyfong from "@/assets/fong.png";
 import CardPayCoffee from "@/components/paycoffeeStuff/Card.pay";
 let AccountPage = () => {
-  const loopDiv = [1, 2, 2, 2];
+  const loopDiv = [1, 2, 2, 2, 2, 1];
   return (
     <>
       <div className="flex flex-col md:flex-row gap-2 h-full ">
         <SideBarProfile />
 
-        <div className="w-full md:w-4/6 lg:w-5/6 bg-stone-50  h-[4000px] p-5 md:p-3 lg:p-0  ">
+        <div className="w-full md:w-4/6 lg:w-5/6 bg-stone-50  md:h-[4000px] p-5 md:p-3 lg:p-0  ">
           {/*vertical container */}
           <div className=" flex flex-col mt-10 p-4 gap-10">
             <div className=" w-full	 flex flex-col gap-5 items-center  pt-10">
@@ -129,10 +129,12 @@ let AccountPage = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-4">
-            <CardPayCoffee />
-            <CardPayCoffee />
-            <CardPayCoffee />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {loopDiv.map((el) => (
+              <>
+                <CardPayCoffee />
+              </>
+            ))}
           </div>
         </div>
       </div>

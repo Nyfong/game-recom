@@ -19,7 +19,7 @@ export const detailTeam = [
     image: Kaiseng,
 
     description:
-      " Lorem ipsum dolor, sit amet consectetur adipisicing elit.Lorem ipsum dolor, sit amet consectetur adipisicing elit.Lorem ipsum dolor, sit amet consectetur adipisicing elit.Lorem ipsum dolor, sit amet consectetur adipisicing elit.Lorem ipsum dolor, sit amet consectetur adipisicing elit.Lorem ipsum dolor, sit amet consectetur adipisicing elit.Lorem ipsum dolor, sit amet consectetur adipisicing elit. ",
+      "A third-year student in the Information Technology and Engineering (ITE) program at the Royal University of Phnom Penh (RUPP), highly motivated to become a proficient full stack developer. This student has built a solid foundation in programming, database management, and web development through coursework and personal projects. They are eager to master both front-end and back-end technologies, combining creativity and technical expertise to create efficient and user-friendly applications",
   },
   {
     name: "Ny Fong",
@@ -27,10 +27,10 @@ export const detailTeam = [
     university: "RUPP ",
     major: "ITE, 9th genaretion",
     position: "Web developer, Frontend, Backend, Databases",
-    logo: [nextjsLogo, figmaLogo, nodeJslogo, mongodb, pythonLogo, mysqlLogo],
+    logo: [nextjsLogo, figmaLogo, mongodb, pythonLogo, mysqlLogo],
     image: Nyfong,
     description:
-      " Lorem ipsum dolor, sit amet consectetur adipisicing elit.Lorem ipsum dolor, sit amet consectetur adipisicing elit.Lorem ipsum dolor, sit amet consectetur adipisicing elit.Lorem ipsum dolor, sit amet consectetur adipisicing elit.Lorem ipsum dolor, sit amet consectetur adipisicing elit.Lorem ipsum dolor, sit amet consectetur adipisicing elit.Lorem ipsum dolor, sit amet consectetur adipisicing elit. ",
+      "A third-year student in the Information Technology and Engineering (ITE) program at the Royal University of Phnom Penh (RUPP), highly motivated to become a proficient full stack developer. This student has built a solid foundation in programming, database management, and web development through coursework and personal projects. They are eager to master both front-end and back-end technologies, combining creativity and technical expertise to create efficient and user-friendly applications",
   },
   {
     name: "Penh Sokpheavy",
@@ -41,7 +41,7 @@ export const detailTeam = [
     logo: [nextjsLogo, figmaLogo, pythonLogo, mysqlLogo],
     image: Vy,
     description:
-      " Lorem ipsum dolor, sit amet consectetur adipisicing elit.Lorem ipsum dolor, sit amet consectetur adipisicing elit.Lorem ipsum dolor, sit amet consectetur adipisicing elit.Lorem ipsum dolor, sit amet consectetur adipisicing elit.Lorem ipsum dolor, sit amet consectetur adipisicing elit.Lorem ipsum dolor, sit amet consectetur adipisicing elit.Lorem ipsum dolor, sit amet consectetur adipisicing elit. ",
+      "A third-year student in the Information Technology and Engineering (ITE) program at the Royal University of Phnom Penh (RUPP), highly motivated to become a proficient full stack developer. This student has built a solid foundation in programming, database management, and web development through coursework and personal projects. They are eager to master both front-end and back-end technologies, combining creativity and technical expertise to create efficient and user-friendly applications",
   },
   {
     name: "Morn Karakot",
@@ -52,6 +52,6 @@ export const detailTeam = [
     logo: [nextjsLogo, figmaLogo, pythonLogo, mysqlLogo],
     image: Kot,
     description:
-      " Lorem ipsum dolor, sit amet consectetur adipisicing elit.Lorem ipsum dolor, sit amet consectetur adipisicing elit.Lorem ipsum dolor, sit amet consectetur adipisicing elit.Lorem ipsum dolor, sit amet consectetur adipisicing elit.Lorem ipsum dolor, sit amet consectetur adipisicing elit.Lorem ipsum dolor, sit amet consectetur adipisicing elit.Lorem ipsum dolor, sit amet consectetur adipisicing elit. ",
+      "A third-year student in the Information Technology and Engineering (ITE) program at the Royal University of Phnom Penh (RUPP), highly motivated to become a proficient full stack developer. This student has built a solid foundation in programming, database management, and web development through coursework and personal projects. They are eager to master both front-end and back-end technologies, combining creativity and technical expertise to create efficient and user-friendly applications",
   },
 ];
