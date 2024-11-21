@@ -4,6 +4,8 @@ import { CiShare1 } from "react-icons/ci";
 import { FaRegComment } from "react-icons/fa";
 
 import Link from "next/link";
+import CommentPopup from "@/components/poUp/Comment.popUp";
+import DialogShareButton from "@/components/button/Sharebtn.commu";
 let SocailCardCommu = () => {
   const dataLike = 90;
   const dataComment = 22;
@@ -13,7 +15,8 @@ let SocailCardCommu = () => {
       <section className="flex flex-col  gap-4 ">
         {arrTest.map((b, i) => {
           return (
-            <Link href={`/auth/login`} key={i}>
+            <Link href="#" key={i}>
+              {/* href={`/auth/login`} */}
               <div className="overflow-hidden rounded-lg shadow transition hover:shadow-lg grid  grid-cols-1  gap-2 p-2">
                 <div className=" flex gap-2 items-center p-2 ">
                   <img
@@ -60,11 +63,12 @@ let SocailCardCommu = () => {
 
                     <div className="flex gap-2 items-center p-2 ">
                       <span>{dataComment} comments</span>
-                      <FaRegComment />
+                      {/* <FaRegComment /> */}
+                      <CommentPopup />
                     </div>
                     <div className="flex gap-2 items-center p-2 ">
                       <span>shares</span>
-                      <CiShare1 />
+                      <DialogShareButton />
                     </div>
                   </div>
                 </div>

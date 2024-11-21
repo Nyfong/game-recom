@@ -4,6 +4,7 @@ import FElogo from "@/assets/logoITE.png";
 import logo from "@/assets/icon/favBlue.png";
 import Image from "next/image";
 import { detailTeam } from "@/lib/teamData";
+import SharingHeartAboutUs from "@/components/button/SharingHeart.aboutus";
 let PersonalAboutus = async ({ params }) => {
   const details = detailTeam;
   const { pageid } = await params; // fetching the params using async and await
@@ -153,6 +154,7 @@ let PersonalAboutus = async ({ params }) => {
                 </div>
                 <div className="px-6 mt-16">
                   <div className="flex flex-col my-4 md:flex-row gap-4 items-center justify-center">
+                    <SharingHeartAboutUs />
                     <p className="font-bold text-3xl text-center mb-1">
                       {update.name}
                     </p>

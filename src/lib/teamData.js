@@ -2,12 +2,12 @@ import Kaiseng from "@/assets/kaiseng.png";
 import Nyfong from "@/assets/fong.png";
 import Vy from "@/assets/yu.png";
 import Kot from "@/assets/kot.png";
-import mongodb from "@/assets/spacialist/mongoDb.png";
 import nextjsLogo from "@/assets/spacialist/nextjs.png";
 import nodeJslogo from "@/assets/spacialist/nodejs.png";
 import figmaLogo from "@/assets/spacialist/figma.png";
 import pythonLogo from "@/assets/spacialist/python.png";
 import mysqlLogo from "@/assets/spacialist/mysql.png";
+import mongodb from "@/assets/spacialist/mongoDb.png";
 export const detailTeam = [
   {
     name: "Phou Kukseng",

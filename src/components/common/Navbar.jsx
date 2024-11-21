@@ -37,7 +37,6 @@ const Navbar = () => {
                       href="/content/game"
                     >
                       <LiaGamepadSolid />
-
                       <span>Games</span>
                     </Link>
                   </li>

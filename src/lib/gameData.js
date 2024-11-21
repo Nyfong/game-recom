@@ -7,7 +7,7 @@ export const get = async () => {
   const url = "https://www.mmobomb.com/api1/games";
 
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { cache: "default" });
 
     // Check if the response is OK (status code 200-299)
     if (!response.ok) {
