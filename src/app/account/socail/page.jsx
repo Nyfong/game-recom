@@ -1,3 +1,7 @@
+import { RiUserFollowLine } from "react-icons/ri";
+import { FaRetweet } from "react-icons/fa6";
+import { SlUserFollowing } from "react-icons/sl";
+
 let SocailAcccount = () => {
   const testArr = [1, 2, 3, 4, 5, 6];
   return (
@@ -18,30 +22,48 @@ let SocailAcccount = () => {
             {/* description  */}
             <div className="flex flex-col items-center justify-center gap-2">
               {/* name following  */}
-              <div className="grid grid-cols-1  sm:grid-cols-3  w-full gap-4 font-bold">
+              <div className="grid grid-cols-1 mt-4  md:mt-0 sm:grid-cols-3  w-full gap-4 font-bold">
                 <p>m.megamind</p>
                 <p>Follwings</p>
-                <p>Massage</p>
+                <p className=" ">Massage</p>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3  w-full gap-4">
-                <p>1,386 posts</p>
-                <p>878K followers</p>
-                <p>52 following</p>
+              <div className="grid grid-cols-1 sm:grid-cols-3  w-full gap-4 text-xs md:text-sm">
+                <div className="flex items-center gap-1">
+                  <p>1,386 posts</p>
+                  <FaRetweet />
+                </div>
+
+                <div className="flex items-center gap-1">
+                  <p className="">878K followers</p>
+                  <RiUserFollowLine />
+                </div>
+                <div className="flex items-center gap-1">
+                  <p className="text-green-500"> 52 following</p>
+                  <SlUserFollowing />
+                </div>
               </div>
               {/* bio */}
-              <p className="mt-5">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Voluptate pariatur, sed voluptates porro aspernatur soluta esse
-                repellendus veritatis sunt fuga incidunt consectetur dolorum?
-                Temporibus qui voluptas, dignissimos ipsum recusandae ratione!
-                VДΓДИД Video creator Game/Movie Lover Introvert, Quality.
-                Telegram: 076 2777770 youtube.com/c/MMegamind
-              </p>
+
+              <div className=" w-full ">
+                <p className="mt-5 ">
+                  {" "}
+                  VДΓДИД Video creator Game/Movie Lover Introvert, Quality.
+                </p>
+                <p className="mt-5">
+                  Telegram: 076 2777770 youtube.com/c/MMegamind
+                </p>
+              </div>
             </div>
           </div>
         </section>
         {/* card section */}
         <section className="mt-10">
+          {/* category */}
+          <div className="flex items-center gap-5 py-4 text-xl">
+            <p className="underline text-blue-700">post</p>
+            <p>video</p>
+            <p>saved</p>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {testArr.map((el) => (
               <>

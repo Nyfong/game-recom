@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
         />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <body>
+      <body className="min-w-80	">
         <UnstickyNav />
         <Navbar />
         {children}
