@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { get } from "@/lib/gameData";
-let ProdCard = async ({ slice }) => {
+let ProdCard = async () => {
   const api = await get();
   console.log(api);
 
@@ -9,7 +9,7 @@ let ProdCard = async ({ slice }) => {
       {/* grid display product */}
       <section className="my-10">
         <div className="grid  grid-cols-2  md:grid-cols-3  lg:grid-cols-4 gap-2">
-          {api.slice(0, 52).map((c, index) => (
+          {api.map((c, index) => (
             <div
               key={index}
               className="relative flex flex-col justify-between block rounded-tr-3xl border border-gray-100"

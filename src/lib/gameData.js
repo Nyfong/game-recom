@@ -1,31 +1,50 @@
-// "use server"; // This is only necessary for server-side in some Next.js functions, can be omitted if not needed.
 export const get = async () => {
-  // const apiKey = "YOUR_API_KEY"; // Replace with your API key
-  // const url = "https://www.freetogame.com/api/games?platform=pc";
-  // const url = "https://api.vercel.app/blog";
-  // const url = "https://zelda.fanapis.com/api/games?limit=20";
-
-  const url = "http://localhost:3000/api/data/data.json";
-  // const url = "https://www.mmobomb.com/api1/games?platform=pc";
+  // Use a path relative to your project for local JSON
+  const url =
+    process.env.NODE_ENV === "production"
+      ? "file://./public/api/data/data.json"
+      : "http://localhost:3000/api/data/data.json";
 
   try {
-    const response = await fetch(url, { cache: "default" });
+    let data;
 
-    // Check if the response is OK (status code 200-299)
-    if (!response.ok) {
-      throw new Error(`Failed to fetch data. HTTP Status: ${response.status}`);
+    if (process.env.NODE_ENV === "production") {
+      // For production, read file directly
+      const fs = require("fs").promises;
+      const path = require("path");
+      const filePath = path.join(
+        process.cwd(),
+        "public",
+        "api",
+        "data",
+        "data.json"
+      );
+      const fileContents = await fs.readFile(filePath, "utf8");
+      data = JSON.parse(fileContents);
+    } else {
+      // For development, use fetch
+      const response = await fetch(url, { cache: "default" });
+
+      if (!response.ok) {
+        throw new Error(
+          `Failed to fetch data. HTTP Status: ${response.status}`
+        );
+      }
+
+      data = await response.json();
     }
 
-    // Parse the JSON response
-    const data = await response.json();
-    const limitedData = data.slice(0, 40);
+    // Validate data
+    if (!Array.isArray(data)) {
+      throw new Error("Data is not an array");
+    }
 
-    // Return the posts if everything is okay
-    return limitedData;
+    // Return limited data
+    return data.slice(0, 40);
   } catch (error) {
-    // Return an error message or handle it as needed
-    return {
-      error: "There was a problem fetching the data. Please try again later.",
-    };
+    console.error("Data fetching error:", error);
+
+    // Always return an array in error case to maintain consistent return type
+    return [];
   }
 };

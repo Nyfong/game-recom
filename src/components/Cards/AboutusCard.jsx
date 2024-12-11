@@ -16,7 +16,7 @@ let AboutUsCard = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-2 p-4">
         {pic.map((e, i) => (
           <>
-            <div key={e.id}>
+            <div key={i}>
               <Link href={`/content/aboutus/${i + 1}`}>
                 <div className="relative group cursor-pointer overflow-hidden duration-500  h-80 bg-zinc-800 text-gray-50 p-5 rounded-lg">
                   <div>
