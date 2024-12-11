@@ -4,7 +4,7 @@ export const get = async () => {
   // const url = "https://www.freetogame.com/api/games?platform=pc";
   // const url = "https://api.vercel.app/blog";
   // const url = "https://zelda.fanapis.com/api/games?limit=20";
-  const url = "https://www.mmobomb.com/api1/games";
+  const url = "http://localhost:3000/api/data/data.json";
 
   try {
     const response = await fetch(url, { cache: "default" });

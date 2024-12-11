@@ -2,11 +2,11 @@ import { FaDownload } from "react-icons/fa";
 import { PiCoffeeBold } from "react-icons/pi";
 import Link from "next/link";
 import { get } from "@/lib/gameData";
+import logo from "@/assets/icon/fav.png";
 let MainProdDetail = async ({ detialsPropId }) => {
   const fetchData = await get();
-  console.log(detialsPropId);
-  console.log(fetchData);
-  const detailData = fetchData[detialsPropId];
+  const detailData = fetchData[detialsPropId - 1];
+  // console.log(detailData.id);
 
   return (
     <>
@@ -35,7 +35,7 @@ let MainProdDetail = async ({ detialsPropId }) => {
               </div>
 
               <div className="absolute bottom-0 flex flex-col md:flex-row  gap-2 items-start justify-end p-6">
-                <Link href="#">
+                <Link href={detailData.game_url} target="_blank">
                   <div className="mt-3 inline-block bg-blue-800 rounded-lg px-5 py-3 text-xs font-medium uppercase tracking-wide text-white flex gap-2 hover:bg-blue-400">
                     <p>Download Now</p>
                     <FaDownload />
@@ -56,18 +56,24 @@ let MainProdDetail = async ({ detialsPropId }) => {
               <div className="flow-root rounded-lg border border-gray-100 py-3 shadow-sm">
                 <dl className="-my-3 divide-y divide-gray-100 text-sm">
                   <div className="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
-                    <dt className="font-medium text-gray-900">Title</dt>
-                    <dd className="text-gray-700 sm:col-span-2"></dd>
+                    <dt className="font-medium text-gray-900">Category</dt>
+                    <dd className="text-gray-700 sm:col-span-2">
+                      {detailData.genre}
+                    </dd>
                   </div>
 
                   <div className="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
                     <dt className="font-medium text-gray-900">Name</dt>
-                    <dd className="text-gray-700 sm:col-span-2">Minecraft</dd>
+                    <dd className="text-gray-700 sm:col-span-2">
+                      {detailData.title}
+                    </dd>
                   </div>
 
                   <div className="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
-                    <dt className="font-medium text-gray-900">Occupation</dt>
-                    <dd className="text-gray-700 sm:col-span-2">PC</dd>
+                    <dt className="font-medium text-gray-900">Plateform</dt>
+                    <dd className="text-gray-700 sm:col-span-2">
+                      {detailData.platform}
+                    </dd>
                   </div>
 
                   <div className="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">

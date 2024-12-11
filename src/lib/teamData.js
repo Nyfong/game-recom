@@ -38,7 +38,7 @@ export const detailTeam = [
     university: "RUPP ",
     major: "ITE, 9th genaretion",
     position: "Web developer, Frontend, Designer",
-    logo: [nextjsLogo, figmaLogo, pythonLogo, mysqlLogo],
+    logo: [figmaLogo, pythonLogo, mysqlLogo],
     image: Vy,
     description:
       "A third-year student in the Information Technology and Engineering (ITE) program at the Royal University of Phnom Penh (RUPP), highly motivated to become a proficient full stack developer. This student has built a solid foundation in programming, database management, and web development through coursework and personal projects. They are eager to master both front-end and back-end technologies, combining creativity and technical expertise to create efficient and user-friendly applications",
@@ -49,7 +49,7 @@ export const detailTeam = [
     university: "RUPP ",
     major: "ITE, 9th genaretion",
     position: "Web developer, Frontend, Designer",
-    logo: [nextjsLogo, figmaLogo, pythonLogo, mysqlLogo],
+    logo: [figmaLogo, pythonLogo, mysqlLogo],
     image: Kot,
     description:
       "A third-year student in the Information Technology and Engineering (ITE) program at the Royal University of Phnom Penh (RUPP), highly motivated to become a proficient full stack developer. This student has built a solid foundation in programming, database management, and web development through coursework and personal projects. They are eager to master both front-end and back-end technologies, combining creativity and technical expertise to create efficient and user-friendly applications",
