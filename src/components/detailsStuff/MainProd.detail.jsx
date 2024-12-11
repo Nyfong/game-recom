@@ -7,7 +7,9 @@ let MainProdDetail = async ({ detialsPropId }) => {
   const fetchData = await get();
   const detailData = fetchData[detialsPropId - 1];
   // console.log(detailData.id);
-
+  if (!detialsPropId) {
+    return <p>Game details not available</p>; // Fallback UI
+  }
   return (
     <>
       <section>

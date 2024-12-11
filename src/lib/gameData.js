@@ -5,8 +5,8 @@ export const get = async () => {
   // const url = "https://api.vercel.app/blog";
   // const url = "https://zelda.fanapis.com/api/games?limit=20";
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-  const url = `${baseUrl}/api/data/data.json`;
+  const url = "http://localhost:3000/api/data/data.json";
+  // const url = "https://www.mmobomb.com/api1/games?platform=pc";
 
   try {
     const response = await fetch(url, { cache: "default" });
@@ -18,9 +18,10 @@ export const get = async () => {
 
     // Parse the JSON response
     const data = await response.json();
+    const limitedData = data.slice(0, 40);
 
     // Return the posts if everything is okay
-    return data;
+    return limitedData;
   } catch (error) {
     // Return an error message or handle it as needed
     return {

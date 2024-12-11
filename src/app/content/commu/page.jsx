@@ -7,7 +7,7 @@ import SocailCardCommu from "@/components/commuStuff/Card/crudCard/SocailCard.co
 let CommunityPage = () => {
   return (
     <>
-      <HeroBannerCommu />
+      {/* <HeroBannerCommu /> */}
       <main className="p-5 md:p-3 lg:p-0  gap-5 md:gap-3 max-w-screen-xl min-w-screen-80 mx-auto my-10">
         <div className="flex flex-col md:flex-row gap-4 h-full ">
           {/* Main Scrollable Content */}
@@ -19,7 +19,6 @@ let CommunityPage = () => {
           {/* Sticky Card */}
           <div className="md:w-1/3 flex items-center flex-col gap-2 md:sticky md:top-[170px] h-max 	">
             {/* children */}
-
             {/* google ads block */}
             <div>
               <img

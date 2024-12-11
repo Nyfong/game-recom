@@ -6,7 +6,7 @@ export default async function DetailGameSpacific({ params }) {
   const { id } = await params;
 
   // Ensure idgame is converted to an integer
-  const pageIdInt = parseInt(id, 10);
+  const pageIdInt = parseInt(id);
 
   return (
     <main className="p-5 md:p-3 lg:p-0 gap-5 md:gap-3 max-w-screen-xl min-w-screen-80 mx-auto my-10">

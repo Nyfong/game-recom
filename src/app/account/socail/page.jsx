@@ -6,7 +6,7 @@ let SocailAcccount = () => {
   const testArr = [1, 2, 3, 4, 5, 6];
   return (
     <>
-      <main className="p-5 md:p-3 lg:p-0   gap-5 md:gap-3 max-w-screen-xl min-w-screen-80 mx-auto my-10">
+      <main className="p-5 md:p-3 lg:p-4   gap-5 md:gap-3 max-w-screen-xl min-w-screen-80 mx-auto my-10">
         {/* cover section */}
         <section className="">
           {/* cover section */}
