@@ -33,7 +33,7 @@ const Navbar = () => {
                 <ul className="flex items-center gap-6 text-sm">
                   <li>
                     <Link
-                      className="text-white flex items-center gap-2 transition hover:text-white/75"
+                      className="text-white flex items-center gap-2 transition hover:text-white/75  py-5"
                       href="/content/game"
                     >
                       <LiaGamepadSolid />
@@ -42,7 +42,7 @@ const Navbar = () => {
                   </li>
                   <li>
                     <Link
-                      className="text-white flex items-center gap-2 transition hover:text-white/75"
+                      className="text-white flex items-center gap-2 transition hover:text-white/75  py-5"
                       href="/content/commu"
                     >
                       <AiFillGift />
@@ -51,7 +51,7 @@ const Navbar = () => {
                   </li>
                   <li>
                     <Link
-                      className="text-white flex items-center gap-2 transition hover:text-white/75"
+                      className="text-white flex items-center gap-2 transition hover:text-white/75  py-5"
                       href="/content/aboutus"
                     >
                       <IoGlasses />
@@ -61,16 +61,16 @@ const Navbar = () => {
 
                   <li>
                     <Link
-                      className="text-white flex items-center gap-2 transition hover:text-white/75"
+                      className="text-white flex items-center gap-2 transition hover:text-white/75  py-5"
                       href="/content/blog"
                     >
                       <BiAtom />
                       <span> Blog</span>
                     </Link>
                   </li>
-                  <li>
+                  <li className="hidden">
                     <Link
-                      className="text-white flex items-center gap-2 transition hover:text-white/75"
+                      className="text-white flex items-center gap-2 transition hover:text-white/75  py-5"
                       href="/account"
                     >
                       <FaUserCircle />
@@ -149,35 +149,35 @@ const Navbar = () => {
               </svg>
             </button>
             <Link
-              className="text-white flex items-center gap-2 transition hover:text-white/75"
+              className="text-white flex items-center gap-2 transition hover:text-white/75  py-5"
               href="/content/game"
             >
               <LiaGamepadSolid />
               <span>Games</span>
             </Link>
             <Link
-              className="text-white flex items-center gap-2 transition hover:text-white/75"
+              className="text-white flex items-center gap-2 transition hover:text-white/75  py-5"
               href="/content/commu"
             >
               <AiFillGift />
               <span> Community</span>
             </Link>
             <Link
-              className="text-white flex items-center gap-2 transition hover:text-white/75"
+              className="text-white flex items-center gap-2 transition hover:text-white/75  py-5"
               href="/content/aboutus"
             >
               <IoGlasses />
               <span> About Us</span>
             </Link>
             <Link
-              className="text-white flex items-center gap-2 transition hover:text-white/75"
+              className="text-white flex items-center gap-2 transition hover:text-white/75  py-5"
               href="/content/blog"
             >
               <BiAtom />
               <span> Blog</span>
             </Link>
             <Link
-              className="text-white flex items-center gap-2 transition hover:text-white/75"
+              className="text-white flex items-center gap-2 transition hover:text-white/75  py-5 hidden"
               href="/account"
             >
               <FaUserCircle />

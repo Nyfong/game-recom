@@ -35,14 +35,14 @@ const CarouselComponent = () => {
   ];
 
   return (
-    <div className="grid grid-cols-1 p-5">
+    <div className="grid grid-cols-1 p-2 sm:p-5">
       <Slider {...settings}>
         {slides.map((slide) => (
           <div key={slide.id} className="slide ">
             <img
               src={slide.image}
               alt={slide.title}
-              className="w-full h-64 rounded-lg object-cover"
+              className="w-full h-64 md:h-80 rounded-lg object-cover"
             />
             {/* <h2 className="text-center mt-4">{slide.title}</h2> */}
           </div>

@@ -15,20 +15,22 @@ let SocailCardCommu = () => {
       <section className="flex flex-col  gap-4 ">
         {arrTest.map((b, i) => {
           return (
-            <Link href="#" key={i}>
-              {/* href={`/auth/login`} */}
+            <Link href="" key={i}>
               <div className="overflow-hidden rounded-lg shadow transition hover:shadow-lg grid  grid-cols-1  gap-2 p-2">
-                <div className=" flex gap-2 items-center p-2 ">
-                  <img
-                    src="https://media.licdn.com/dms/image/v2/C5603AQHDZgdQ5sRTaQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1566531738983?e=2147483647&v=beta&t=dSsMLxrTZTBhHTPwynhcvyU7fmnV-snEchMbnRT56Oc"
-                    className="w-16 h-16 rounded-full"
-                    alt=""
-                  />
-                  <div className="flex flex-col">
-                    <span>M.megamind</span>
-                    <time className="text-sm text-gray-300">02 Nov 2024</time>
+                <Link href="/account/socail">
+                  <div className=" flex gap-2 items-center p-2 ">
+                    <img
+                      src="https://media.licdn.com/dms/image/v2/C5603AQHDZgdQ5sRTaQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1566531738983?e=2147483647&v=beta&t=dSsMLxrTZTBhHTPwynhcvyU7fmnV-snEchMbnRT56Oc"
+                      className="w-16 h-16 rounded-full"
+                      alt=""
+                    />
+
+                    <div className="flex flex-col">
+                      <span>M.megamind</span>
+                      <time className="text-sm text-gray-300">02 Nov 2024</time>
+                    </div>
                   </div>
-                </div>
+                </Link>
                 <div>
                   <img
                     alt=""

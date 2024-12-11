@@ -1,10 +1,6 @@
 "use client";
-import { useState } from "react";
-import Image from "next/image";
-import Logo2 from "@/assets/icon/fav.png";
 import HeroBannerCommu from "@/components/commuStuff/Banner/HeroBanner";
-import BlogCard from "@/components/blogStuff/HomeBlog/BlogCard";
-import CardCategories from "@/components/commuStuff/Card/frontCard/CardCategories";
+
 import SocailCardCommu from "@/components/commuStuff/Card/crudCard/SocailCard.commi";
 
 // import Logo2 from "@/assets/fong.png";
