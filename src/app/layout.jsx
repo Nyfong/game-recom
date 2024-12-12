@@ -11,7 +11,6 @@ export default function RootLayout({ children }) {
       <body>
         <UnstickyNav />
         <Navbar />
-
         {children}
         <Footer />
       </body>
