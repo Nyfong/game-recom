@@ -4,6 +4,11 @@ import CarouselComponent from "@/components/Home/banner/Swiper";
 import ProdCard from "@/components/Home/prod/Card";
 import CategoryGrid from "@/components/Home/prod/CategoryGrid";
 import HomeSection from "@/components/Home/section/Section";
+// src/app/home/page.jsx
+export const metadata = {
+  title: "Home Page",
+  description: "This is the home page of my website.",
+};
 
 let Homepage = () => {
   return (
