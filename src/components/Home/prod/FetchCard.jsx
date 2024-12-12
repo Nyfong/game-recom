@@ -9,7 +9,7 @@ const ProdPage = async () => {
   return (
     <>
       <section className="my-10">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+        <div className=" gap-2">
           {api.slice(0.6).map((product, index) => (
             <ProdCard key={index} product={product} />
           ))}

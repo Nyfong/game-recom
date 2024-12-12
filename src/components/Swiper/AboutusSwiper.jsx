@@ -35,7 +35,7 @@ const AboutusSwiper = () => {
   ];
 
   return (
-    <div className="carousel-container p-4">
+    <div className="carousel-container p-4 ">
       <Slider {...settings}>
         {slides.map((slide) => (
           <div key={slide.id} className="slide">
