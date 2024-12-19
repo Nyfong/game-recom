@@ -14,16 +14,16 @@
   },
   {
     "id": 2,
-    "title": "Overwatch 2",
-    "thumbnail": "https://www.mmobomb.com/g/1136/thumbnail.jpg",
-    "short_description": "Big changes come to the Overwatch formula in this sequel...and so does PvE content, eventually.",
-    "game_url": "https://www.mmobomb.com/open/overwatch-2",
-    "genre": "Shooter",
+    "title": "Phantasy Star Online 2",
+    "thumbnail": "https://www.mmobomb.com/g/467/thumbnail.jpg",
+    "short_description": "Phantasy Star Online 2 is a free to play 3D MMORPG published by SEGA. Based on the original Dreamcast and Gamecube series, Phantasy Star Online 2 offers players the chance to visit detailed worlds and fight hundreds of interesting enemies.",
+    "game_url": "https://www.mmobomb.com/open/phantasy-star-online-2",
+    "genre": "MMORPG",
     "platform": "PC (Windows)",
-    "publisher": "Activision Blizzard King",
-    "developer": "Blizzard Entertainment",
-    "release_date": "2022-10-04",
-    "profile_url": "https://www.mmobomb.com/overwatch-2"
+    "publisher": "SEGA",
+    "developer": "SEGA",
+    "release_date": "2020-05-27",
+    "profile_url": "https://www.mmobomb.com/phantasy-star-online-2"
   },
   {
     "id": 3,
@@ -544,5 +544,18 @@
     "developer": "KingsIsle Entertainment",
     "release_date": "2008-09-02",
     "profile_url": "https://www.mmobomb.com/wizard101"
+  },
+  {
+    "id": 43,
+    "title": "Pocket Starships",
+    "thumbnail": "https://www.mmobomb.com/g/405/thumbnail.jpg",
+    "short_description": "Blast off into adventure in Pocket Starships, a free-to-play browser MMORPG with fast-paced starship-fighting action! Play with your friends or go it alone by taking quests from NPCs.",
+    "game_url": "https://www.mmobomb.com/open/pocket-starships",
+    "genre": "Strategy",
+    "platform": "Web Browser",
+    "publisher": "Spyr",
+    "developer": "Spyr",
+    "release_date": "0000-00-00",
+    "profile_url": "https://www.mmobomb.com/pocket-starships"
   }
 ]

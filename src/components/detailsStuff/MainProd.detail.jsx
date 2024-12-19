@@ -5,7 +5,9 @@ import { get } from "@/lib/gameData";
 import logo from "@/assets/icon/fav.png";
 let MainProdDetail = async ({ detialsPropId }) => {
   const fetchData = await get();
+  console.log("Fetch data detailprop:  ", fetchData[detialsPropId]);
   const detailData = fetchData[detialsPropId - 1];
+  console.log(detailData);
   // console.log(detailData.id);
   if (!detialsPropId) {
     return <p>Game details not available</p>; // Fallback UI

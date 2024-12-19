@@ -40,7 +40,7 @@ export const get = async () => {
     }
 
     // Return limited data
-    return data.slice(0, 40);
+    return data.slice(0, 50);
   } catch (error) {
     console.error("Data fetching error:", error);
 
