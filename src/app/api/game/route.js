@@ -37,11 +37,8 @@ export async function POST(request) {
     const fileData = fs.readFileSync(dataFilePath, "utf-8");
     const games = JSON.parse(fileData);
 
-    // Find the position to insert (id - 1)
-    const insertIndex = id - 1;
-
-    // Ensure the index is valid (should not be less than 0)
-    if (insertIndex < 0 || insertIndex > games.length) {
+    // Validate the provided ID
+    if (id <= 0 || id > games.length + 1) {
       return new Response(
         JSON.stringify({ error: "Invalid index to insert" }),
         { status: 400 }
@@ -49,10 +46,21 @@ export async function POST(request) {
     }
 
     // Insert the new game at the calculated index
+    const insertIndex = id - 1;
     games.splice(insertIndex, 0, body);
 
-    // Write updated games list to the file
-    fs.writeFileSync(dataFilePath, JSON.stringify(games, null, 2), "utf-8");
+    // Reassign sequential IDs to all items
+    const renumberedGames = games.map((game, index) => ({
+      ...game,
+      id: index + 1, // IDs start from 1
+    }));
+
+    // Write updated games list back to the file
+    fs.writeFileSync(
+      dataFilePath,
+      JSON.stringify(renumberedGames, null, 2),
+      "utf-8"
+    );
 
     return new Response(
       JSON.stringify({ message: "Game added successfully" }),
@@ -117,10 +125,16 @@ export async function DELETE(request) {
       });
     }
 
-    // Write updated list back to the file
+    // Reassign sequential IDs to the remaining items
+    const renumberedGames = updatedGames.map((game, index) => ({
+      ...game,
+      id: index + 1, // IDs start from 1
+    }));
+
+    // Write updated and renumbered list back to the file
     fs.writeFileSync(
       dataFilePath,
-      JSON.stringify(updatedGames, null, 2),
+      JSON.stringify(renumberedGames, null, 2),
       "utf-8"
     );
 
