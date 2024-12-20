@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-// Define the correct path to the data.json file
+// Define the correct path to the data.json file (use the public folder)
 const dataFilePath = path.join(
   process.cwd(),
   "public",
@@ -13,13 +13,11 @@ const dataFilePath = path.join(
 // Handle GET request to fetch and return data
 export async function GET() {
   try {
+    // Since Vercel cannot directly write to disk in production, ensure data is available
     const fileData = fs.readFileSync(dataFilePath, "utf-8");
     const games = JSON.parse(fileData);
 
-    // Pretty print the JSON data
-    const prettyJson = JSON.stringify(games, null, 2); // Indent with 2 spaces
-
-    return new Response(prettyJson, { status: 200 });
+    return new Response(JSON.stringify(games, null, 2), { status: 200 });
   } catch (error) {
     console.error(error);
     return new Response(JSON.stringify({ error: "Failed to read data" }), {
@@ -32,7 +30,7 @@ export async function GET() {
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { id } = body; // Assuming id is provided in the body
+    const { id } = body;
 
     const fileData = fs.readFileSync(dataFilePath, "utf-8");
     const games = JSON.parse(fileData);
@@ -55,7 +53,7 @@ export async function POST(request) {
       id: index + 1, // IDs start from 1
     }));
 
-    // Write updated games list back to the file
+    // Save updated data to the public folder
     fs.writeFileSync(
       dataFilePath,
       JSON.stringify(renumberedGames, null, 2),
@@ -131,7 +129,7 @@ export async function DELETE(request) {
       id: index + 1, // IDs start from 1
     }));
 
-    // Write updated and renumbered list back to the file
+    // Write updated list back to the file
     fs.writeFileSync(
       dataFilePath,
       JSON.stringify(renumberedGames, null, 2),
