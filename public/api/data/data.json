@@ -534,19 +534,6 @@
   },
   {
     "id": 42,
-    "title": "Wizard101",
-    "thumbnail": "https://www.mmobomb.com/g/297/thumbnail.jpg",
-    "short_description": "Wizard101 is a 3D Wizard MMORPG which is very much influence by Harry Porter. Here a player is considered as a student of Ravenwood School of Magic Arts, which belongs to a fictional town known as Wizard valley.",
-    "game_url": "https://www.mmobomb.com/open/wizard101",
-    "genre": "MMORPG",
-    "platform": "PC (Windows)",
-    "publisher": "KingsIsle Entertainment",
-    "developer": "KingsIsle Entertainment",
-    "release_date": "2008-09-02",
-    "profile_url": "https://www.mmobomb.com/wizard101"
-  },
-  {
-    "id": 43,
     "title": "Pocket Starships",
     "thumbnail": "https://www.mmobomb.com/g/405/thumbnail.jpg",
     "short_description": "Blast off into adventure in Pocket Starships, a free-to-play browser MMORPG with fast-paced starship-fighting action! Play with your friends or go it alone by taking quests from NPCs.",

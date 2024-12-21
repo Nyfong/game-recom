@@ -8,7 +8,13 @@ import { LiaGamepadSolid } from "react-icons/lia";
 import { AiFillGift } from "react-icons/ai";
 import { IoGlasses } from "react-icons/io5";
 import { BiAtom } from "react-icons/bi";
-
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 const Navbar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -83,11 +89,14 @@ const Navbar = () => {
 
             <div className="flex items-center gap-4">
               <div className="hidden sm:flex sm:gap-4">
-                <div
-                  className="font-sans flex justify-center gap-2 items-center mx-auto shadow-xl text-lg text-gray-50 bg-[#0A0D2D] backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-[#FFFFFF] hover:text-black before:-z-10 before:aspect-square before:hover:scale-200 before:hover:duration-500 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group"
-                  // href="/auth/login"
-                >
-                  signin
+                <div className="font-sans flex justify-center gap-2 items-center mx-auto shadow-xl text-lg text-gray-50 bg-[#0A0D2D] backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-[#FFFFFF] hover:text-black before:-z-10 before:aspect-square before:hover:scale-200 before:hover:duration-500 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group">
+                  {/* /auth/login */}
+                  <SignedOut>
+                    <SignInButton />
+                  </SignedOut>
+                  <SignedIn>
+                    <UserButton />
+                  </SignedIn>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 16 19"
@@ -187,7 +196,12 @@ const Navbar = () => {
               className="font-sans flex justify-center gap-2 items-center mx-auto shadow-xl text-lg text-gray-50 bg-[#0A0D2D] backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-[#FFFFFF] hover:text-black before:-z-10 before:aspect-square before:hover:scale-200 before:hover:duration-500 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group"
               href="/auth/login"
             >
-              Login
+              <SignedOut>
+                <SignInButton />
+              </SignedOut>
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 19"

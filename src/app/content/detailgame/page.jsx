@@ -5,6 +5,13 @@ import { DiGit } from "react-icons/di";
 import { VscVscode } from "react-icons/vsc";
 import Image from "next/image";
 let DetailGame = () => {
+  const { isSignedIn } = useUser();
+  const router = useRouter();
+
+  if (!isSignedIn) {
+    router.push("/auth/login");
+    return null; // Avoid rendering the page while redirecting
+  }
   return (
     <>
       <main className="p-5 md:p-3 lg:p-0  gap-5 md:gap-3 max-w-screen-xl min-w-screen-80 mx-auto my-10">
