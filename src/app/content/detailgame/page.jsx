@@ -7,7 +7,6 @@ import Image from "next/image";
 let DetailGame = () => {
   const { isSignedIn } = useUser();
   const router = useRouter();
-
   if (!isSignedIn) {
     router.push("/auth/login");
     return null; // Avoid rendering the page while redirecting

@@ -4,33 +4,37 @@ import { useState, useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
 import { get } from "@/lib/gameData"; // Make sure gameData doesn't depend on fs during SSR
 import Link from "next/link";
-let ProdCard = ({ data }) => {
-  const { user } = useUser(); // Only accessible on client-side
+let ProdCard = ({ data: selectedGenre }) => {
+  const { user } = useUser();
   const [api, setApi] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [showWelcome, setShowWelcome] = useState(true); // State to control welcome message visibility
+  const [showWelcome, setShowWelcome] = useState(true);
 
-  // Fetch game data on the client side
   useEffect(() => {
     const fetchData = async () => {
       const apiData = await get();
       setApi(apiData);
 
-      // Filter data based on the genre passed in the props
-      const filtered = apiData.filter((item) => item.genre === `${data}`);
-      setFilteredData(filtered);
+      // Only filter if a genre is selected
+      if (selectedGenre) {
+        const filtered = apiData.filter(
+          (item) => item.genre?.toLowerCase() === selectedGenre.toLowerCase()
+        );
+        setFilteredData(filtered);
+        console.log("Filtered data:", filtered);
+      } else {
+        setFilteredData([]); // Reset filtered data when no genre is selected
+      }
     };
 
     fetchData();
 
-    // Hide welcome message after 2 seconds
     const timeoutId = setTimeout(() => {
       setShowWelcome(false);
-    }, 2000); // 2000ms = 2 seconds
+    }, 2000);
 
-    // Cleanup timeout when the component unmounts
     return () => clearTimeout(timeoutId);
-  }, [data]); // Refetch data if 'data' changes
+  }, [selectedGenre]); // Only depend on selectedGenre
 
   if (!user) {
     return (
