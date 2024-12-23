@@ -1,52 +1,14 @@
-"use client"; // Add this at the top of the file
-
-import { useSession } from "next-auth/react"; // If using next-auth for user session
-import { useRouter } from "next/navigation"; // Import from next/navigation
-import MainProdDetail from "@/components/detailsStuff/MainProd.detail";
-import SuggestDetailScroll from "@/components/detailsStuff/Suggest.detail";
-import Link from "next/link";
-import { DiGit } from "react-icons/di";
-import { VscVscode } from "react-icons/vsc";
+import logo from "@/assets/icon/favBlue.png";
 import Image from "next/image";
-
-let DetailGame = () => {
-  const { data: session, status } = useSession(); // Using next-auth for session data
-  const router = useRouter();
-
-  // If the session is loading or unavailable, show a loading state or redirect
-  if (status === "loading") {
-    return <div>Loading...</div>; // Or a spinner if you prefer
-  }
-
-  if (!session) {
-    router.push("/auth/login");
-    return <div>Redirecting...</div>; // Optional: Show a message during redirection
-  }
-
+const DefualtPage = () => {
   return (
     <>
-      <main className="p-5 md:p-3 lg:p-0 gap-5 md:gap-3 max-w-screen-xl min-w-screen-80 mx-auto my-10">
-        {/* <MainProdDetail />
-        <SuggestDetailScroll /> */}
-        <div className=" h-auto md:h-[400px] justify-center flex flex-col md:flex-row gap-5 items-center justify-center p-5">
-          <div className=" flex  flex-col md:flex-row gap-4 items-center">
-            <p className="text-sm md:text-3xl">
-              hello we are on developing mode
-            </p>
-            <DiGit className="text-3xl" />
-            <VscVscode className="text-3xl" />
-          </div>
-          <div className="p-5 overflow-hidden rounded-xl">
-            <img
-              src="https://media.tenor.com/r0R0N3dI3kIAAAAM/dancing-cat-dance.gif"
-              alt=""
-              className="border-lg w-[200px] h-[300px] object-cover rounded-lg"
-            />
-          </div>
-        </div>
+      <main className="p-5 md:p-3 lg:p-0 gap-5 md:gap-3 flex flex-col gap-1 items-center justify-center h-[500px] max-w-screen-xl min-w-screen-80 mx-auto my-10">
+        <p>What are you doing?</p>
+        <Image src={logo} className="w-40 h-40 object-contain" alt="" />
       </main>
     </>
   );
 };
 
-export default DetailGame;
+export default DefualtPage;
