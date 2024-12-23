@@ -3,16 +3,29 @@ import { PiCoffeeBold } from "react-icons/pi";
 import Link from "next/link";
 import { get } from "@/lib/gameData";
 import logo from "@/assets/icon/fav.png";
+
 let MainProdDetail = async ({ detialsPropId }) => {
   // Fetch data from your API or source
-  const fetchData = await get();
+  let fetchData;
+  try {
+    fetchData = await get(); // Fetch data from your API or source
+    console.log("Fetched data:", fetchData); // Check what data is being returned
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return <p>Error fetching data</p>; // Error fallback
+  }
+
+  // Check if the fetched data is valid
+  if (!fetchData || !Array.isArray(fetchData)) {
+    return <p>No data found</p>;
+  }
 
   // Find the game by matching the 'id' with 'detialsPropId'
   const detailData = fetchData.find(
     (item) => item.id === parseInt(detialsPropId)
-  ); // Ensure detialsPropId is converted to an integer
+  );
 
-  console.log("Fetched data for ID", detialsPropId, detailData); // Check if the data is matched correctly
+  console.log("Fetched data for ID", detialsPropId, detailData); // Debug log to ensure correct matching
 
   // If no matching game is found, display a fallback message
   if (!detailData) {
@@ -22,7 +35,7 @@ let MainProdDetail = async ({ detialsPropId }) => {
   return (
     <>
       <section>
-        <div className="grid grid-cols-1 gap-4  md:grid-cols-2 md:gap-2">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-2">
           {/* main product image */}
           <div>
             <div className="group relative block">
