@@ -7,7 +7,3 @@ export function cn(...inputs) {
 export function flattenAttributes(data) {
   // Your implementation here
 }
-
-export function getStrapiURL() {
-  return process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:3000";
-}
