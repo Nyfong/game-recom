@@ -2,28 +2,26 @@ export const get = async () => {
   // Define the URL for local JSON based on the environment
   const url =
     process.env.NODE_ENV === "production"
-      ? "file://./public/api/data/data.json"
-      : "http://localhost:3000/api/data/data.json";
+      ? "/api/data/data.json" // Access via static path in production
+      : "http://localhost:3000/api/data/data.json"; // Development mode
 
   try {
     let data;
 
     if (process.env.NODE_ENV === "production") {
-      // For production, read the file directly
-      const fs = require("fs").promises;
-      const path = require("path");
-      const filePath = path.join(
-        process.cwd(),
-        "public",
-        "api",
-        "data",
-        "data.json"
-      );
-      const fileContents = await fs.readFile(filePath, "utf8");
-      data = JSON.parse(fileContents);
+      // In production, the file should be available via HTTP
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(
+          `Failed to fetch data. HTTP Status: ${response.status}`
+        );
+      }
+
+      data = await response.json();
     } else {
-      // For development, use fetch
-      const response = await fetch(url, { cache: "default" });
+      // In development, we fetch from localhost
+      const response = await fetch(url);
 
       if (!response.ok) {
         throw new Error(
@@ -43,8 +41,6 @@ export const get = async () => {
     }
   } catch (error) {
     console.error("Data fetching error:", error);
-
-    // Return an empty array in case of an error to maintain consistency
-    return [];
+    return []; // Return an empty array in case of an error
   }
 };
