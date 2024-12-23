@@ -1,5 +1,5 @@
 export const get = async () => {
-  // Use a path relative to your project for local JSON
+  // Define the URL for local JSON based on the environment
   const url =
     process.env.NODE_ENV === "production"
       ? "file://./public/api/data/data.json"
@@ -9,7 +9,7 @@ export const get = async () => {
     let data;
 
     if (process.env.NODE_ENV === "production") {
-      // For production, read file directly
+      // For production, read the file directly
       const fs = require("fs").promises;
       const path = require("path");
       const filePath = path.join(
@@ -34,17 +34,17 @@ export const get = async () => {
       data = await response.json();
     }
 
-    // Validate data
-    if (!Array.isArray(data)) {
-      throw new Error("Data is not an array");
+    // Ensure the data is an array and contains a 'game' property in the first object
+    if (Array.isArray(data) && data[0].game) {
+      // Return the 'game' array from the first object
+      return data[0].game.slice(0, 50);
+    } else {
+      throw new Error("'game' is not an array or missing in the data");
     }
-
-    // Return limited data
-    return data.slice(0, 50);
   } catch (error) {
     console.error("Data fetching error:", error);
 
-    // Always return an array in error case to maintain consistent return type
+    // Return an empty array in case of an error to maintain consistency
     return [];
   }
 };

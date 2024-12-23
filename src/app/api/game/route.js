@@ -13,11 +13,10 @@ const dataFilePath = path.join(
 // Handle GET request to fetch and return data
 export async function GET() {
   try {
-    // Since Vercel cannot directly write to disk in production, ensure data is available
     const fileData = fs.readFileSync(dataFilePath, "utf-8");
-    const games = JSON.parse(fileData);
+    const data = JSON.parse(fileData); // Now contains both games and users
 
-    return new Response(JSON.stringify(games, null, 2), { status: 200 });
+    return new Response(JSON.stringify(data, null, 2), { status: 200 });
   } catch (error) {
     console.error(error);
     return new Response(JSON.stringify({ error: "Failed to read data" }), {
@@ -30,13 +29,13 @@ export async function GET() {
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { id } = body;
+    const { id, gameData } = body; // Assuming 'gameData' contains the new game info
 
     const fileData = fs.readFileSync(dataFilePath, "utf-8");
-    const games = JSON.parse(fileData);
+    const data = JSON.parse(fileData);
 
-    // Validate the provided ID
-    if (id <= 0 || id > games.length + 1) {
+    // Validate the provided ID for games
+    if (id <= 0 || id > data.games.length + 1) {
       return new Response(
         JSON.stringify({ error: "Invalid index to insert" }),
         { status: 400 }
@@ -45,20 +44,17 @@ export async function POST(request) {
 
     // Insert the new game at the calculated index
     const insertIndex = id - 1;
-    games.splice(insertIndex, 0, body);
+    data.games.splice(insertIndex, 0, gameData);
 
-    // Reassign sequential IDs to all items
-    const renumberedGames = games.map((game, index) => ({
+    // Reassign sequential IDs to all games
+    const renumberedGames = data.games.map((game, index) => ({
       ...game,
       id: index + 1, // IDs start from 1
     }));
 
     // Save updated data to the public folder
-    fs.writeFileSync(
-      dataFilePath,
-      JSON.stringify(renumberedGames, null, 2),
-      "utf-8"
-    );
+    data.games = renumberedGames; // Update the games array in the data
+    fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2), "utf-8");
 
     return new Response(
       JSON.stringify({ message: "Game added successfully" }),
@@ -79,20 +75,20 @@ export async function PUT(request) {
     const { id, ...updatedData } = body;
 
     const fileData = fs.readFileSync(dataFilePath, "utf-8");
-    const games = JSON.parse(fileData);
+    const data = JSON.parse(fileData);
 
     // Find the game by ID and update it
-    const gameIndex = games.findIndex((game) => game.id === id);
+    const gameIndex = data.games.findIndex((game) => game.id === id);
     if (gameIndex === -1) {
       return new Response(JSON.stringify({ error: "Game not found" }), {
         status: 404,
       });
     }
 
-    games[gameIndex] = { ...games[gameIndex], ...updatedData };
+    data.games[gameIndex] = { ...data.games[gameIndex], ...updatedData };
 
     // Save updated games list to the file
-    fs.writeFileSync(dataFilePath, JSON.stringify(games, null, 2), "utf-8");
+    fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2), "utf-8");
 
     return new Response(
       JSON.stringify({ message: "Game updated successfully" }),
@@ -112,12 +108,12 @@ export async function DELETE(request) {
     const { id } = await request.json();
 
     const fileData = fs.readFileSync(dataFilePath, "utf-8");
-    const games = JSON.parse(fileData);
+    const data = JSON.parse(fileData);
 
     // Filter out the game to delete
-    const updatedGames = games.filter((game) => game.id !== id);
+    const updatedGames = data.games.filter((game) => game.id !== id);
 
-    if (updatedGames.length === games.length) {
+    if (updatedGames.length === data.games.length) {
       return new Response(JSON.stringify({ error: "Game not found" }), {
         status: 404,
       });
@@ -130,11 +126,8 @@ export async function DELETE(request) {
     }));
 
     // Write updated list back to the file
-    fs.writeFileSync(
-      dataFilePath,
-      JSON.stringify(renumberedGames, null, 2),
-      "utf-8"
-    );
+    data.games = renumberedGames; // Update the games array in the data
+    fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2), "utf-8");
 
     return new Response(
       JSON.stringify({ message: "Game deleted successfully" }),

@@ -20,6 +20,10 @@ import {
 
 const frameworks = [
   {
+    value: "",
+    label: "All game",
+  },
+  {
     value: "Shooter",
     label: "Shooter",
   },
@@ -28,23 +32,25 @@ const frameworks = [
     label: "MMORPG",
   },
   {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
+    value: "Action RPG",
+    label: "Action RPG",
   },
 ];
 
-function FilterBtn() {
+// Add onFilter prop
+function FilterBtn({ onFilter }) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
-  console.log(value);
+
+  // Create a handler that updates both local state and parent
+  const handleSelect = (currentValue) => {
+    const newValue = currentValue === value ? "" : currentValue;
+    setValue(newValue);
+    // Pass the selected value back to parent
+    onFilter?.(newValue);
+    setOpen(false);
+  };
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -70,12 +76,7 @@ function FilterBtn() {
                 <CommandItem
                   key={framework.value}
                   value={framework.value}
-                  onSelect={(currentValue) => {
-                    // Toggle value if selecting the same category again
-                    const newValue = currentValue === value ? "" : currentValue;
-                    setValue(newValue);
-                    setOpen(false);
-                  }}
+                  onSelect={handleSelect} // Use the new handler
                 >
                   <Check
                     className={cn(
@@ -93,4 +94,5 @@ function FilterBtn() {
     </Popover>
   );
 }
+
 export default FilterBtn;
