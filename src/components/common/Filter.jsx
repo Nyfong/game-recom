@@ -24,6 +24,10 @@ const frameworks = [
     label: "All game",
   },
   {
+    value: "Strategy",
+    label: "Strategy",
+  },
+  {
     value: "Shooter",
     label: "Shooter",
   },
@@ -34,6 +38,11 @@ const frameworks = [
   {
     value: "Action RPG",
     label: "Action RPG",
+  },
+
+  {
+    value: "ARPG",
+    label: "ARPG",
   },
 ];
 

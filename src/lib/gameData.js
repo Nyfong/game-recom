@@ -8,8 +8,11 @@ export const get = async () => {
   try {
     let data;
 
-    if (process.env.NODE_ENV === "production") {
-      // For production, read the file directly
+    // Only use fs on the server side (Next.js will execute this on the server during production build)
+    if (
+      typeof window === "undefined" &&
+      process.env.NODE_ENV === "production"
+    ) {
       const fs = require("fs").promises;
       const path = require("path");
       const filePath = path.join(
@@ -22,29 +25,23 @@ export const get = async () => {
       const fileContents = await fs.readFile(filePath, "utf8");
       data = JSON.parse(fileContents);
     } else {
-      // For development, use fetch
+      // For client-side (or development), use fetch
       const response = await fetch(url, { cache: "default" });
-
       if (!response.ok) {
         throw new Error(
           `Failed to fetch data. HTTP Status: ${response.status}`
         );
       }
-
       data = await response.json();
     }
 
-    // Ensure the data is an array and contains a 'game' property in the first object
     if (Array.isArray(data) && data[0].game) {
-      // Return the 'game' array from the first object
       return data[0].game.slice(0, 50);
     } else {
       throw new Error("'game' is not an array or missing in the data");
     }
   } catch (error) {
     console.error("Data fetching error:", error);
-
-    // Return an empty array in case of an error to maintain consistency
-    return [];
+    return []; // Return an empty array in case of an error
   }
 };
