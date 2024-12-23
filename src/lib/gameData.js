@@ -2,13 +2,13 @@ export const get = async () => {
   // Define the URL for local JSON based on the environment
   const url =
     process.env.NODE_ENV === "production"
-      ? "file://./public/api/data/data.json"
-      : "http://localhost:3000/api/data/data.json";
+      ? "/api/data/data.json" // Use the static path when in production
+      : "http://localhost:3000/api/data/data.json"; // Development mode
 
   try {
     let data;
 
-    // Only use fs on the server side (Next.js will execute this on the server during production build)
+    // If it's server-side in production, use fs to read the local file
     if (
       typeof window === "undefined" &&
       process.env.NODE_ENV === "production"
@@ -22,6 +22,8 @@ export const get = async () => {
         "data",
         "data.json"
       );
+
+      // Check if the file exists and read it
       const fileContents = await fs.readFile(filePath, "utf8");
       data = JSON.parse(fileContents);
     } else {
