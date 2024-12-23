@@ -1,8 +1,9 @@
 import { FaDownload } from "react-icons/fa";
 import { PiCoffeeBold } from "react-icons/pi";
 import Link from "next/link";
-import { get } from "@/lib/gameData";
-import logo from "@/assets/icon/fav.png";
+import { get } from "@/lib/gameData"; // Ensure this function returns data in the expected structure
+import logo from "@/assets/icon/fav.png"; // Make sure this logo is used somewhere in your component if necessary
+
 let MainProdDetail = async ({ detialsPropId }) => {
   // Fetch data from your API or source
   const fetchData = await get();
@@ -22,7 +23,7 @@ let MainProdDetail = async ({ detialsPropId }) => {
   return (
     <>
       <section>
-        <div className="grid grid-cols-1 gap-4  md:grid-cols-2 md:gap-2">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-2">
           {/* main product image */}
           <div>
             <div className="group relative block">
@@ -32,7 +33,7 @@ let MainProdDetail = async ({ detialsPropId }) => {
                     detailData.thumbnail ||
                     "https://www.minecraft.net/content/dam/games/minecraft/key-art/Vanilla-PMP_Collection-Carousel-0_Update-Aquatic_1280x768.jpg"
                   }
-                  alt=""
+                  alt={detailData.title || "Game Thumbnail"}
                   className="absolute inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
                 />
                 <img
@@ -40,7 +41,7 @@ let MainProdDetail = async ({ detialsPropId }) => {
                     detailData.thumbnail ||
                     "https://www.minecraft.net/content/dam/games/minecraft/key-art/Vanilla-PMP_Collection-Carousel-0_Update-Aquatic_1280x768.jpg"
                   }
-                  alt=""
+                  alt={detailData.title || "Game Thumbnail"}
                   className="absolute inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
                 />
               </div>
@@ -70,21 +71,21 @@ let MainProdDetail = async ({ detialsPropId }) => {
                   <div className="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
                     <dt className="font-medium text-gray-900">Category</dt>
                     <dd className="text-gray-700 sm:col-span-2">
-                      {detailData.genre}
+                      {detailData.genre || "N/A"}
                     </dd>
                   </div>
 
                   <div className="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
                     <dt className="font-medium text-gray-900">Name</dt>
                     <dd className="text-gray-700 sm:col-span-2">
-                      {detailData.title}
+                      {detailData.title || "Unnamed Game"}
                     </dd>
                   </div>
 
                   <div className="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
                     <dt className="font-medium text-gray-900">Platform</dt>
                     <dd className="text-gray-700 sm:col-span-2">
-                      {detailData.platform}
+                      {detailData.platform || "N/A"}
                     </dd>
                   </div>
 
