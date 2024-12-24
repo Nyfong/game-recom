@@ -39,7 +39,18 @@ const frameworks = [
     value: "Action RPG",
     label: "Action RPG",
   },
-
+  {
+    value: "Social",
+    label: "Social",
+  },
+  {
+    value: "MOBA",
+    label: "MOBA",
+  },
+  {
+    value: "Card Game",
+    label: "Card Game",
+  },
   {
     value: "ARPG",
     label: "ARPG",

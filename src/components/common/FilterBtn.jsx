@@ -19,7 +19,6 @@ let FilterSection = () => {
         <div className="flex items-center">
           <FilterButton onFilter={handleFilterData} />
         </div>
-        <SearchBar />
       </section>
       <ProdCard data={selectedGenre} />
     </>

@@ -78,6 +78,13 @@ let MainProdDetail = async ({ detialsPropId }) => {
                   </div>
 
                   <div className="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
+                    <dt className="font-medium text-gray-900">Developer</dt>
+                    <dd className="text-gray-700 sm:col-span-2">
+                      {detailData.developer}
+                    </dd>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
                     <dt className="font-medium text-gray-900">Platform</dt>
                     <dd className="text-gray-700 sm:col-span-2">
                       {detailData.platform}
@@ -94,6 +101,12 @@ let MainProdDetail = async ({ detialsPropId }) => {
                     <dd className="text-gray-700 sm:col-span-2">
                       {detailData.short_description ||
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit."}
+                    </dd>
+                  </div>
+                  <div className="grid grid-cols-1 gap-1 p-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
+                    <dt className="font-medium text-gray-900">Release date</dt>
+                    <dd className="text-gray-700 sm:col-span-2">
+                      {detailData.release_date}
                     </dd>
                   </div>
                 </dl>
