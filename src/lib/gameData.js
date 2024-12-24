@@ -1,46 +1,29 @@
+// "use server"; // This is only necessary for server-side in some Next.js functions, can be omitted if not needed.
 export const get = async () => {
-  // Define the URL for local JSON based on the environment
+  const apiKey = "YOUR_API_KEY"; // Replace with your API key
   const url =
-    process.env.NODE_ENV === "production"
-      ? "/api/data/data.json" // Access via static path in production
-      : "http://localhost:3000/api/data/data.json"; // Development mode
+    "https://api.allorigins.win/raw?url=https://backend-apigame.onrender.com/api/games";
 
   try {
-    let data;
+    const response = await fetch(url);
 
-    if (process.env.NODE_ENV === "production") {
-      // In production, the file should be available via HTTP
-      const response = await fetch(url);
-
-      if (!response.ok) {
-        throw new Error(
-          `Failed to fetch data. HTTP Status: ${response.status}`
-        );
-      }
-
-      data = await response.json();
-    } else {
-      // In development, we fetch from localhost
-      const response = await fetch(url);
-
-      if (!response.ok) {
-        throw new Error(
-          `Failed to fetch data. HTTP Status: ${response.status}`
-        );
-      }
-
-      data = await response.json();
+    // Check if the response is OK (status code 200-299)
+    if (!response.ok) {
+      throw new Error(`Failed to fetch data. HTTP Status: ${response.status}`);
     }
 
-    // Ensure the data is an array and contains a 'game' property in the first object
-    if (Array.isArray(data) && data[0].game) {
-      // Return the 'game' array from the first object
-      return data[0].game.slice(0, 50);
-    } else {
-      throw new Error("'game' is not an array or missing in the data");
-    }
+    // Parse the JSON response
+    const data = await response.json();
+
+    // Return the posts if everything is okay
+    return data;
   } catch (error) {
-    console.error("Data fetching error:", error);
-    return []; // Return an empty array in case of an error
+    // Log the error for debugging
+    console.error("Error fetching data:", error.message);
+
+    // Return an error message or handle it as needed
+    return {
+      error: "There was a problem fetching the data. Please try again later.",
+    };
   }
 };

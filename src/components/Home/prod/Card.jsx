@@ -15,6 +15,7 @@ let ProdCard = ({ data: selectedGenre }) => {
     const fetchData = async () => {
       const apiData = await get();
       setApi(apiData);
+      console.log(apiData);
 
       // Filter by genre if selectedGenre is present
       if (selectedGenre) {
@@ -72,7 +73,7 @@ let ProdCard = ({ data: selectedGenre }) => {
   return (
     <section className="my-10">
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-        {(filteredData.length > 0 ? filteredData : api).map((c) => {
+        {(filteredData.length > 0 ? filteredData : api).map((c, i) => {
           // Check if the game's ID exists in the list
           const gameIndex = (
             filteredData.length > 0 ? filteredData : api
@@ -80,11 +81,11 @@ let ProdCard = ({ data: selectedGenre }) => {
 
           // If the game exists, generate the correct URL for the link
           const linkUrl =
-            gameIndex !== -1 ? `/content/detailgame/${c.id}` : null;
+            gameIndex !== -1 ? `/content/detailgame/${c._id}` : null;
 
           return (
             <div
-              key={c.id}
+              key={i.id}
               className="relative flex flex-col justify-between block rounded-tr-3xl border border-gray-100"
             >
               <span className="absolute -right-px -top-px rounded-bl-3xl text-xs md:text-md rounded-tr-3xl bg-rose-600 px-6 py-4 font-medium uppercase tracking-widest text-white">
