@@ -1,11 +1,29 @@
 import { promises as fs } from "fs";
 import path from "path";
 
-// Define the correct path to the data.json file
-const dataFilePath = path.join(process.cwd(), "data", "data.json");
+// Determine the environment and set the file path
+const dataFilePath =
+  process.env.NODE_ENV === "production"
+    ? path.join("/tmp", "data.json") // Use writable temp directory for production
+    : path.join(process.cwd(), "data", "data.json");
+
+// Helper function to initialize the data file in production if it doesn't exist
+async function initializeDataFile() {
+  try {
+    await fs.access(dataFilePath);
+  } catch {
+    const initialData = { games: [] }; // Define the structure of your initial data
+    await fs.writeFile(
+      dataFilePath,
+      JSON.stringify(initialData, null, 2),
+      "utf-8"
+    );
+  }
+}
 
 async function readData() {
   try {
+    await initializeDataFile(); // Ensure file exists in production
     const fileData = await fs.readFile(dataFilePath, "utf-8");
     return JSON.parse(fileData);
   } catch (error) {
@@ -21,13 +39,11 @@ async function writeData(data) {
   }
 }
 
-// Handle GET request to fetch a game by its ID
 export async function GET(request) {
   try {
-    const { id } = request.params; // Retrieve ID from request params
+    const { id } = request.params;
     const data = await readData();
 
-    // Find the game by the id (it could be at any index, we match by id)
     const game = data.games.find((game) => game.id === parseInt(id));
 
     if (game) {
@@ -44,10 +60,9 @@ export async function GET(request) {
   }
 }
 
-// Handle POST request to add a new game
 export async function POST(request) {
   try {
-    const { id, gameData } = await request.json(); // Read the request body
+    const { id, gameData } = await request.json();
     if (!id || !gameData) {
       return new Response(
         JSON.stringify({ error: "Missing required fields" }),
@@ -57,7 +72,6 @@ export async function POST(request) {
 
     const data = await readData();
 
-    // Check if the game with the given ID already exists (to ensure you don't insert by index)
     const existingGameIndex = data.games.findIndex((game) => game.id === id);
 
     if (existingGameIndex !== -1) {
@@ -67,11 +81,9 @@ export async function POST(request) {
       );
     }
 
-    // Insert the new game at the specified position, based on the index you calculate
     const insertIndex = id - 1;
-    data.games.splice(insertIndex, 0, gameData); // Insert new game at the correct index
+    data.games.splice(insertIndex, 0, gameData);
 
-    // Renumber game IDs sequentially starting from 1
     data.games = data.games.map((game, index) => ({ ...game, id: index + 1 }));
     await writeData(data);
 
@@ -86,10 +98,9 @@ export async function POST(request) {
   }
 }
 
-// Handle PUT request to update a game
 export async function PUT(request) {
   try {
-    const { id, ...updatedData } = await request.json(); // Read the request body
+    const { id, ...updatedData } = await request.json();
     if (!id || !updatedData) {
       return new Response(
         JSON.stringify({ error: "Missing required fields" }),
@@ -99,7 +110,6 @@ export async function PUT(request) {
 
     const data = await readData();
 
-    // Find game by id
     const gameIndex = data.games.findIndex((game) => game.id === id);
 
     if (gameIndex === -1) {
@@ -108,7 +118,6 @@ export async function PUT(request) {
       });
     }
 
-    // Update the game data
     data.games[gameIndex] = { ...data.games[gameIndex], ...updatedData };
     await writeData(data);
 
@@ -123,10 +132,9 @@ export async function PUT(request) {
   }
 }
 
-// Handle DELETE request to remove a game
 export async function DELETE(request) {
   try {
-    const { id } = await request.json(); // Read the request body
+    const { id } = await request.json();
     if (!id) {
       return new Response(JSON.stringify({ error: "Missing game ID" }), {
         status: 400,
@@ -135,7 +143,6 @@ export async function DELETE(request) {
 
     const data = await readData();
 
-    // Find and remove the game by its id
     const gameIndex = data.games.findIndex((game) => game.id === id);
 
     if (gameIndex === -1) {
@@ -144,10 +151,8 @@ export async function DELETE(request) {
       });
     }
 
-    // Remove the game from the array
     data.games.splice(gameIndex, 1);
 
-    // Renumber the game IDs sequentially starting from 1
     data.games = data.games.map((game, index) => ({ ...game, id: index + 1 }));
     await writeData(data);
 
