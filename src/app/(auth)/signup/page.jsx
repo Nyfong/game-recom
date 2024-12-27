@@ -7,6 +7,7 @@ const Signup = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState(""); // Added name state
   const [error, setError] = useState("");
   const router = useRouter();
 
@@ -14,32 +15,42 @@ const Signup = () => {
     e.preventDefault();
 
     // Basic validation
-    if (!username || !email || !password) {
+    if (!username || !email || !password || !name) {
       setError("All fields are required.");
       return;
     }
 
-    const user = { username, email, password };
+    const user = { username, email, password, name }; // Added name to user object
 
-    // Store user data in localStorage
-    localStorage.setItem("user", JSON.stringify(user));
-
-    // Send user data to API to save in data.json
+    // Send user data to backend API for registration
     try {
-      const response = await fetch("/api/saveUser", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
-      });
+      const response = await fetch(
+        "https://backend-apigame.onrender.com/api/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        }
+      );
+
+      const result = await response.json();
 
       if (response.ok) {
+        // Optionally store user data in localStorage after successful registration
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            username: result.username,
+            email: result.email,
+          })
+        );
+
         // Redirect to signin page
         router.push("/signin");
       } else {
-        const data = await response.json();
-        setError(data.error || "Failed to save user data.");
+        setError(result.error || "Failed to register user.");
       }
     } catch (err) {
       console.error("Error during API request:", err);
@@ -78,6 +89,17 @@ const Signup = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-md"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700">Name</label>{" "}
+            {/* New name field */}
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               className="w-full p-2 border border-gray-300 rounded-md"
               required
             />

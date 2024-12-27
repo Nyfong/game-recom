@@ -1,8 +1,7 @@
 // "use server"; // This is only necessary for server-side in some Next.js functions, can be omitted if not needed.
 export const get = async () => {
   const apiKey = "YOUR_API_KEY"; // Replace with your API key
-  const url =
-    "https://api.allorigins.win/raw?url=https://backend-apigame.onrender.com/api/games";
+  const url = "https://backend-apigame.onrender.com/api/games";
 
   try {
     const response = await fetch(url);

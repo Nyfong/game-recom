@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { FcGoogle } from "react-icons/fc";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
@@ -20,27 +21,43 @@ const Signin = () => {
     }
 
     try {
-      // Send a POST request to your API to check if the user exists
-      const response = await fetch("/api/checkuser", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      // Send a POST request to your backend login API
+      const response = await fetch(
+        "https://backend-apigame.onrender.com/api/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
       const result = await response.json();
+
+      console.log("Backend response:", result); // Log the response
 
       if (response.ok) {
         setError(""); // Clear any previous errors
 
-        // Store user data (email and username) in localStorage
-        localStorage.setItem(
-          "user",
-          JSON.stringify({ email, username: result.username })
-        );
+        // Check if the response contains a user and store relevant data in localStorage
+        const user = result.user; // Assuming 'user' is the main object returned in the response
+        if (user) {
+          const { username, email, profile } = user;
+          localStorage.setItem(
+            "user",
+            JSON.stringify({
+              email,
+              username,
+              profile: profile || {}, // Store profile information if available
+            })
+          );
 
-        router.push("/"); // Redirect to the home page or dashboard
+          console.log("Redirecting to home..."); // Debug log
+          router.push("/"); // Redirect to the home page or dashboard
+        } else {
+          setError("User not found. Please check your credentials.");
+        }
       } else {
         setError(result.error || "Invalid credentials. Please try again.");
       }
@@ -48,6 +65,11 @@ const Signin = () => {
       console.error("Error during signin:", err);
       setError("An unexpected error occurred. Please try again.");
     }
+  };
+
+  // Function to initiate Google OAuth with backend
+  const handleGoogleSignIn = () => {
+    window.location.href = "https://backend-apigame.onrender.com/auth/google";
   };
 
   return (
@@ -93,6 +115,19 @@ const Signin = () => {
             </p>
           </div>
         </form>
+
+        {/* Google Sign In Button */}
+        <div className="w-full flex justify-center mt-4">
+          <button
+            onClick={handleGoogleSignIn}
+            className="w-full p-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+          >
+            <span className="flex items-center justify-center gap-4">
+              Sign In with Google
+              <FcGoogle />
+            </span>
+          </button>
+        </div>
       </div>
     </div>
   );
