@@ -73,7 +73,10 @@ let ProdCard = ({ data: selectedGenre }) => {
   return (
     <section className="my-10">
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-        {(filteredData.length > 0 ? filteredData : api).map((c, i) => {
+        {(filteredData.length > 0 ? filteredData : api).map((c) => {
+          // Assuming `c.id` or `c._id` is a unique identifier for each game
+          const key = c.id || c._id; // Use a fallback in case id is not available
+
           // Check if the game's ID exists in the list
           const gameIndex = (
             filteredData.length > 0 ? filteredData : api
@@ -85,7 +88,7 @@ let ProdCard = ({ data: selectedGenre }) => {
 
           return (
             <div
-              key={i.id}
+              key={key} // Use `key={key}` here for unique key prop
               className="relative flex flex-col justify-between block rounded-tr-3xl border border-gray-100"
             >
               <span className="absolute -right-px -top-px rounded-bl-3xl text-xs md:text-md rounded-tr-3xl bg-rose-600 px-6 py-4 font-medium uppercase tracking-widest text-white">

@@ -1,28 +1,41 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Signup = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState(""); // Added name state
+  const [name, setName] = useState("");
   const [error, setError] = useState("");
+  const [isHydrated, setIsHydrated] = useState(false); // Ensure hydration
   const router = useRouter();
+
+  useEffect(() => {
+    setIsHydrated(true); // Marks the component as hydrated
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic validation
     if (!username || !email || !password || !name) {
       setError("All fields are required.");
       return;
     }
 
-    const user = { username, email, password, name }; // Added name to user object
+    const userData = {
+      username,
+      email,
+      password,
+      name,
+      role: "user",
+      profile: {
+        name,
+      },
+    };
 
-    // Send user data to backend API for registration
     try {
       const response = await fetch(
         "https://backend-apigame.onrender.com/api/register",
@@ -31,23 +44,21 @@ const Signup = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(user),
+          body: JSON.stringify(userData),
         }
       );
 
       const result = await response.json();
 
       if (response.ok) {
-        // Optionally store user data in localStorage after successful registration
         localStorage.setItem(
           "user",
           JSON.stringify({
             username: result.username,
             email: result.email,
+            role: "user",
           })
         );
-
-        // Redirect to signin page
         router.push("/signin");
       } else {
         setError(result.error || "Failed to register user.");
@@ -58,9 +69,14 @@ const Signup = () => {
     }
   };
 
+  if (!isHydrated) {
+    // Prevent mismatched SSR content
+    return null;
+  }
+
   return (
     <div className="h-screen w-full flex justify-center items-center">
-      <div className="w-[300px] sm:w-[390px] md:w-[500px] h-[400px] p-6 border border-gray-300 rounded-lg shadow-lg">
+      <div className="w-[300px] sm:w-[390px] md:w-[500px] h-[450px] p-6 border border-gray-300 rounded-lg shadow-lg">
         <h2 className="text-2xl font-bold text-center mb-6">Signup</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -94,8 +110,7 @@ const Signup = () => {
             />
           </div>
           <div>
-            <label className="block text-gray-700">Name</label>{" "}
-            {/* New name field */}
+            <label className="block text-gray-700">Name</label>
             <input
               type="text"
               value={name}
@@ -112,6 +127,11 @@ const Signup = () => {
             >
               Signup
             </button>
+          </div>
+          <div className="text-center mt-4">
+            <Link href="/signin" className="text-blue-500 hover:underline">
+              Already have an account? Sign In
+            </Link>
           </div>
         </form>
       </div>

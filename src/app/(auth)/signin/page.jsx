@@ -9,73 +9,74 @@ const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic validation
-    if (!email || !password) {
-      setError("Please enter both email and password.");
-      return;
-    }
-
     try {
-      // Send a POST request to your backend login API
-      const response = await fetch(
-        "https://backend-apigame.onrender.com/api/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        }
-      );
+      const response = await fetch("https://backend-apigame.onrender.com/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
       const result = await response.json();
 
-      console.log("Backend response:", result); // Log the response
-
       if (response.ok) {
-        setError(""); // Clear any previous errors
+        const userData = {
+          email: result.user.email,
+          username: result.user.username,
+          role: result.user.role,
+          token: result.token
+        };
 
-        // Check if the response contains a user and store relevant data in localStorage
-        const user = result.user; // Assuming 'user' is the main object returned in the response
-        if (user) {
-          const { username, email, profile } = user;
-          localStorage.setItem(
-            "user",
-            JSON.stringify({
-              email,
-              username,
-              profile: profile || {}, // Store profile information if available
-            })
-          );
-
-          console.log("Redirecting to home..."); // Debug log
-          router.push("/"); // Redirect to the home page or dashboard
+        if (result.user.role === 'admin') {
+          if (!isAdmin) {
+            setError("Please use admin login for admin accounts");
+            return;
+          }
+          localStorage.setItem('admin', JSON.stringify(userData));
+          router.push("../../dashboard/layout.jsx");
         } else {
-          setError("User not found. Please check your credentials.");
+          if (isAdmin) {
+            router.push("/dashboard");
+            return;
+          }
+          localStorage.setItem('user', JSON.stringify(userData));
+          router.push("/");
         }
       } else {
-        setError(result.error || "Invalid credentials. Please try again.");
+        setError(result.error || "Invalid credentials");
       }
     } catch (err) {
-      console.error("Error during signin:", err);
-      setError("An unexpected error occurred. Please try again.");
+      console.error("Error:", err);
+      setError("An unexpected error occurred");
     }
-  };
-
-  // Function to initiate Google OAuth with backend
-  const handleGoogleSignIn = () => {
-    window.location.href = "https://backend-apigame.onrender.com/auth/google";
   };
 
   return (
     <div className="h-screen w-full flex justify-center items-center">
-      <div className="w-[300px] sm:w-[390px] md:w-[500px] h-[400px] p-6 border border-gray-300 block rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold text-center mb-6">Signin</h2>
+      <div className="w-[300px] sm:w-[390px] md:w-[500px] h-[450px] p-6 border border-gray-300 rounded-lg shadow-lg">
+        <h2 className="text-2xl font-bold text-center mb-6">
+          {isAdmin ? "Admin Login" : "Sign In"}
+        </h2>
+
+        <div className="mb-4">
+          <label className="inline-flex items-center">
+            <input
+              type="checkbox"
+              checked={isAdmin}
+              onChange={(e) => setIsAdmin(e.target.checked)}
+              className="form-checkbox h-4 w-4 text-blue-600"
+            />
+            <span className="ml-2">Login as Admin</span>
+          </label>
+        </div>
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-gray-700">Email</label>
@@ -98,36 +99,34 @@ const Signin = () => {
             />
           </div>
           {error && <p className="text-red-500 text-sm">{error}</p>}
-          <div>
-            <button
-              type="submit"
-              className="w-full p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-            >
-              Signin
-            </button>
-          </div>
-          <div className="w-full flex justify-center mt-2">
-            <p className="text-gray-500">
-              Don't have an account?{" "}
-              <Link href="/signup" className="text-blue-500 hover:underline">
-                Signup
-              </Link>
-            </p>
-          </div>
-        </form>
-
-        {/* Google Sign In Button */}
-        <div className="w-full flex justify-center mt-4">
           <button
-            onClick={handleGoogleSignIn}
-            className="w-full p-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+            type="submit"
+            className="w-full p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
           >
-            <span className="flex items-center justify-center gap-4">
-              Sign In with Google
-              <FcGoogle />
-            </span>
+            {isAdmin ? "Admin Login" : "Sign In"}
           </button>
-        </div>
+
+          {!isAdmin && (
+            <>
+              <div className="text-center">
+                <Link href="/signup" className="text-blue-500 hover:underline">
+                  Don't have an account? Sign Up
+                </Link>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => window.location.href = "https://backend-apigame.onrender.com/auth/google"}
+                className="w-full p-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+              >
+                <span className="flex items-center justify-center gap-4">
+                  Sign In with Google
+                  <FcGoogle />
+                </span>
+              </button>
+            </>
+          )}
+        </form>
       </div>
     </div>
   );

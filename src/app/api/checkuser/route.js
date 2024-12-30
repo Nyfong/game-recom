@@ -25,13 +25,25 @@ export async function POST(req) {
     );
 
     if (user) {
-      return new Response(
-        JSON.stringify({
-          success: true,
-          username: user.username, // Include the username in the response
-        }),
-        { status: 200 }
-      );
+      // Check if the user is an admin
+      if (user.role === "admin") {
+        return new Response(
+          JSON.stringify({
+            success: true,
+            username: user.username, // Include the username in the response
+            redirectTo: "/dashboard", // Add redirect path for admin
+          }),
+          { status: 200 }
+        );
+      } else {
+        return new Response(
+          JSON.stringify({
+            success: true,
+            username: user.username, // Include the username for non-admin user
+          }),
+          { status: 200 }
+        );
+      }
     } else {
       return new Response(
         JSON.stringify({ error: "Invalid credentials. Please try again." }),
