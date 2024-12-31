@@ -14,11 +14,11 @@ const GameCRUDDashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [imageFile, setImageFile] = useState(null);
-
+  
   // Fetch games from the API
   const fetchGames = async () => {
     try {
-      const response = await fetch("/api/games");
+      const response = await fetch("https://backend-apigame.onrender.com/api/games");
       if (!response.ok) throw new Error("Failed to fetch games");
       const data = await response.json();
       setGames(data);
@@ -28,7 +28,7 @@ const GameCRUDDashboard = () => {
       setIsLoading(false);
     }
   };
-
+console.log(games)
   useEffect(() => {
     fetchGames();
   }, []);
@@ -236,10 +236,11 @@ const GameCRUDDashboard = () => {
               <tr key={game._id} className="border-b hover:bg-gray-50">
                 <td className="p-3 flex items-center">
                   <Image
-                    src={game.image || PLACEHOLDER_IMAGE}
-                    alt={game.name}
+                    src={game.thumbnail || PLACEHOLDER_IMAGE}
+                    alt={game.title}
                     width={100}
                     height={100}
+                    property="lazyloading"
                     className="rounded-lg object-cover w-[100px] h-[100px] mr-10"
                   />
                   {game.name}
