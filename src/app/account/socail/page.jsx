@@ -1,6 +1,7 @@
 import { RiUserFollowLine } from "react-icons/ri";
 import { FaRetweet } from "react-icons/fa6";
 import { SlUserFollowing } from "react-icons/sl";
+import SocialCover from "@/components/profileStuff/socialCover";
 
 let SocailAcccount = () => {
   const testArr = [1, 2, 3, 4, 5, 6];
@@ -8,54 +9,7 @@ let SocailAcccount = () => {
     <>
       <main className="p-5 md:p-3 lg:p-4   gap-5 md:gap-3 max-w-screen-xl min-w-screen-80 mx-auto my-10">
         {/* cover section */}
-        <section className="">
-          {/* cover section */}
-          <div className="grid grid-cols-1 md:grid-cols-2 bg-slate-50	rounded-lg  p-10">
-            {/* imgage profile */}
-            <div className="flex items-center justify-center">
-              <img
-                src="https://media.licdn.com/dms/image/v2/C5603AQHDZgdQ5sRTaQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1566531738983?e=2147483647&v=beta&t=dSsMLxrTZTBhHTPwynhcvyU7fmnV-snEchMbnRT56Oc"
-                className="h-36 w-36 md:w-48 md:h-48 object-cover rounded-full"
-                alt=""
-              />
-            </div>
-            {/* description  */}
-            <div className="flex flex-col items-center justify-center gap-2">
-              {/* name following  */}
-              <div className="grid grid-cols-1 mt-4  md:mt-0 sm:grid-cols-3  w-full gap-4 font-bold">
-                <p>m.megamind</p>
-                <p>Follwings</p>
-                <p className=" ">Massage</p>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3  w-full gap-4 text-xs md:text-sm">
-                <div className="flex items-center gap-1">
-                  <p>1,386 posts</p>
-                  <FaRetweet />
-                </div>
-
-                <div className="flex items-center gap-1">
-                  <p className="">878K followers</p>
-                  <RiUserFollowLine />
-                </div>
-                <div className="flex items-center gap-1">
-                  <p className="text-green-500"> 52 following</p>
-                  <SlUserFollowing />
-                </div>
-              </div>
-              {/* bio */}
-
-              <div className=" w-full ">
-                <p className="mt-5 ">
-                  {" "}
-                  VДΓДИД Video creator Game/Movie Lover Introvert, Quality.
-                </p>
-                <p className="mt-5">
-                  Telegram: 076 2777770 youtube.com/c/MMegamind
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+        <SocialCover />
         {/* card section */}
         <section className="mt-10">
           {/* category */}
