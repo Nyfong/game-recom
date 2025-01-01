@@ -42,11 +42,6 @@ const menuItems = [
     title: "Analytics",
     list: [
       { title: "List Game", path: "/dashboard/listgame", icon: <MdWork /> },
-      {
-        title: "Download",
-        path: "/dashboard/download",
-        icon: <FaCartArrowDown />,
-      },
     ],
   },
   {
@@ -58,11 +53,6 @@ const menuItems = [
         icon: <MdOutlineSettings />,
       },
       { title: "Logout", path: "/", icon: <MdLogout /> },
-      {
-        title: "HelpCenter",
-        path: "/dashboard/helpcenter",
-        icon: <MdHelpCenter />,
-      },
       { title: "Team", path: "/dashboard/team", icon: <MdPeople /> },
     ],
   },

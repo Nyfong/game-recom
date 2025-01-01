@@ -1,90 +1,6 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import Image from "next/image";
-import PropTypes from "prop-types";
-import Noavatar from "/public/noavatar.png";
-
-// Reusable UserRow Component
-const UserRow = ({
-  _id,
-  name,
-  image,
-  title,
-  status,
-  role,
-  email,
-  onEdit,
-  onDelete,
-}) => (
-  <tr>
-    <td className="px-6 py-4 whitespace-nowrap">
-      <div className="flex items-center">
-        <div className="flex-shrink-0 h-10 w-10">
-          <Image
-            className="h-10 w-10 rounded-full"
-            src={image || Noavatar}
-            alt="User Profile"
-            width={40}
-            height={40}
-          />
-        </div>
-        <div className="ml-4">
-          <div className="text-sm font-medium text-gray-900">{name}</div>
-          <div className="text-sm text-gray-500">{email}</div>
-        </div>
-      </div>
-    </td>
-    <td className="px-6 py-4 whitespace-nowrap">
-      <div className="text-sm text-gray-900">{title}</div>
-      <div className="text-sm text-gray-500">Optimization</div>
-    </td>
-    <td className="px-6 py-4 whitespace-nowrap">
-      <span
-        className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-          status === "Active"
-            ? "bg-green-100 text-green-800"
-            : "bg-red-100 text-red-800"
-        }`}
-      >
-        {status}
-      </span>
-    </td>
-    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-      {role}
-    </td>
-    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-      {email}
-    </td>
-    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-      <button
-        onClick={() => onEdit(_id)}
-        className="text-indigo-600 hover:text-indigo-900 mr-2"
-      >
-        Edit
-      </button>
-      <button
-        onClick={() => onDelete(_id)}
-        className="text-red-600 hover:text-red-900"
-      >
-        Delete
-      </button>
-    </td>
-  </tr>
-);
-
-// PropTypes for UserRow
-UserRow.propTypes = {
-  _id: PropTypes.string,
-  name: PropTypes.string.isRequired,
-  image: PropTypes.string,
-  title: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
-  role: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  onEdit: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
-};
+import React, { useState, useEffect } from 'react';
 
 // Main Users Component
 const Users = () => {
@@ -96,7 +12,7 @@ const Users = () => {
   // Fetch Users
   const fetchUsers = async () => {
     try {
-      const response = await fetch("/api/users");
+      const response = await fetch("https://backend-apigame.onrender.com/api/users");
       if (!response.ok) {
         throw new Error("Failed to fetch users");
       }
@@ -112,8 +28,13 @@ const Users = () => {
   // Add/Update User
   const saveUser = async (userData) => {
     try {
-      const response = await fetch("/api/users", {
-        method: "POST",
+      const method = userData._id ? "PUT" : "POST"; // Determine if it is an update or add
+      const url = userData._id
+        ? `/api/users?id=${userData._id}` // Update user by ID
+        : "/api/users"; // Add new user
+
+      const response = await fetch(url, {
+        method: method,
         headers: {
           "Content-Type": "application/json",
         },
@@ -125,7 +46,7 @@ const Users = () => {
       }
 
       await fetchUsers(); // Refresh user list
-      setEditingUser(null);
+      setEditingUser(null); // Clear editing state
     } catch (err) {
       setError(err.message);
     }
@@ -174,7 +95,6 @@ const Users = () => {
     const handleSubmit = (e) => {
       e.preventDefault();
       onSave(formData);
-      
     };
 
     return (
@@ -263,21 +183,6 @@ const Users = () => {
         </div>
       </form>
     );
-  };
-
-  // PropTypes for UserEditForm
-  UserEditForm.propTypes = {
-    user: PropTypes.shape({
-      _id: PropTypes.string,
-      name: PropTypes.string,
-      email: PropTypes.string,
-      title: PropTypes.string,
-      status: PropTypes.string,
-      role: PropTypes.string,
-      image: PropTypes.string,
-    }),
-    onSave: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired,
   };
 
   if (isLoading) {

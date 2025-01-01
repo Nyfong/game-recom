@@ -13,19 +13,20 @@ import { BiAtom } from "react-icons/bi";
 const Navbar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(true); // Add a loading state
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user data exists in localStorage
-    const storedUser = JSON.parse(localStorage.getItem("user"));
+    // Check if there's a user in localStorage
+    const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      setUser(storedUser); // Set the user state
+      setUser(JSON.parse(storedUser)); // Parse and set user data if available
     }
-    setIsLoading(false); // Set loading to false once data is loaded
+    setIsLoading(false);
   }, []);
 
   const handleSignOut = () => {
-    // Remove user data from localStorage and update the state
+    // Remove token and user data from localStorage and reset user state
+    localStorage.removeItem("authToken");
     localStorage.removeItem("user");
     setUser(null);
   };
@@ -36,7 +37,7 @@ const Navbar = () => {
 
   // Show loading state until data is loaded
   if (isLoading) {
-    return null; // Or you can show a loading spinner or something else
+    return null; // Or show a loading spinner
   }
 
   return (
