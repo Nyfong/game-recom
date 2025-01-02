@@ -4,7 +4,9 @@ import React, { useState, useEffect } from "react";
 import { Trash2, Edit, PlusCircle } from "lucide-react";
 import Image from "next/image";
 
-const PLACEHOLDER_IMAGE = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==";
+const PLACEHOLDER_IMAGE =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==";
+const API_BASE_URL = "https://backend-apigame.onrender.com/api";
 
 const GameCRUDDashboard = () => {
   const [games, setGames] = useState([]);
@@ -14,38 +16,45 @@ const GameCRUDDashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [imageFile, setImageFile] = useState(null);
-  
-  // Fetch games from the API
+
   const fetchGames = async () => {
     try {
-      const response = await fetch("https://backend-apigame.onrender.com/api/games");
-      if (!response.ok) throw new Error("Failed to fetch games");
+      const response = await fetch(`${API_BASE_URL}/games`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(error || "Failed to fetch games");
+      }
       const data = await response.json();
       setGames(data);
       setIsLoading(false);
     } catch (err) {
+      console.error("Fetch error:", err);
       setError(err.message);
       setIsLoading(false);
     }
   };
-console.log(games)
+
   useEffect(() => {
     fetchGames();
   }, []);
 
-  const handleDelete = async (id) => {
-    try {
-      const response = await fetch(`/api/games/${id}`, {
-        method: "DELETE",
-      });
-      
-      if (!response.ok) throw new Error("Failed to delete game");
-      
-      await fetchGames(); // Refresh the list
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+  // const handleDelete = async (id) => {
+  //   try {
+  //     const response = await fetch(`${API_BASE_URL}/deletegame/${id}`, {
+  //       method: "DELETE",
+  //     });
+
+  //     if (!response.ok) throw new Error("Failed to delete game");
+  //     await fetchGames();
+  //   } catch (err) {
+  //     setError(err.message);
+  //   }
+  // };
 
   const handleEdit = (game) => {
     setSelectedGame({ ...game });
@@ -55,61 +64,97 @@ console.log(games)
 
   const handleAddNew = () => {
     setSelectedGame({
-      name: "",
-      category: "",
+      title: "",
+      genre: "",
       developer: "",
-      rating: "",
-      size: "",
-      releaseDate: "",
-      lastUpdate: "",
-      image: PLACEHOLDER_IMAGE,
+      publisher: "",
+      platform: "",
+      release_date: "",
+      game_url: "",
+      profile_url: "",
+      short_description: "",
+      thumbnail: PLACEHOLDER_IMAGE,
     });
     setImageFile(null);
     setIsAddMode(true);
     setIsModalOpen(true);
   };
-
   const handleSave = async () => {
     try {
-      const formData = new FormData();
-      
-      // Append all game data
-      Object.keys(selectedGame).forEach(key => {
-        if (key !== 'image' || !imageFile) { // Don't append image if we have a file
-          formData.append(key, selectedGame[key]);
-        }
-      });
-      
-      // Append image file if exists
-      if (imageFile) {
-        formData.append('image', imageFile);
+      // Basic validation
+      if (!selectedGame.title || !selectedGame.genre || !selectedGame.developer || 
+          !selectedGame.publisher || !selectedGame.platform || !selectedGame.release_date || 
+          !selectedGame.game_url || !selectedGame.profile_url || !selectedGame.short_description) {
+        throw new Error("All fields are required");
       }
-
-      const url = isAddMode ? '/api/games' : `/api/games/${selectedGame._id}`;
-      const method = isAddMode ? 'POST' : 'PUT';
-
-      const response = await fetch(url, {
-        method: method,
-        body: formData,
-      });
-
-      if (!response.ok) throw new Error(`Failed to ${isAddMode ? 'add' : 'update'} game`);
-
-      await fetchGames(); // Refresh the list
+  
+      // Create the game data object
+      const gameData = {
+        title: selectedGame.title,
+        genre: selectedGame.genre,
+        developer: selectedGame.developer,
+        publisher: selectedGame.publisher,
+        platform: selectedGame.platform,
+        release_date: selectedGame.release_date,
+        game_url: selectedGame.game_url,
+        profile_url: selectedGame.profile_url,
+        short_description: selectedGame.short_description,
+        thumbnail: selectedGame.thumbnail || PLACEHOLDER_IMAGE
+      };
+  
+      const response = await fetch(
+        isAddMode 
+          ? "https://backend-apigame.onrender.com/api/addgame"
+          : `https://backend-apigame.onrender.com/api/updategame/${selectedGame._id}`,
+        {
+          method: isAddMode ? "POST" : "PUT",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(gameData)
+        }
+      );
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || `Failed to ${isAddMode ? "add" : "update"} game`);
+      }
+  
+      await fetchGames();
       setIsModalOpen(false);
       setImageFile(null);
     } catch (err) {
       setError(err.message);
+      console.error("Save error:", err);
     }
   };
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/deletegame/${id}`, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
 
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(error || "Failed to delete game");
+      }
+      await fetchGames();
+    } catch (err) {
+      console.error("Delete error:", err);
+      setError(err.message);
+    }
+  };
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setImageFile(file);
       // Create preview URL
       const previewUrl = URL.createObjectURL(file);
-      setSelectedGame(prev => ({ ...prev, image: previewUrl }));
+      setSelectedGame((prev) => ({ ...prev, image: previewUrl }));
     }
   };
 
@@ -130,7 +175,7 @@ console.log(games)
               <div className="flex items-center space-x-4">
                 <div className="w-20 h-20 relative">
                   <Image
-                    src={selectedGame.image || PLACEHOLDER_IMAGE}
+                    src={selectedGame.thumbnail || PLACEHOLDER_IMAGE}
                     alt="Game Preview"
                     className="rounded-lg object-cover"
                     fill
@@ -146,38 +191,93 @@ console.log(games)
             </div>
             <input
               type="text"
-              placeholder="Game Name"
-              value={selectedGame.name}
-              onChange={(e) => setSelectedGame({ ...selectedGame, name: e.target.value })}
+              placeholder="Game Title *"
+              value={selectedGame.title}
+              onChange={(e) =>
+                setSelectedGame({ ...selectedGame, title: e.target.value })
+              }
               className="w-full p-2 border rounded"
             />
             <input
               type="text"
-              placeholder="Category"
-              value={selectedGame.category}
-              onChange={(e) => setSelectedGame({ ...selectedGame, category: e.target.value })}
+              placeholder="Genre *"
+              value={selectedGame.genre}
+              onChange={(e) =>
+                setSelectedGame({ ...selectedGame, genre: e.target.value })
+              }
               className="w-full p-2 border rounded"
             />
             <input
               type="text"
-              placeholder="Developer"
+              placeholder="Developer *"
               value={selectedGame.developer}
-              onChange={(e) => setSelectedGame({ ...selectedGame, developer: e.target.value })}
+              onChange={(e) =>
+                setSelectedGame({ ...selectedGame, developer: e.target.value })
+              }
               className="w-full p-2 border rounded"
             />
             <input
               type="text"
-              placeholder="Rating"
-              value={selectedGame.rating}
-              onChange={(e) => setSelectedGame({ ...selectedGame, rating: e.target.value })}
+              placeholder="Publisher *"
+              value={selectedGame.publisher}
+              onChange={(e) =>
+                setSelectedGame({ ...selectedGame, publisher: e.target.value })
+              }
               className="w-full p-2 border rounded"
             />
             <input
               type="text"
-              placeholder="Size"
-              value={selectedGame.size}
-              onChange={(e) => setSelectedGame({ ...selectedGame, size: e.target.value })}
+              placeholder="Platform *"
+              value={selectedGame.platform}
+              onChange={(e) =>
+                setSelectedGame({ ...selectedGame, platform: e.target.value })
+              }
               className="w-full p-2 border rounded"
+            />
+            <input
+              type="date"
+              placeholder="Release Date *"
+              value={selectedGame.release_date}
+              onChange={(e) =>
+                setSelectedGame({
+                  ...selectedGame,
+                  release_date: e.target.value,
+                })
+              }
+              className="w-full p-2 border rounded"
+            />
+            <input
+              type="text"
+              placeholder="Game URL *"
+              value={selectedGame.game_url}
+              onChange={(e) =>
+                setSelectedGame({ ...selectedGame, game_url: e.target.value })
+              }
+              className="w-full p-2 border rounded"
+            />
+            <input
+              type="text"
+              placeholder="Profile URL *"
+              value={selectedGame.profile_url}
+              onChange={(e) =>
+                setSelectedGame({
+                  ...selectedGame,
+                  profile_url: e.target.value,
+                })
+              }
+              className="w-full p-2 border rounded"
+            />
+            <textarea
+              placeholder="Short Description *"
+              value={selectedGame.short_description}
+              onChange={(e) =>
+                setSelectedGame({
+                  ...selectedGame,
+                  short_description: e.target.value,
+                })
+              }
+              className="w-full p-2 border rounded"
+              rows={3}
             />
             <div className="flex space-x-4">
               <button
@@ -207,68 +307,73 @@ console.log(games)
     return <div className="text-red-500 text-center py-4">{error}</div>;
   }
 
+  const renderGameTable = () => (
+    <table className="w-full text-sm text-left">
+      <thead className="bg-gray-100 text-gray-700">
+        <tr>
+          <th className="p-3">Game</th>
+          <th className="p-3">Genre</th>
+          <th className="p-3">Developer</th>
+          <th className="p-3">Publisher</th>
+          <th className="p-3">Platform</th>
+          <th className="p-3">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {games.map((game) => (
+          <tr key={game._id} className="border-b hover:bg-gray-50">
+            <td className="p-3 flex items-center">
+              <Image
+                src={game.thumbnail || PLACEHOLDER_IMAGE}
+                alt={game.title}
+                width={100}
+                height={100}
+                property="lazyloading"
+                className="rounded-lg object-cover w-[100px] h-[100px] mr-10"
+              />
+               <div className="ml-4">
+                <p className="font-bold">{game.title}</p>
+                {/* <p className="text-gray-500 text-sm">{game.short_description}</p> */}
+              </div>
+            </td>
+            <td className="p-3">{game.genre}</td>
+            <td className="p-3">{game.developer}</td>
+            <td className="p-3">{game.publisher}</td>
+            <td className="p-3">{game.platform}</td>
+            <td className="p-3 flex space-x-2">
+              <button
+                onClick={() => handleEdit(game)}
+                className="text-blue-500 hover:text-blue-700"
+              >
+                <Edit />
+              </button>
+              <button
+                onClick={() => handleDelete(game._id)}
+                className="text-red-500 hover:text-red-700"
+              >
+                <Trash2 />
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+
   return (
-    <div className="p-4 bg-white rounded-lg shadow-md">
-      <div className="flex items-center justify-between mb-4">
-        <h1 className="text-lg font-semibold">Game Management</h1>
+    <div className="p-6">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Game Management Dashboard</h1>
         <button
           onClick={handleAddNew}
-          className="flex items-center px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+          className="flex items-center bg-green-500 text-white p-2 rounded hover:bg-green-600"
         >
-          <PlusCircle className="mr-2" size={20} /> Add Game
+          <PlusCircle className="mr-2" /> Add New Game
         </button>
       </div>
-
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm text-left">
-          <thead className="bg-gray-100 text-gray-700">
-            <tr>
-              <th className="p-3">Game</th>
-              <th className="p-3">Category</th>
-              <th className="p-3">Developer</th>
-              <th className="p-3">Rating</th>
-              <th className="p-3">Size</th>
-              <th className="p-3">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {games.map((game) => (
-              <tr key={game._id} className="border-b hover:bg-gray-50">
-                <td className="p-3 flex items-center">
-                  <Image
-                    src={game.thumbnail || PLACEHOLDER_IMAGE}
-                    alt={game.title}
-                    width={100}
-                    height={100}
-                    property="lazyloading"
-                    className="rounded-lg object-cover w-[100px] h-[100px] mr-10"
-                  />
-                  {game.name}
-                </td>
-                <td className="p-3">{game.category}</td>
-                <td className="p-3">{game.developer}</td>
-                <td className="p-3">{game.rating}</td>
-                <td className="p-3">{game.size}</td>
-                <td className="p-3 space-x-2">
-                  <button
-                    onClick={() => handleEdit(game)}
-                    className="text-blue-500 hover:bg-blue-100 p-2 rounded"
-                  >
-                    <Edit size={20} />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(game._id)}
-                    className="text-red-500 hover:bg-red-100 p-2 rounded"
-                  >
-                    <Trash2 size={20} />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="overflow-x-auto bg-white rounded-lg shadow">
+        {games.length ? renderGameTable() : <p className="p-4">No games available.</p>}
       </div>
-
       {renderGameModal()}
     </div>
   );

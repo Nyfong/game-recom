@@ -5,6 +5,9 @@ import { FaRegComment } from "react-icons/fa";
 import Link from "next/link";
 import CommentPopup from "@/components/poUp/Comment.popUp";
 import DialogShareButton from "@/components/button/Sharebtn.commu";
+import Post from "@/components/blogStuff/HomeBlog/Post";
+import YouTubePost from "@/components/blogStuff/HomeBlog/Post";
+import GamePostForm from "@/components/blogStuff/HomeBlog/Post";
 
 let SocailCardCommu = () => {
   const dataLike = 90;
@@ -70,6 +73,10 @@ let SocailCardCommu = () => {
                     <span>shares</span>
                     <DialogShareButton />
                   </div>
+                  {/* <div className="flex gap-2 items-center p-2">
+                    <span>TEst Post</span>
+                    <GamePostForm />
+                  </div> */}
                 </div>
               </div>
             </div>
