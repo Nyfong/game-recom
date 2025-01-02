@@ -16,37 +16,66 @@ const Signin = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("https://backend-apigame.onrender.com/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        "https://backend-apigame.onrender.com/api/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
       const result = await response.json();
 
       if (response.ok) {
         const userData = {
-          email: result.user.email,
+          profile: {
+            name: result.user.name,
+            profileImageUrl: result.user.profileImageUrl || "",
+            bio: result.user.bio || "",
+            location: result.user.location || "",
+            joinedAt: result.user.joinedAt || new Date().toISOString(),
+          },
+          actions: {
+            posts: result.user.posts || [],
+            comments: result.user.comments || [],
+            ratings: result.user.ratings || [],
+            likes: result.user.likes || [],
+          },
+          settings: {
+            notifications: result.user.settings?.notifications || {
+              email: true,
+              push: true,
+            },
+            theme: result.user.settings?.theme || "light",
+            language: result.user.settings?.language || "en",
+          },
+          _id: result.user._id,
           username: result.user.username,
-          role: result.user.role,
-          token: result.token
+          email: result.user.email,
+          createdAt: result.user.createdAt,
+          updatedAt: result.user.updatedAt,
+          token: result.token,
+          __v: result.user.__v,
         };
 
-        if (result.user.role === 'admin') {
+        // Storing the entire user data in localStorage
+        localStorage.setItem("user", JSON.stringify(userData));
+
+        // Redirecting based on role
+        if (result.user.role === "admin") {
           if (!isAdmin) {
             setError("Please use admin login for admin accounts");
             return;
           }
-          localStorage.setItem('admin', JSON.stringify(userData));
           router.push("../../dashboard/layout.jsx");
         } else {
           if (isAdmin) {
-            router.push("/dashboard");
+            setError("Admin login required for admin accounts");
             return;
           }
-          localStorage.setItem('user', JSON.stringify(userData));
           router.push("/");
         }
       } else {
@@ -54,7 +83,7 @@ const Signin = () => {
       }
     } catch (err) {
       console.error("Error:", err);
-      setError("An unexpected error occurred");
+      setError("An unexpected error occurred. Please try again.");
     }
   };
 
@@ -116,7 +145,10 @@ const Signin = () => {
 
               <button
                 type="button"
-                onClick={() => window.location.href = "https://backend-apigame.onrender.com/auth/google"}
+                onClick={() =>
+                  (window.location.href =
+                    "https://backend-apigame.onrender.com/auth/google")
+                }
                 className="w-full p-2 bg-green-500 text-white rounded-md hover:bg-green-600"
               >
                 <span className="flex items-center justify-center gap-4">
