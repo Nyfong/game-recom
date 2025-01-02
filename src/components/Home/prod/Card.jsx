@@ -1,92 +1,75 @@
-"use client";
+"use client"; // This makes the component a client component
 
 import { useState, useEffect } from "react";
-import { get } from "@/lib/gameData"; // API fetching logic
+import { get } from "@/lib/gameData"; // Ensure gameData doesn't depend on fs during SSR
 import Link from "next/link";
 
-const ProdCard = ({ data: selectedGenre }) => {
+let ProdCard = ({ data: selectedGenre }) => {
   const [api, setApi] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [showWelcome, setShowWelcome] = useState(true);
   const [user, setUser] = useState(null);
 
-  // Fetch game data and filter by genre
+  // Fetch game data and filter by genre if provided
   useEffect(() => {
     const fetchData = async () => {
       const apiData = await get();
       setApi(apiData);
+      console.log(apiData);
 
+      // Filter by genre if selectedGenre is present
       if (selectedGenre) {
         const filtered = apiData.filter(
           (item) => item.genre?.toLowerCase() === selectedGenre.toLowerCase()
         );
         setFilteredData(filtered);
+      } else {
+        setFilteredData([]); // Reset filtered data when no genre is selected
       }
     };
 
     fetchData();
 
-    const timeoutId = setTimeout(() => setShowWelcome(false), 2000);
-    return () => clearTimeout(timeoutId);
-  }, [selectedGenre]);
+    const timeoutId = setTimeout(() => {
+      setShowWelcome(false);
+    }, 2000);
 
-  // Validate token and retrieve user data from backend
+    return () => clearTimeout(timeoutId); // Clean up timeout when component unmounts
+  }, [selectedGenre]); // Re-fetch data when selectedGenre changes
+
+  // Read user data from localStorage once
   useEffect(() => {
-    const validateToken = async () => {
+    if (typeof window !== "undefined") {
       const storedUser = localStorage.getItem("user");
-      if (!storedUser) return;
-
-      const parsedUser = JSON.parse(storedUser);
-      const token = parsedUser.token;
-
-      try {
-        const response = await fetch(
-          "https://your-backend-api.com/api/validate-token", // Replace with your actual API endpoint
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        if (response.ok) {
-          const userData = await response.json(); // Assuming user data is returned in the response
-          setUser(userData); // Set user data from backend response
-        } else {
-          localStorage.removeItem("user"); // Token invalid/expired
-          setUser(null);
-        }
-      } catch (error) {
-        console.error("Token validation failed:", error);
-        setUser(null);
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
       }
-    };
+    }
+  }, []); // Empty dependency array ensures this only runs once on mount
 
-    validateToken();
-  }, []);
-
+  // Early return if user is not available
   if (!user) {
     return (
-      <section className="flex justify-center items-center p-4">
-        <div className="rounded-md bg-indigo-900 px-5 py-3 text-sm font-medium text-white">
+      <section className="gap-2 flex justify-center items-center p-4">
+        <div className="block rounded-md border border-indigo-900 bg-indigo-900 px-5 py-3 text-sm font-medium uppercase tracking-widest text-white">
           Please login to view game details 🚀
         </div>
       </section>
     );
   }
 
+  // Show welcome message when user is logged in and during the timeout
   if (showWelcome) {
     return (
-      <section className="flex justify-center items-center p-4">
-        <div className="rounded-md bg-green-900 px-5 py-3 text-sm font-medium text-white">
+      <section className="gap-2 flex justify-center items-center p-4">
+        <div className="block rounded-md border border-indigo-700 bg-green-900 px-5 py-3 text-sm font-medium uppercase tracking-widest text-white">
           Welcome, {user.username}!
         </div>
       </section>
     );
   }
 
+  // Render the product cards when the user is logged in and after 2 seconds
   return (
     <section className="my-10">
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
@@ -144,8 +127,8 @@ const ProdCard = ({ data: selectedGenre }) => {
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
