@@ -1,7 +1,8 @@
-"use client"; // Add this at the top of your file
+"use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation"; // Add this import
 import logo from "@/assets/icon/fav.png";
 import Image from "next/image";
 import { FaUserCircle } from "react-icons/fa";
@@ -11,33 +12,50 @@ import { IoGlasses } from "react-icons/io5";
 import { BiAtom } from "react-icons/bi";
 
 const Navbar = () => {
+  const router = useRouter(); // Initialize router
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [userImage, setUserImage] = useState(null);
 
   useEffect(() => {
-    // Check if there's a user in localStorage
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      setUser(JSON.parse(storedUser)); // Parse and set user data if available
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
     }
     setIsLoading(false);
   }, []);
 
+  useEffect(() => {
+    if (user && user.id) {
+      fetch(`https://backend-apigame.onrender.com/api/users/${user.id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data && data.profileImage) {
+            setUserImage(data.profileImage);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching user image:", error);
+        });
+    }
+  }, [user]);
+
   const handleSignOut = () => {
-    // Remove token and user data from localStorage and reset user state
     localStorage.removeItem("authToken");
     localStorage.removeItem("user");
     setUser(null);
+    setUserImage(null);
+    router.push("/"); // Add navigation to home page
   };
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
 
-  // Show loading state until data is loaded
   if (isLoading) {
-    return null; // Or show a loading spinner
+    return null;
   }
 
   return (
@@ -82,7 +100,6 @@ const Navbar = () => {
                       <span>About Us</span>
                     </Link>
                   </li>
-
                   <li>
                     <Link
                       className="text-white flex items-center gap-2 transition hover:text-white/75 py-5"
@@ -99,12 +116,26 @@ const Navbar = () => {
             <div className="flex items-center gap-4">
               <div className="hidden sm:flex sm:gap-4">
                 {user ? (
-                  <button
-                    onClick={handleSignOut}
-                    className="font-sans flex justify-center gap-2 items-center mx-auto shadow-xl text-lg text-gray-50 bg-[#0A0D2D] backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-[#FFFFFF] hover:text-black before:-z-10 before:aspect-square before:hover:scale-200 before:hover:duration-500 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group"
-                  >
-                    Sign Out
-                  </button>
+                  <div className="flex items-center gap-4">
+                    <Link href="/account">
+                      <Image
+                        src={
+                          userImage ||
+                          "https://static.vecteezy.com/system/resources/previews/001/840/612/non_2x/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg"
+                        }
+                        alt="User Profile"
+                        width={40}
+                        height={40}
+                        className="rounded-full"
+                      />
+                    </Link>
+                    <button
+                      onClick={handleSignOut}
+                      className="font-sans flex justify-center gap-2 items-center mx-auto shadow-xl text-lg text-gray-50 bg-[#0A0D2D] backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-[#FFFFFF] hover:text-black before:-z-10 before:aspect-square before:hover:scale-200 before:hover:duration-500 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group"
+                    >
+                      Sign Out
+                    </button>
+                  </div>
                 ) : (
                   <Link
                     className="font-sans flex justify-center gap-2 items-center mx-auto shadow-xl text-lg text-gray-50 bg-[#0A0D2D] backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-[#FFFFFF] hover:text-black before:-z-10 before:aspect-square before:hover:scale-200 before:hover:duration-500 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group"
@@ -140,7 +171,6 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Drawer for mobile */}
         {isDrawerOpen && (
           <div className="md:hidden bg-blue-800 text-white p-10 z-20 flex flex-col items-start justify-center pt-16 space-y-6">
             <button
@@ -191,12 +221,26 @@ const Navbar = () => {
               <span>Blog</span>
             </Link>
             {user ? (
-              <button
-                onClick={handleSignOut}
-                className="text-white flex items-center gap-2 transition hover:text-white/75 py-5"
-              >
-                Sign Out
-              </button>
+              <div className="text-white flex items-center gap-2">
+                <Link href="/account">
+                  <Image
+                    src={
+                      userImage ||
+                      "https://static.vecteezy.com/system/resources/previews/001/840/612/non_2x/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg"
+                    }
+                    alt="User Profile"
+                    width={30}
+                    height={30}
+                    className="rounded-full"
+                  />
+                </Link>
+                <button
+                  onClick={handleSignOut}
+                  className="transition hover:text-white/75 py-5"
+                >
+                  Sign Out
+                </button>
+              </div>
             ) : (
               <Link
                 className="text-white flex items-center gap-2 transition hover:text-white/75 py-5"
