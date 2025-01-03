@@ -221,22 +221,27 @@ const Navbar = () => {
               <span>Blog</span>
             </Link>
             {user ? (
-              <div className="text-white flex items-center gap-2">
+              <div className="text-white flex flex-col  items-center gap-2">
                 <Link href="/account">
-                  <Image
-                    src={
-                      userImage ||
-                      "https://static.vecteezy.com/system/resources/previews/001/840/612/non_2x/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg"
-                    }
-                    alt="User Profile"
-                    width={30}
-                    height={30}
-                    className="rounded-full"
-                  />
+                  <hr className="bg-gray-300 mb-5" />
+                  <div className="flex items-center gap-3">
+                    <Image
+                      src={
+                        userImage ||
+                        "https://static.vecteezy.com/system/resources/previews/001/840/612/non_2x/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg"
+                      }
+                      alt="User Profile"
+                      width={50}
+                      height={50}
+                      className="rounded-full"
+                    />
+                    <span>My profile</span>
+                  </div>
+                  <hr className="bg-gray-300 mt-5" />
                 </Link>
                 <button
                   onClick={handleSignOut}
-                  className="transition hover:text-white/75 py-5"
+                  className="transition hover:text-white/75 p-5 bg-red-500  rounded-lg mt-5"
                 >
                   Sign Out
                 </button>
