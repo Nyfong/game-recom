@@ -4,17 +4,15 @@ import Rightbar from "@/components/dashboard/rightbar/RightBar";
 
 const Dashboard = () => {
   return (
-    <div className="w-full p-4">
-      {/* Grid Layout */}
-      <div className="flex">
-        {/* Left Section */}
-        <div className="max-w-[880px] flex-1">
-          <Card />
-        </div>
-        {/* Right Section */}
-        <div className="">
-          <Rightbar />
-        </div>
+    <div className="flex flex-col lg:flex-row gap-4">
+      {/* Left Section */}
+      <div className="flex-1">
+        <Card />
+      </div>
+
+      {/* Right Section */}
+      <div className="lg:w-[300px]">
+        <Rightbar />
       </div>
     </div>
   );

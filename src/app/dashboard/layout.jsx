@@ -1,21 +1,31 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Sidebar from "@/components/dashboard/sidebar/SideBar";
 import Navbar from "@/components/dashboard/navbar/NavBar";
 
 const Layout = ({ children }) => {
-  return (
-    <div className="flex max-h-screen ">
-      {/* Sidebar  */}
-      <div className="flex-none border-2 border-r-slate-500   bg-white w-[150px] md:w-[200px] lg:w-[250px] rounded-md h-screen">
-        <div >
-          <Sidebar />
-        </div>
-      </div>
+  // const router = useRouter();
 
-      {/* Content  */}
-      <div className="flex-1 p-5 overflow-auto rounded-md ">
+  // useEffect(() => {
+  //   const admin = JSON.parse(localStorage.getItem("admin"));
+  //   if (!admin) {
+  //     router.push("/signin"); // Redirect to signin if not admin
+  //   }
+  // }, [router]);
+
+  return (
+    <div className="flex h-screen">
+      {/* Sidebar */}
+      <div className="bg-white border-r w-[200px]">
+        <Sidebar />
+      </div>
+      
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col">
         <Navbar />
-        {children}
+        <main className="flex-1 overflow-auto p-4">{children}</main>
       </div>
     </div>
   );

@@ -1,253 +1,290 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-// Main Users Component
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isAddingUser, setIsAddingUser] = useState(false);
+  const [editingId, setEditingId] = useState(null);
   const [error, setError] = useState(null);
-  const [editingUser, setEditingUser] = useState(null);
+  const [newUser, setNewUser] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+  const [editUser, setEditUser] = useState({ username: "", email: "" });
 
-  // Fetch Users
+  const API_BASE_URL = "https://backend-apigame.onrender.com/api";
+  
+  const headers = {
+    'Content-Type': 'application/json'
+  };
+
+  // Fetch users
   const fetchUsers = async () => {
+    setIsLoading(true);
+    setError(null);
     try {
-      const response = await fetch("https://backend-apigame.onrender.com/api/users");
+      const response = await fetch(`${API_BASE_URL}/users`, {
+        method: 'GET',
+        headers
+      });
       if (!response.ok) {
-        throw new Error("Failed to fetch users");
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      setUsers(data);
+      setUsers(data.users || []);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      setError("Failed to load users. Please try again later.");
+      setUsers([]);
+    } finally {
       setIsLoading(false);
-    } catch (err) {
-      setError(err.message);
-      setIsLoading(false);
     }
   };
 
-  // Add/Update User
-  const saveUser = async (userData) => {
-    try {
-      const method = userData._id ? "PUT" : "POST"; // Determine if it is an update or add
-      const url = userData._id
-        ? `/api/users?id=${userData._id}` // Update user by ID
-        : "/api/users"; // Add new user
-
-      const response = await fetch(url, {
-        method: method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to save user");
-      }
-
-      await fetchUsers(); // Refresh user list
-      setEditingUser(null); // Clear editing state
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
-  // Delete User
-  const deleteUser = async (userId) => {
-    try {
-      const response = await fetch(`/api/users?id=${userId}`, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to delete user");
-      }
-
-      await fetchUsers(); // Refresh user list
-    } catch (err) {
-      setError(err.message);
-    }
-  };
-
-  // Initial fetch
   useEffect(() => {
     fetchUsers();
   }, []);
 
-  // User Edit Form Component
-  const UserEditForm = ({ user, onSave, onCancel }) => {
-    const [formData, setFormData] = useState(
-      user || {
-        name: "",
-        email: "",
-        title: "",
-        status: "Active",
-        role: "",
-        image: "",
+  // Add user
+  const handleAddUser = async () => {
+    setError(null);
+    try {
+      const response = await fetch(`${API_BASE_URL}/register`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify(newUser),
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    );
-
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    };
-
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      onSave(formData);
-    };
-
-    return (
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-      >
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Name
-          </label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Email
-          </label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Title
-          </label>
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Status
-          </label>
-          <select
-            name="status"
-            value={formData.status}
-            onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"
-          >
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
-          </select>
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Role
-          </label>
-          <input
-            type="text"
-            name="role"
-            value={formData.role}
-            onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700"
-          />
-        </div>
-        <div className="flex items-center justify-between">
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Save
-          </button>
-          <button
-            type="button"
-            onClick={onCancel}
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Cancel
-          </button>
-        </div>
-      </form>
-    );
+      const data = await response.json();
+      setIsAddingUser(false);
+      setNewUser({ username: "", email: "", password: "" });
+      fetchUsers();
+    } catch (error) {
+      console.error("Error adding user:", error);
+      setError(error.message || "Failed to add user. Please try again.");
+    }
   };
 
-  if (isLoading) {
-    return <div className="text-center py-4">Loading...</div>;
-  }
+  // Update user
+  const handleUpdateUser = async (id) => {
+    setError(null);
+    try {
+      // Changed endpoint to match the likely backend route
+      const response = await fetch(`${API_BASE_URL}/user/${id}`, {
+        method: "PUT",
+        headers,
+        body: JSON.stringify(editUser),
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      setEditingId(null);
+      setEditUser({ username: "", email: "" });
+      fetchUsers();
+    } catch (error) {
+      console.error("Error updating user:", error);
+      setError(error.message || "Failed to update user. Please try again.");
+    }
+  };
 
-  if (error) {
-    return <div className="text-red-500 text-center py-4">{error}</div>;
-  }
+  // Delete user
+  const handleDeleteUser = async (id) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/deletegame/${id}`, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(error || "Failed to delete game");
+      }
+      await fetchGames();
+    } catch (err) {
+      console.error("Delete error:", err);
+      setError(err.message);
+    }
+  };
+  const renderUserRow = (user) => (
+    <tr key={user._id} className="border-b hover:bg-gray-50">
+      <td className="p-4">
+        {editingId === user._id ? (
+          <input
+            type="text"
+            value={editUser.username}
+            onChange={(e) =>
+              setEditUser({
+                ...editUser,
+                username: e.target.value,
+              })
+            }
+            className="w-full p-2 border rounded"
+          />
+        ) : (
+          user.username
+        )}
+      </td>
+      <td className="p-4">
+        {editingId === user._id ? (
+          <input
+            type="email"
+            value={editUser.email}
+            onChange={(e) =>
+              setEditUser({ ...editUser, email: e.target.value })
+            }
+            className="w-full p-2 border rounded"
+          />
+        ) : (
+          user.email
+        )}
+      </td>
+      <td className="p-4">
+        <div className="flex gap-2">
+          {editingId === user._id ? (
+            <>
+              <button
+                onClick={() => handleUpdateUser(user._id)}
+                className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
+              >
+                Save
+              </button>
+              <button
+                onClick={() => setEditingId(null)}
+                className="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600"
+              >
+                Cancel
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                onClick={() => {
+                  setEditingId(user._id);
+                  setEditUser({
+                    username: user.username,
+                    email: user.email,
+                  });
+                }}
+                className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => handleDeleteUser(user._id)}
+                className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+              >
+                Delete
+              </button>
+            </>
+          )}
+        </div>
+      </td>
+    </tr>
+  );
 
   return (
-    <div>
-      {editingUser !== null && (
-        <UserEditForm
-          user={editingUser}
-          onSave={saveUser}
-          onCancel={() => setEditingUser(null)}
-        />
-      )}
-      <div className="overflow-x-auto">
+    <div className="p-6 bg-white rounded-lg shadow-md">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-xl font-bold">User Management</h2>
         <button
-          onClick={() => setEditingUser({})}
-          className="mb-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+          onClick={() => setIsAddingUser(true)}
+          disabled={isAddingUser}
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:bg-blue-300"
         >
-          Add New User
+          Add User
         </button>
-        <table className="min-w-full divide-y divide-gray-200">
+      </div>
+
+      {error && (
+        <div className="mb-4 p-4 bg-red-100 text-red-700 rounded-md">
+          {error}
+        </div>
+      )}
+
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse min-w-full">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Name
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Title
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Status
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Role
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Email
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Actions
-              </th>
+              <th className="text-left p-4 border-b">Username</th>
+              <th className="text-left p-4 border-b">Email</th>
+              <th className="text-left p-4 border-b w-[200px]">Actions</th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {users.length === 0 ? (
+          <tbody>
+            {isAddingUser && (
+              <tr className="border-b">
+                <td className="p-4">
+                  <input
+                    type="text"
+                    placeholder="Username"
+                    value={newUser.username}
+                    onChange={(e) =>
+                      setNewUser({ ...newUser, username: e.target.value })
+                    }
+                    className="w-full p-2 border rounded"
+                  />
+                </td>
+                <td className="p-4">
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    value={newUser.email}
+                    onChange={(e) =>
+                      setNewUser({ ...newUser, email: e.target.value })
+                    }
+                    className="w-full p-2 border rounded"
+                  />
+                </td>
+                <td className="p-4">
+                  <div className="flex gap-2">
+                    <input
+                      type="password"
+                      placeholder="Password"
+                      value={newUser.password}
+                      onChange={(e) =>
+                        setNewUser({ ...newUser, password: e.target.value })
+                      }
+                      className="w-full p-2 border rounded"
+                    />
+                    <button
+                      onClick={handleAddUser}
+                      className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600"
+                    >
+                      Save
+                    </button>
+                    <button
+                      onClick={() => setIsAddingUser(false)}
+                      className="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            )}
+            {isLoading ? (
               <tr>
-                <td colSpan={6} className="text-center py-4">
-                  No users found.
+                <td colSpan="3" className="text-center p-4">
+                  Loading users...
+                </td>
+              </tr>
+            ) : users.length === 0 ? (
+              <tr>
+                <td colSpan="3" className="text-center p-4">
+                  No users found
                 </td>
               </tr>
             ) : (
-              users.map((user) => (
-                <UserRow
-                  key={user._id}
-                  {...user}
-                  onEdit={() => setEditingUser(user)}
-                  onDelete={() => deleteUser(user._id)}
-                />
-              ))
+              users.map(renderUserRow)
             )}
           </tbody>
         </table>

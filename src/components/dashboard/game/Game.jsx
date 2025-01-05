@@ -97,7 +97,7 @@ const GameCRUDDashboard = () => {
         platform: selectedGame.platform,
         release_date: selectedGame.release_date,
         game_url: selectedGame.game_url,
-        profile_url: selectedGame.profile_url,
+        // profile_url: selectedGame.profile_url,
         short_description: selectedGame.short_description,
         thumbnail: selectedGame.thumbnail || PLACEHOLDER_IMAGE
       };
@@ -119,7 +119,7 @@ const GameCRUDDashboard = () => {
         const errorData = await response.json();
         throw new Error(errorData.message || `Failed to ${isAddMode ? "add" : "update"} game`);
       }
-  
+
       await fetchGames();
       setIsModalOpen(false);
       setImageFile(null);
