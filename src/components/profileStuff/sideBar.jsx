@@ -4,6 +4,7 @@ import { FaCommentsDollar } from "react-icons/fa";
 import { AiFillFire } from "react-icons/ai";
 import { AiOutlineLogout } from "react-icons/ai";
 import { IoIosInformationCircleOutline } from "react-icons/io";
+import Link from "next/link";
 let SideBarProfile = () => {
   return (
     <>
@@ -26,7 +27,9 @@ let SideBarProfile = () => {
               <MdOutlineManageHistory className="text-white" />
             </div>
             <div>
-              <p className="text-white">history</p>
+              <Link href="/content/game" className="text-white">
+                Games
+              </Link>
             </div>
           </div>
           {/* profile picture */}

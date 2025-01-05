@@ -3,6 +3,8 @@ import { PiCoffeeBold } from "react-icons/pi";
 import Link from "next/link";
 import { get } from "@/lib/gameData";
 import logo from "@/assets/icon/fav.png";
+import RatingSection from "../rating/RatingSection";
+import CommentSection from "../rating/CommentSection";
 
 let MainProdDetail = async ({ detialsPropId }) => {
   // Fetch all the data
@@ -153,6 +155,11 @@ let MainProdDetail = async ({ detialsPropId }) => {
           </div>
         </div>
       </section>
+      <RatingSection gameId={detailData._id} />
+      <CommentSection
+        gameId={detailData._id}
+        existingReviews={detailData.reviews}
+      />
     </>
   );
 };

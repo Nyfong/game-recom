@@ -1,63 +1,70 @@
+"use client";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
+
 let BlogCard = () => {
-  const arrTest = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]; // Simply loop over this array to create 10 cards
+  const [blogs, setBlogs] = useState([]); // State to store fetched blogs
+  const [loading, setLoading] = useState(true); // State to handle loading state
+  const [error, setError] = useState(null); // State to handle errors
+
+  useEffect(() => {
+    // Fetch data from API
+    const fetchBlogs = async () => {
+      try {
+        const response = await fetch(
+          "https://backend-apigame.onrender.com/api/blog"
+        );
+        if (!response.ok) throw new Error("Failed to fetch blogs");
+        const data = await response.json();
+        setBlogs(data); // Update blogs state with fetched data
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false); // Stop loading
+      }
+    };
+
+    fetchBlogs();
+  }, []);
+
+  if (loading) return <p>Loading...</p>; // Display loading state
+  if (error) return <p>Error: {error}</p>; // Display error state
+
   return (
-    <>
-      <section className="grid grid-cols-1 gap-2">
-        {arrTest.map((b, i) => {
-          return (
-            <Link href={`/content/blog/${i + 1}`} key={i}>
-              <div className="overflow-hidden rounded-lg shadow transition hover:shadow-lg grid  grid-cols-1 lg:grid-cols-2 gap-2 p-2">
-                <div>
-                  <img
-                    alt=""
-                    src="https://www.gamerefinery.com/wp-content/uploads/2024/08/analyst-bulletin-july-2024.png"
-                    className="h-56 w-full object-cover rounded-lg  opacity-70 duration-100	 hover:opacity-100"
-                  />
-
-                  <div className="bg-white p-4 sm:p-6">
-                    <time
-                      dateTime="2022-10-10"
-                      className="block text-xs text-gray-500"
-                    >
-                      {" "}
-                      10th Oct 2022{" "}
-                    </time>
-
-                    <h3 className="mt-0.5 text-lg text-gray-900 font-bold">
-                      Analyst Bulletin: Mobile Game Market Review July 2024
-                    </h3>
-                  </div>
-                </div>
-                {/* DESCRIPTION */}
-                <div>
-                  <p className="line-clamp-2 md:line-clamp-5 lg:line-clamp-none text-sm/relaxed text-gray-500">
-                    Seasonal Collectible Albums have seemingly got everyone on
-                    mobile in a twist, or should we say a tangle? Last month,
-                    Rollic’s Twisted Tangle became the first hybrid casual title
-                    to ever implement the feature, showing this trending feature
-                    knows no bounds. But this isn’t the only reason to take note
-                    of Rollic. The studio’s wider portfolio of hybrid casual
-                    puzzle games—including Seat Away and Screw Jam—are all
-                    lighting up the US grossing charts too, fueled by a mixture
-                    of monetization and a busy LiveOps calendar. Seasonal
-                    Collectible Albums have seemingly got everyone on mobile in
-                    a twist, or should we say a tangle? Last month, Rollic’s
-                    Twisted Tangle became the first hybrid casual title to ever
-                    implement the feature, showing this trending feature knows
-                    no bounds. But this isn’t the only reason to take note of
-                    Rollic. The studio’s wider portfolio of hybrid casual puzzle
-                    games—including Seat Away and Screw Jam—are all lighting up
-                    the US grossing charts too, fueled by a mixture of
-                    monetization and a busy LiveOps calendar.
-                  </p>
+    <section className="grid grid-cols-1 gap-4">
+      {blogs.map((blog, i) => (
+        <div key={i.id}>
+          <Link href={`/content/blog/${blog._id}`}>
+            <div className="overflow-hidden rounded-lg shadow transition hover:shadow-lg grid grid-cols-1 lg:grid-cols-2 gap-4 p-4">
+              <div>
+                <img
+                  alt={blog.title || "Blog Image"}
+                  src={blog.image || "https://via.placeholder.com/400"}
+                  className="h-56 w-full object-cover rounded-lg opacity-70 duration-100 hover:opacity-100"
+                />
+                <div className="bg-white p-4 sm:p-6">
+                  <time
+                    dateTime={blog.date || "2022-10-10"}
+                    className="block text-xs text-gray-500"
+                  >
+                    {blog.date || "10th Oct 2022"}
+                  </time>
+                  <h3 className="mt-0.5 text-lg text-gray-900 font-bold">
+                    {blog.title || "Untitled Blog"}
+                  </h3>
                 </div>
               </div>
-            </Link>
-          );
-        })}
-      </section>
-    </>
+              <div>
+                <p className="line-clamp-2 md:line-clamp-5 lg:line-clamp-none text-sm text-gray-500">
+                  {blog.description || "No description available."}
+                </p>
+              </div>
+            </div>
+          </Link>
+        </div>
+      ))}
+    </section>
   );
 };
+
 export default BlogCard;

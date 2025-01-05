@@ -16,9 +16,8 @@ const Users = () => {
   const [editUser, setEditUser] = useState({ username: "", email: "" });
 
   const API_BASE_URL = "https://backend-apigame.onrender.com/api";
-  
   const headers = {
-    'Content-Type': 'application/json'
+    "Content-Type": "application/json",
   };
 
   // Fetch users
@@ -27,8 +26,8 @@ const Users = () => {
     setError(null);
     try {
       const response = await fetch(`${API_BASE_URL}/users`, {
-        method: 'GET',
-        headers
+        method: "GET",
+        headers,
       });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -74,8 +73,7 @@ const Users = () => {
   const handleUpdateUser = async (id) => {
     setError(null);
     try {
-      // Changed endpoint to match the likely backend route
-      const response = await fetch(`${API_BASE_URL}/user/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/users/${id}`, {
         method: "PUT",
         headers,
         body: JSON.stringify(editUser),
@@ -96,24 +94,21 @@ const Users = () => {
   // Delete user
   const handleDeleteUser = async (id) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/deletegame/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/users/${id}`, {
         method: "DELETE",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
+        headers,
       });
-
       if (!response.ok) {
         const error = await response.text();
-        throw new Error(error || "Failed to delete game");
+        throw new Error(error || "Failed to delete user");
       }
-      await fetchGames();
+      fetchUsers();
     } catch (err) {
       console.error("Delete error:", err);
       setError(err.message);
     }
   };
+
   const renderUserRow = (user) => (
     <tr key={user._id} className="border-b hover:bg-gray-50">
       <td className="p-4">
