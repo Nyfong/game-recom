@@ -123,7 +123,7 @@ const AccountPage = () => {
   }
 
   return (
-    <div className="bg-white w-full flex flex-col gap-5 px-3 md:px-16 lg:px-28 md:flex-row text-[#161931]">
+    <div className="bg-white w-full flex flex-col gap-5 px-3 md:px-16 lg:px-28 md:flex-row text-[#161931] z-20 md:z-0">
       {/* Toggle Button for Drawer */}
       <button
         className="md:hidden p-2 bg-indigo-600 text-white rounded  mt-5"
@@ -138,7 +138,7 @@ const AccountPage = () => {
           isDrawerOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0 md:static md:w-1/3 lg:w-1/4`}
       >
-        <div className="p-4">
+        <div className="p-4 ">
           <h2 className="text-2xl font-semibold mb-4">Settings</h2>
           <nav className="flex flex-col gap-2">
             <a
@@ -179,7 +179,7 @@ const AccountPage = () => {
       {/* Overlay */}
       {isDrawerOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-10 md:hidden"
+          className="fixed inset-0  z-10 md:hidden"
           onClick={() => setIsDrawerOpen(false)}
         ></div>
       )}

@@ -33,7 +33,7 @@ let BlogCard = () => {
   return (
     <section className="grid grid-cols-1 gap-4">
       {blogs.map((blog, i) => (
-        <div key={i.id}>
+        <div key={i}>
           <Link href={`/content/blog/${blog._id}`}>
             <div className="overflow-hidden rounded-lg shadow transition hover:shadow-lg grid grid-cols-1 lg:grid-cols-2 gap-4 p-4">
               <div>
