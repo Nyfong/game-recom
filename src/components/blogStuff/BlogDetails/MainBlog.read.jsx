@@ -12,6 +12,7 @@ const MainBlogRead = ({ id }) => {
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [imageLoaded, setImageLoaded] = useState(false); // State to track image loading
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -83,11 +84,19 @@ const MainBlogRead = ({ id }) => {
           {/* Main Blog Content */}
           <article className="w-full md:w-8/12 px-4 mb-8">
             <div className="relative">
+              {!imageLoaded && (
+                <div className="w-full h-64 md:h-96 flex justify-center items-center bg-gray-100 rounded-lg shadow-md">
+                  <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-900"></div>
+                </div>
+              )}
               <img
                 src={blog.image}
                 alt={blog.title}
-                className="w-full h-64 md:h-96 object-cover rounded-lg shadow-md"
+                className={`w-full h-64 md:h-96 object-cover rounded-lg shadow-md ${
+                  imageLoaded ? "block" : "hidden"
+                }`}
                 loading="lazy"
+                onLoad={() => setImageLoaded(true)} // Set imageLoaded to true when the image is fully loaded
               />
               <div className="absolute bottom-4 left-4">
                 <Link

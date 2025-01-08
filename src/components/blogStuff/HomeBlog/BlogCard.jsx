@@ -27,8 +27,21 @@ let BlogCard = () => {
     fetchBlogs();
   }, []);
 
-  if (loading) return <p>Loading...</p>; // Display loading state
-  if (error) return <p>Error: {error}</p>; // Display error state
+  if (loading) {
+    return (
+      <div className="flex justify-center mt-20 h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-900"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-red-500">Error: {error}</p>
+      </div>
+    );
+  }
 
   return (
     <section className="grid grid-cols-1 gap-4">
