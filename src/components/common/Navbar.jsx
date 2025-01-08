@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation"; // Add this import
+import { useRouter } from "next/navigation";
 import logo from "@/assets/icon/fav.png";
 import Image from "next/image";
 import { FaUserCircle } from "react-icons/fa";
@@ -12,42 +12,40 @@ import { IoGlasses } from "react-icons/io5";
 import { BiAtom } from "react-icons/bi";
 
 const Navbar = () => {
-  const router = useRouter(); // Initialize router
+  const router = useRouter();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [userImage, setUserImage] = useState(null);
 
+  // Fetch user data from localStorage and API
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);
-    }
-    setIsLoading(false);
-  }, []);
 
-  useEffect(() => {
-    if (user && user.id) {
-      fetch(`https://backend-apigame.onrender.com/api/users/${user.id}`)
+      // Fetch user profile image from the backend
+      fetch(`https://backend-apigame.onrender.com/api/users/${parsedUser._id}`)
         .then((response) => response.json())
         .then((data) => {
-          if (data && data.profileImage) {
-            setUserImage(data.profileImage);
+          if (data && data.profile && data.profile.profileImageUrl) {
+            setUserImage(data.profile.profileImageUrl);
           }
         })
         .catch((error) => {
           console.error("Error fetching user image:", error);
         });
     }
-  }, [user]);
+    setIsLoading(false);
+  }, []);
 
   const handleSignOut = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("user");
     setUser(null);
     setUserImage(null);
-    router.push("/"); // Add navigation to home page
+    router.push("/");
   };
 
   const toggleDrawer = () => {
@@ -63,7 +61,7 @@ const Navbar = () => {
       <header className="bg-blue-800 sticky top-0 z-10">
         <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between overflow-hidden">
-            <div className="md:flex md:items-center  md:gap-5">
+            <div className="md:flex md:items-center md:gap-5">
               <Link className="block text-teal-600" href="/">
                 <span className="sr-only">Home</span>
                 <Image src={logo} alt="" className="w-36 h-36" />
@@ -117,18 +115,26 @@ const Navbar = () => {
               <div className="hidden sm:flex sm:gap-4">
                 {user ? (
                   <div className="flex items-center gap-4">
-                    <Link href="/account">
-                      <Image
-                        src={
-                          userImage ||
-                          "https://static.vecteezy.com/system/resources/previews/001/840/612/non_2x/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg"
-                        }
-                        alt="User Profile"
-                        width={40}
-                        height={40}
-                        className="rounded-full"
-                      />
-                    </Link>
+                    <div className="relative group">
+                      <Link href="/account">
+                        <div className="flex flex-col items-center">
+                          <Image
+                            src={
+                              userImage ||
+                              "https://static.vecteezy.com/system/resources/previews/001/840/612/non_2x/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg"
+                            }
+                            alt="User Profile"
+                            width={40}
+                            height={40}
+                            className="rounded-full cursor-pointer"
+                          />
+                          {/* User name appears on hover */}
+                          <div className="absolute top-full mt-2 text-white text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            {user.username}
+                          </div>
+                        </div>
+                      </Link>
+                    </div>
                     <button
                       onClick={handleSignOut}
                       className="font-sans flex justify-center gap-2 items-center mx-auto shadow-xl text-lg text-gray-50 bg-[#0A0D2D] backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-[#FFFFFF] hover:text-black before:-z-10 before:aspect-square before:hover:scale-200 before:hover:duration-500 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group"
@@ -221,7 +227,7 @@ const Navbar = () => {
               <span>Blog</span>
             </Link>
             {user ? (
-              <div className="text-white flex flex-col  items-center gap-2">
+              <div className="text-white flex flex-col items-center gap-2">
                 <Link href="/account">
                   <hr className="bg-gray-300 mb-5" />
                   <div className="flex items-center gap-3">
@@ -241,7 +247,7 @@ const Navbar = () => {
                 </Link>
                 <button
                   onClick={handleSignOut}
-                  className="transition hover:text-white/75 p-5 bg-red-500  rounded-lg mt-5"
+                  className="transition hover:text-white/75 p-5 bg-red-500 rounded-lg mt-5"
                 >
                   Sign Out
                 </button>

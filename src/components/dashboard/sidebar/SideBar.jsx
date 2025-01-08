@@ -36,6 +36,11 @@ const menuItems = [
         path: "/dashboard/games",
         icon: <PiGameControllerFill />,
       },
+      {
+        title: "Community",
+        path: "/dashboard/community",
+        icon: <PiGameControllerFill />,
+      },
     ],
   },
   {

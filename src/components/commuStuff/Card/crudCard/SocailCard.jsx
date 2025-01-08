@@ -1,161 +1,184 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
-import CreatePostForm from "./CreatePostForm";
-import Post from "./Post";
 import { FaSpinner } from "react-icons/fa";
+import CreatePost from "./CreatePostForm";
+import Post from "./Post";
 
 const SocialCard = () => {
-  const [showPostForm, setShowPostForm] = useState(false);
-  const [posts, setPosts] = useState([]); // Initialize as an empty array
+  const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  // Fetch initial posts from the API
-  const fetchPosts = async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const response = await fetch("https://backend-api-dygr.onrender.com/api/getPosts");
-      if (!response.ok) {
-        throw new Error("Failed to fetch posts");
-      }
-      const result = await response.json(); // Parse the response
-
-      // Check if the response has a `data` field and it's an array
-      if (!result.data || !Array.isArray(result.data)) {
-        throw new Error("Expected an array of posts in the 'data' field");
-      }
-
-      setPosts(result.data); // Set the `data` field to the posts state
-    } catch (error) {
-      setError(error.message);
-      setPosts([]); // Set posts to an empty array in case of error
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const [userData, setUserData] = useState(null);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
-    fetchPosts();
+    const initializeComponent = async () => {
+      try {
+        const storedUser = localStorage.getItem("user");
+        if (!storedUser) {
+          setIsInitialized(true);
+          return;
+        }
+
+        const parsedUser = JSON.parse(storedUser);
+        const userId = parsedUser._id;
+
+        // Fetch user data
+        const userResponse = await fetch(`https://backend-apigame.onrender.com/api/users/${userId}`);
+        if (!userResponse.ok) throw new Error("Failed to fetch user data");
+        const userData = await userResponse.json();
+        setUserData(userData);
+
+        // Fetch posts
+        const postsResponse = await fetch("https://backend-apigame.onrender.com/api/posts");
+        if (!postsResponse.ok) throw new Error("Failed to fetch posts");
+        const postsData = await postsResponse.json();
+        setPosts(postsData.posts || []);
+      } catch (error) {
+        console.error("Initialization error:", error);
+      } finally {
+        setIsLoading(false);
+        setIsInitialized(true);
+      }
+    };
+
+    initializeComponent();
   }, []);
 
-  // Create a new post
   const handleCreatePost = async (postData) => {
-    setError(null);
     try {
+      const storedUser = localStorage.getItem("user");
+      if (!storedUser) throw new Error("User not authenticated");
+  
+      const parsedUser = JSON.parse(storedUser);
+      const userId = parsedUser._id;
+  
+      // Prepare FormData for media upload
       const formData = new FormData();
-      formData.append("title", postData.title);
-      formData.append("description", postData.description);
-      formData.append("mediaType", postData.mediaType);
-      formData.append("mediaFile", postData.mediaFile);
-
-      const response = await fetch("/api/posts", {
-        method: "POST",
-        body: formData, // Use FormData for file uploads
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to create post");
+      formData.append("content[text]", postData.content.text);
+      formData.append("status[visibility]", postData.status.visibility);
+      formData.append("tags", postData.tags.join(","));
+  
+      if (postData.content.media.length > 0) {
+        formData.append("media", postData.content.media[0]);
       }
-
+  
+      const response = await fetch(`https://backend-apigame.onrender.com/api/users/${userId}/posts`, {
+        method: "POST",
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to create post");
+      }
+  
       const newPost = await response.json();
-      setPosts([newPost, ...posts]);
-      setShowPostForm(false);
+      setPosts((prevPosts) => [newPost, ...prevPosts]);
     } catch (error) {
-      setError(error.message);
+      console.error("Error creating post:", error.message);
+      alert(`Error creating post: ${error.message}`);
     }
   };
 
-  // Edit a post
-  const handleEditPost = async (id, updatedData) => {
-    setError(null);
+  const handleEditPost = async (id, updatedContent) => {
     try {
-      const response = await fetch(`/api/posts/${id}`, {
+      const storedUser = localStorage.getItem("user");
+      if (!storedUser) throw new Error("User not authenticated");
+
+      const parsedUser = JSON.parse(storedUser);
+      const userId = parsedUser._id;
+
+      const response = await fetch(`https://backend-apigame.onrender.com/api/users/${userId}/posts/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(updatedData),
+        body: JSON.stringify({ content: updatedContent }),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to update post");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to update post");
       }
 
       const updatedPost = await response.json();
       setPosts((prevPosts) =>
         prevPosts.map((post) =>
-          post._id === id ? { ...post, ...updatedPost } : post
+          post._id === id ? { ...post, content: updatedContent } : post
         )
       );
     } catch (error) {
-      setError(error.message);
+      console.error("Error updating post:", error.message);
+      alert(`Error updating post: ${error.message}`);
     }
   };
 
-  // Delete a post
   const handleDeletePost = async (id) => {
-    setError(null);
     try {
-      const response = await fetch(`/api/posts/${id}`, {
+      const storedUser = localStorage.getItem("user");
+      if (!storedUser) throw new Error("User not authenticated");
+
+      const parsedUser = JSON.parse(storedUser);
+      const userId = parsedUser._id;
+
+      const response = await fetch(`https://backend-apigame.onrender.com/api/users/${userId}/posts/${id}`, {
         method: "DELETE",
       });
 
       if (!response.ok) {
-        throw new Error("Failed to delete post");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to delete post");
       }
 
       setPosts((prevPosts) => prevPosts.filter((post) => post._id !== id));
     } catch (error) {
-      setError(error.message);
+      console.error("Error deleting post:", error.message);
+      alert(`Error deleting post: ${error.message}`);
     }
   };
 
-  if (isLoading) {
+  if (!isInitialized) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <FaSpinner className="animate-spin text-4xl text-blue-500" />
+      <div className="w-full h-screen flex items-center justify-center">
+        <FaSpinner className="animate-spin text-2xl" />
       </div>
     );
   }
 
-  if (error) {
+  if (!userData) {
     return (
-      <div className="text-red-500 text-center p-4 bg-red-50 rounded-lg">
-        {error}
+      <div className="w-full h-screen flex items-center justify-center">
+        <p className="font-bold">Please log in to continue</p>
       </div>
     );
   }
+
+  const { profile = {}, username } = userData;
+  const profileImageUrl = profile.profileImageUrl || "https://via.placeholder.com/150";
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-4">
-      <button
-        onClick={() => setShowPostForm(true)}
-        className="w-full mb-6 bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors font-medium shadow-lg"
-        aria-label="Create a new post"
-      >
-        Share something with the community
-      </button>
-      {showPostForm && (
-        <CreatePostForm
-          onSubmit={handleCreatePost}
-          onClose={() => setShowPostForm(false)}
-        />
+    <div className="max-w-2xl mx-auto p-4">
+      <CreatePost
+        userName={username}
+        userAvatar={profileImageUrl}
+        onSubmit={handleCreatePost}
+      />
+
+      {isLoading ? (
+        <div className="flex justify-center items-center">
+          <FaSpinner className="animate-spin text-2xl" />
+        </div>
+      ) : (
+        posts.map((post) => (
+          <Post
+            key={post._id}
+            post={post}
+            onEdit={handleEditPost}
+            onDelete={handleDeletePost}
+          />
+        ))
       )}
-      <div className="space-y-6">
-        {posts.length === 0 ? (
-          <div className="text-center text-gray-500">No posts to display.</div>
-        ) : (
-          posts.map((post) => (
-            <Post
-              key={post._id}
-              post={post}
-              onEdit={handleEditPost}
-              onDelete={handleDeletePost}
-            />
-          ))
-        )}
-      </div>
     </div>
   );
 };

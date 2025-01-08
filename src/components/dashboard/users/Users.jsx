@@ -79,9 +79,9 @@ const Users = () => {
         body: JSON.stringify(editUser),
       });
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const error = await response.json();
+        throw new Error(error.message || "Failed to update user");
       }
-      const data = await response.json();
       setEditingId(null);
       setEditUser({ username: "", email: "" });
       fetchUsers();
@@ -99,8 +99,8 @@ const Users = () => {
         headers,
       });
       if (!response.ok) {
-        const error = await response.text();
-        throw new Error(error || "Failed to delete user");
+        const error = await response.json();
+        throw new Error(error.message || "Failed to delete user");
       }
       fetchUsers();
     } catch (err) {
