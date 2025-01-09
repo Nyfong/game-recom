@@ -24,7 +24,7 @@ let PayMeCoffee = () => {
         <section className="my-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
           {pic.map((p) => (
             <>
-              <div key={p}>
+              <div key={p.id}>
                 <CardPayCoffee p={p} />
               </div>
             </>
