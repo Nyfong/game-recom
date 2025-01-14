@@ -1,216 +1,229 @@
 "use client";
-
-import React, { useState } from "react";
-import { FaImage, FaTimes, FaSmile, FaPlus } from "react-icons/fa";
+import React, { useState } from 'react';
+import { FaImage, FaTimes, FaSpinner } from 'react-icons/fa';
 
 const CreatePost = ({ userName, userAvatar, onSubmit }) => {
-  const [isFormVisible, setIsFormVisible] = useState(false); // State to manage form visibility
-  const [postContent, setPostContent] = useState("");
-  const [mediaFile, setMediaFile] = useState(null);
+  const [text, setText] = useState('');
   const [mediaPreview, setMediaPreview] = useState(null);
-  const [visibility, setVisibility] = useState("public");
-  const [tags, setTags] = useState("");
-  const [error, setError] = useState("");
+  const [mediaFile, setMediaFile] = useState(null);
+  const [tags, setTags] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+  const compressImage = async (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target.result;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const MAX_WIDTH = 800;
+          const MAX_HEIGHT = 600;
+          let width = img.width;
+          let height = img.height;
 
-    // Validate file type and size
-    if (!file.type.startsWith("image/") && !file.type.startsWith("video/")) {
-      setError("Only images and videos are allowed.");
-      return;
-    }
-    if (file.size > 10 * 1024 * 1024) {
-      setError("File size must be less than 10MB.");
-      return;
-    }
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
 
-    setMediaFile(file);
-    setMediaPreview(URL.createObjectURL(file));
-    setError("");
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          canvas.toBlob(
+            (blob) => {
+              if (blob) {
+                resolve(blob);
+              } else {
+                reject(new Error('Failed to compress image'));
+              }
+            },
+            'image/jpeg',
+            0.7
+          );
+        };
+        img.onerror = () => {
+          reject(new Error('Failed to load image'));
+        };
+      };
+      reader.onerror = () => {
+        reject(new Error('Failed to read file'));
+      };
+    });
   };
 
-  const handleSubmit = (e) => {
+  const handleMediaChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        setError('Image size must be less than 5MB');
+        return;
+      }
+
+      try {
+        const compressedBlob = await compressImage(file);
+        setMediaFile(compressedBlob);
+
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setMediaPreview(reader.result);
+        };
+        reader.readAsDataURL(compressedBlob);
+        setError('');
+      } catch (err) {
+        setError('Error processing image. Please try again.');
+        console.error('Error processing image:', err);
+        setMediaFile(null);
+        setMediaPreview(null);
+      }
+    }
+  };
+
+  const removeMedia = () => {
+    setMediaFile(null);
+    setMediaPreview(null);
+    setError('');
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate post content
-    if (!postContent.trim() && !mediaFile) {
-      setError("Please enter some content or upload a file.");
+    // Clear previous errors
+    setError('');
+
+    // Validate text
+    if (!text.trim()) {
+      setError('Post text is required');
       return;
     }
 
-    // Prepare the post data
-    const postData = {
-      content: {
-        text: postContent,
-        media: mediaFile ? [mediaFile] : [],
-      },
-      status: {
-        visibility: visibility,
-        likes: 0,
-        comments: 0,
-        shares: 0,
-      },
-      tags: tags.split(",").map((tag) => tag.trim()),
-    };
+    setIsSubmitting(true);
 
-    // Call the onSubmit prop with the post data
-    onSubmit(postData);
+    try {
+      const formData = new FormData();
+      formData.append('text', text.trim());
 
-    // Reset the form and hide it
-    setPostContent("");
-    setMediaFile(null);
-    setMediaPreview(null);
-    setVisibility("public");
-    setTags("");
-    setError("");
-    setIsFormVisible(false); // Hide the form after submission
+      if (mediaFile) {
+        formData.append('media', mediaFile);
+      }
+
+      const tagArray = tags
+        .split(',')
+        .map(tag => tag.trim())
+        .filter(tag => tag !== '');
+
+      formData.append('tags', JSON.stringify(tagArray));
+
+      // Log the FormData contents for debugging
+      console.log('Form data being sent:');
+      for (let [key, value] of formData.entries()) {
+        console.log(key, value);
+      }
+
+      const result = await onSubmit(formData);
+      console.log('Post created successfully:', result);
+
+      // Clear form
+      setText('');
+      setTags('');
+      setMediaFile(null);
+      setMediaPreview(null);
+    } catch (error) {
+      console.error('Submit error:', error);
+      setError(error.message || 'Error creating post. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-      {/* Always show the user profile section */}
-      <div className="flex items-center gap-4 mb-6">
-        <div className="w-12 h-12 rounded-full overflow-hidden">
-          <img
-            src={userAvatar}
-            alt={userName}
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <div>
-          <h3 className="font-semibold text-lg">{userName}</h3>
-          <p className="text-sm text-gray-500">What's on your mind?</p>
-        </div>
+    <div className="bg-white rounded-lg shadow p-4 mb-6">
+      <div className="flex items-center mb-4">
+        <img
+          src={userAvatar}
+          alt={userName}
+          className="w-10 h-10 rounded-full mr-3"
+        />
+        <span className="font-semibold">{userName}</span>
       </div>
 
-      {/* Button to toggle form visibility */}
-      {!isFormVisible && (
-        <button
-          onClick={() => setIsFormVisible(true)}
-          className="w-full flex items-center justify-center gap-2 p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-        >
-          <FaPlus />
-          <span>Create a Post</span>
-        </button>
+      {error && (
+        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg">
+          {error}
+        </div>
       )}
 
-      {/* Form (visible only if isFormVisible is true) */}
-      {isFormVisible && (
-        <form onSubmit={handleSubmit}>
-          {/* Close Icon */}
-          <div className="flex justify-end mb-4">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <textarea
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="What's on your mind?"
+          className="w-full p-3 border rounded-lg min-h-[100px] resize-none focus:outline-none focus:ring-2 focus:ring-blue-400"
+          required
+        />
+
+        <input
+          type="text"
+          value={tags}
+          onChange={(e) => setTags(e.target.value)}
+          placeholder="Add tags (comma separated)"
+          className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+
+        {mediaPreview && (
+          <div className="relative">
+            <img
+              src={mediaPreview}
+              alt="Preview"
+              className="max-h-60 rounded-lg mx-auto"
+            />
             <button
               type="button"
-              onClick={() => setIsFormVisible(false)}
-              className="text-gray-600 hover:text-red-500"
+              onClick={removeMedia}
+              className="absolute top-2 right-2 bg-gray-800 bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-70"
             >
-              <FaTimes className="text-2xl" />
+              <FaTimes />
             </button>
           </div>
+        )}
 
-          {/* Text Content */}
-          <textarea
-            value={postContent}
-            onChange={(e) => setPostContent(e.target.value)}
-            placeholder="What's on your mind?"
-            className="w-full p-3 border border-gray-300 rounded-lg mb-4 resize-none"
-            rows="3"
-          />
-
-          {/* Media Preview */}
-          {mediaPreview && (
-            <div className="relative mb-4">
-              <button
-                type="button"
-                onClick={() => {
-                  setMediaFile(null);
-                  setMediaPreview(null);
-                }}
-                className="absolute top-2 right-2 bg-gray-800 text-white p-1 rounded-full hover:bg-gray-700"
-              >
-                <FaTimes />
-              </button>
-              {mediaFile.type.startsWith("image") ? (
-                <img
-                  src={mediaPreview}
-                  alt="Preview"
-                  className="w-full max-h-96 object-cover rounded-lg"
-                />
-              ) : (
-                <video
-                  src={mediaPreview}
-                  controls
-                  className="w-full max-h-96 rounded-lg"
-                />
-              )}
-            </div>
-          )}
-
-          {/* Visibility Selector */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Visibility
-            </label>
-            <select
-              value={visibility}
-              onChange={(e) => setVisibility(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-lg"
-            >
-              <option value="public">Public</option>
-              <option value="private">Private</option>
-              <option value="friends">Friends Only</option>
-            </select>
-          </div>
-
-          {/* Tags Input */}
-          <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Tags (comma-separated)
-            </label>
+        <div className="flex justify-between items-center">
+          <label className="cursor-pointer text-blue-500 hover:text-blue-600">
+            <FaImage className="text-xl" />
             <input
-              type="text"
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
-              placeholder="e.g., sunset, nature"
-              className="w-full p-2 border border-gray-300 rounded-lg"
+              type="file"
+              accept="image/*"
+              onChange={handleMediaChange}
+              className="hidden"
+              aria-label="Upload media"
             />
-          </div>
+          </label>
 
-          {/* Error Message */}
-          {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-
-          {/* Action Buttons */}
-          <div className="flex justify-between items-center">
-            <div className="flex gap-4">
-              <label className="flex items-center gap-2 text-gray-600 hover:text-blue-500 cursor-pointer">
-                <FaImage />
-                <span>Photo/Video</span>
-                <input
-                  type="file"
-                  accept="image/*, video/*"
-                  onChange={handleFileChange}
-                  className="hidden"
-                />
-              </label>
-              <button
-                type="button"
-                className="flex items-center gap-2 text-gray-600 hover:text-blue-500"
-              >
-                <FaSmile />
-                <span>Feeling/Activity</span>
-              </button>
-            </div>
-            <button
-              type="submit"
-              className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-            >
-              Post
-            </button>
-          </div>
-        </form>
-      )}
+          <button
+            type="submit"
+            disabled={isSubmitting || !text.trim()}
+            className={`px-4 py-2 rounded-lg flex items-center ${
+              isSubmitting || !text.trim()
+                ? 'bg-gray-300 cursor-not-allowed'
+                : 'bg-blue-500 hover:bg-blue-600 text-white'
+            }`}
+          >
+            {isSubmitting && <FaSpinner className="animate-spin mr-2" />}
+            {isSubmitting ? 'Posting...' : 'Post'}
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

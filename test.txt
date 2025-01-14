@@ -49,3 +49,26 @@
                 />
               </div>
             </div>
+
+
+
+
+
+            ///
+            "use client";
+
+import React, { useState, useEffect } from "react";
+import { FaSpinner } from "react-icons/fa";
+import CreatePost from "./CreatePostForm";
+import Post from "./Post";
+
+const SocialCard = () => {
+  const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [userData, setUserData] = useState(null);
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  // Your component logic here
+};
+
+export default SocialCard;

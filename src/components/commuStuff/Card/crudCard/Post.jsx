@@ -1,113 +1,145 @@
-"use client"; // Ensure this is at the top for Next.js
-
-import React, { useState } from "react"; // Import useState
-import { FaEdit, FaTrash, FaHeart, FaShareAlt } from "react-icons/fa"; // Import icons
+// Post.js
+"use client";
+import React, { useState } from 'react';
+import { FaEllipsisH, FaPencilAlt, FaTrash } from 'react-icons/fa';
 
 const Post = ({ post, onEdit, onDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [editedContent, setEditedContent] = useState(post.content?.text || "");
+  const [editText, setEditText] = useState(post.content?.text || '');
+  const [showMenu, setShowMenu] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
-  // Get the logged-in user's ID
-  const storedUser = localStorage.getItem("user");
-  const loggedInUserId = storedUser ? JSON.parse(storedUser)._id : null;
+  const handleUpdate = async () => {
+    try {
+      const updatedContent = {
+        content: {
+          ...post.content,
+          text: editText
+        },
+        status: post.status,
+        tags: post.tags
+      };
 
-  // Check if the logged-in user is the author of the post
-  const isAuthor = post.user?._id === loggedInUserId;
-
-  const handleSave = () => {
-    onEdit(post._id, { text: editedContent, media: post.content?.media || [] });
-    setIsEditing(false);
+      await onEdit(post._id, updatedContent);
+      setIsEditing(false);
+    } catch (error) {
+      console.error('Error updating post:', error);
+    }
   };
 
+  const handleDelete = async () => {
+    if (window.confirm('Are you sure you want to delete this post?')) {
+      setIsDeleting(true);
+      try {
+        await onDelete(post._id);
+      } catch (error) {
+        console.error('Error deleting post:', error);
+        setIsDeleting(false);
+      }
+    }
+  };
+
+  const storedUser = typeof localStorage !== 'undefined' ? localStorage.getItem('user') : null;
+  const currentUserId = storedUser ? JSON.parse(storedUser)._id : null;
+  const isOwner = currentUserId === post.user?.id;
+
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-full overflow-hidden">
-            <img
-              src={post.user?.profile?.profileImageUrl || "https://via.placeholder.com/150"}
-              alt={post.user?.username || "User"}
-              className="w-full h-full object-cover"
-            />
-          </div>
+    <div className="bg-white rounded-lg shadow p-4 mb-4">
+      <div className="flex justify-between items-start mb-4">
+        <div className="flex items-center">
+          <img
+            src={post.user?.profile?.profileImageUrl || 'https://via.placeholder.com/40'}
+            alt={post.user?.profile?.name || 'User'}
+            className="w-10 h-10 rounded-full mr-3"
+          />
           <div>
-            <h3 className="font-semibold">{post.user?.username || "Unknown User"}</h3>
+            <h3 className="font-semibold">{post.user?.profile?.name || 'Unknown User'}</h3>
             <p className="text-sm text-gray-500">
-              {post.createdAt ? new Date(post.createdAt).toLocaleString() : "Unknown Date"}
+              {new Date(post.createdAt).toLocaleDateString()}
             </p>
           </div>
         </div>
 
-        {/* Show edit/delete buttons only if the user is the author */}
-        {isAuthor && (
-          <div className="flex items-center gap-2">
+        {isOwner && (
+          <div className="relative">
             <button
-              onClick={() => setIsEditing(!isEditing)}
-              className="text-gray-600 hover:text-blue-500"
+              onClick={() => setShowMenu(!showMenu)}
+              className="p-2 hover:bg-gray-100 rounded-full"
             >
-              <FaEdit />
+              <FaEllipsisH />
             </button>
-            <button
-              onClick={() => onDelete(post._id)}
-              className="text-gray-600 hover:text-red-500"
-            >
-              <FaTrash />
-            </button>
+
+            {showMenu && (
+              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl z-10">
+                <button
+                  onClick={() => {
+                    setIsEditing(true);
+                    setShowMenu(false);
+                  }}
+                  className="w-full px-4 py-2 text-left flex items-center hover:bg-gray-100 rounded-t-lg"
+                >
+                  <FaPencilAlt className="mr-2" /> Edit Post
+                </button>
+                <button
+                  onClick={handleDelete}
+                  disabled={isDeleting}
+                  className="w-full px-4 py-2 text-left flex items-center text-red-500 hover:bg-gray-100 rounded-b-lg"
+                >
+                  <FaTrash className="mr-2" /> Delete Post
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>
 
-      {/* Rest of the component */}
       {isEditing ? (
-        <div>
+        <div className="mb-4">
           <textarea
-            value={editedContent}
-            onChange={(e) => setEditedContent(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-lg mb-4 resize-none"
-            rows="3"
+            value={editText}
+            onChange={(e) => setEditText(e.target.value)}
+            className="w-full p-3 border rounded-lg mb-3 min-h-[100px] resize-none focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
-          <button
-            onClick={handleSave}
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-          >
-            Save
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={handleUpdate}
+              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+            >
+              Save
+            </button>
+            <button
+              onClick={() => setIsEditing(false)}
+              className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       ) : (
-        <div>
-          <p className="text-gray-700 mb-4">{post.content?.text || "No content available"}</p>
-          {post.content?.media && post.content.media.length > 0 && (
-            <div className="mb-4">
-              {post.content.media.map((mediaItem) =>
-                mediaItem.type === "image" ? (
-                  <img
-                    key={mediaItem._id}
-                    src={mediaItem.url}
-                    alt={mediaItem.altText || "Media"}
-                    className="w-full max-h-96 object-cover rounded-lg"
-                  />
-                ) : (
-                  <video
-                    key={mediaItem._id}
-                    src={mediaItem.url}
-                    controls
-                    className="w-full max-h-96 rounded-lg"
-                  />
-                )
-              )}
-            </div>
-          )}
-        </div>
+        <p className="mb-4">{post.content?.text}</p>
       )}
 
-      <div className="flex items-center gap-6">
-        <button className="flex items-center gap-2 text-gray-600 hover:text-red-500">
-          <FaHeart /> <span>{post.status?.likes || 0} Likes</span>
-        </button>
-        <button className="text-gray-600 hover:text-blue-500">
-          <FaShareAlt />
-        </button>
-      </div>
+      {post.content?.media?.map((media, index) => (
+        <img
+          key={media._id || index}
+          src={media.url}
+          alt={media.altText || 'Post image'}
+          className="w-full rounded-lg mb-4 max-h-96 object-cover"
+        />
+      ))}
+
+      {post.tags?.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {post.tags.map((tag, index) => (
+            <span
+              key={index}
+              className="bg-gray-100 px-2 py-1 rounded-full text-sm text-gray-600"
+            >
+              #{tag}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
