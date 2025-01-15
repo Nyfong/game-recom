@@ -5,6 +5,7 @@ import logo from "@/assets/icon/favBlue.png";
 import Image from "next/image";
 import { detailTeam } from "@/lib/teamData";
 import SharingHeartAboutUs from "@/components/button/SharingHeart.aboutus";
+
 let PersonalAboutus = async ({ params }) => {
   const details = detailTeam;
   const { pageid } = await params; // fetching the params using async and await
@@ -169,12 +170,13 @@ let PersonalAboutus = async ({ params }) => {
                     {update.position}
                   </p>
                   <hr />
-                  <div className="flex gap items-center justify-evenly p-2 md:p-4">
+                  <div className="flex flex-col  sm:flex-row gap items-center justify-evenly p-2 md:p-4">
                     {picLogoSkill.map((el) => (
                       <>
                         <Image
+                          key={el.id}
                           src={el}
-                          className=" w-6 md:w-20 h-8  object-contain  "
+                          className=" w-6 md:w-8 lg:w-20 h-8  object-contain  "
                           alt="logo"
                         />
                       </>

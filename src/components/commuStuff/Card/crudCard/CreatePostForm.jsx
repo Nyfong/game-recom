@@ -140,12 +140,18 @@ const CreatePost = ({ userName, userAvatar, onSubmit }) => {
       setMediaFile(null);
       setMediaPreview(null);
     } catch (error) {
+      if (error.message.includes("Failed to fetch")) {
+        setError("Network error: Please check your internet connection.");
+      } else {
+        setError(error.message || 'Error creating post. Please try again.');
+      }
       console.error('Submit error:', error);
-      setError(error.message || 'Error creating post. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  const placeholderImageUrl = 'https://via.placeholder.com/40?text=User';
 
   return (
     <div className="bg-white rounded-lg shadow p-4 mb-6">
@@ -166,6 +172,8 @@ const CreatePost = ({ userName, userAvatar, onSubmit }) => {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <textarea
+          id="postText"
+          name="postText"
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="What's on your mind?"
@@ -174,6 +182,8 @@ const CreatePost = ({ userName, userAvatar, onSubmit }) => {
         />
 
         <input
+          id="postTags"
+          name="postTags"
           type="text"
           value={tags}
           onChange={(e) => setTags(e.target.value)}

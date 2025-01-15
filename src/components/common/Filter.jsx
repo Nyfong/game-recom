@@ -57,18 +57,23 @@ const frameworks = [
   },
 ];
 
-// Add onFilter prop
-function FilterBtn({ onFilter }) {
+function FilterBtn({ games = [], onFilter }) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
+  const [searchQuery, setSearchQuery] = React.useState("");
 
-  // Create a handler that updates both local state and parent
+  // Handle category selection
   const handleSelect = (currentValue) => {
     const newValue = currentValue === value ? "" : currentValue;
     setValue(newValue);
-    // Pass the selected value back to parent
-    onFilter?.(newValue);
+    onFilter?.(newValue, searchQuery); // Pass both category and search query to parent
     setOpen(false);
+  };
+
+  // Handle search input change
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    onFilter?.(value, query); // Pass both category and search query to parent
   };
 
   return (
@@ -88,15 +93,20 @@ function FilterBtn({ onFilter }) {
       </PopoverTrigger>
       <PopoverContent className="w-[200px] md:w-[500px] p-0">
         <Command>
-          <CommandInput placeholder="Search Category..." />
+          <CommandInput
+            placeholder="Search Category or Game..."
+            value={searchQuery}
+            onValueChange={handleSearch} // Update search query
+          />
           <CommandList>
-            <CommandEmpty>No category found.</CommandEmpty>
+            <CommandEmpty>No category or game found.</CommandEmpty>
             <CommandGroup>
+              {/* Render categories */}
               {frameworks.map((framework) => (
                 <CommandItem
                   key={framework.value}
                   value={framework.value}
-                  onSelect={handleSelect} // Use the new handler
+                  onSelect={handleSelect}
                 >
                   <Check
                     className={cn(
@@ -108,6 +118,24 @@ function FilterBtn({ onFilter }) {
                 </CommandItem>
               ))}
             </CommandGroup>
+            {/* Render filtered games */}
+            {games
+              .filter(
+                (game) =>
+                  game.title
+                    .toLowerCase()
+                    .includes(searchQuery.toLowerCase()) &&
+                  (value === "" || game.genre === value)
+              )
+              .map((game) => (
+                <CommandItem
+                  key={game._id}
+                  value={game.title}
+                  onSelect={() => handleSelect(game.genre)}
+                >
+                  {game.title}
+                </CommandItem>
+              ))}
           </CommandList>
         </Command>
       </PopoverContent>

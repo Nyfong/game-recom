@@ -11,6 +11,7 @@ export const metadata = {
 };
 
 let Homepage = () => {
+  const sliceNumber = 4;
   return (
     <>
       {/* slider */}
@@ -21,7 +22,7 @@ let Homepage = () => {
 
         <CarouselComponent />
         {/* grid display product */}
-        <ProdCard />
+        <ProdCard sliceNumber={sliceNumber} />
 
         <HomeSection />
       </main>

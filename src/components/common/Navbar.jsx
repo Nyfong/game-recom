@@ -58,7 +58,7 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="bg-blue-800 sticky top-0 z-10">
+      <header className="bg-blue-800 sticky top-0 z-10 md:z-20">
         <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between overflow-hidden">
             <div className="md:flex md:items-center md:gap-5">
@@ -117,16 +117,14 @@ const Navbar = () => {
                   <div className="flex items-center gap-4">
                     <div className="relative group">
                       <Link href="/account">
-                        <div className="flex flex-col items-center">
-                          <Image
+                        <div className="flex flex-col items-center overflow-hidden">
+                          <img
                             src={
                               userImage ||
                               "https://static.vecteezy.com/system/resources/previews/001/840/612/non_2x/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg"
                             }
                             alt="User Profile"
-                            width={40}
-                            height={40}
-                            className="rounded-full cursor-pointer"
+                            className="rounded-full w-8 h-8 object-cover cursor-pointer"
                           />
                           {/* User name appears on hover */}
                           <div className="absolute top-full mt-2 text-white text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200">
@@ -177,11 +175,24 @@ const Navbar = () => {
           </div>
         </div>
 
+        {/* Drawer Overlay */}
         {isDrawerOpen && (
-          <div className="md:hidden bg-blue-800 text-white p-10 z-20 flex flex-col items-start justify-center pt-16 space-y-6">
+          <div
+            className="fixed inset-0 bg-black/50 z-30 md:hidden"
+            onClick={toggleDrawer}
+          ></div>
+        )}
+
+        {/* Drawer */}
+        <div
+          className={`fixed top-0 right-0 h-full w-64 bg-blue-800 text-white z-40 transform transition-transform duration-300 ease-in-out ${
+            isDrawerOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <div className="p-6">
             <button
               onClick={toggleDrawer}
-              className="text-white absolute top-[15%] right-5"
+              className="text-white absolute top-4 right-4"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -198,70 +209,67 @@ const Navbar = () => {
                 />
               </svg>
             </button>
-            <Link
-              className="text-white flex items-center gap-2 transition hover:text-white/75 py-5"
-              href="/content/game"
-            >
-              <LiaGamepadSolid />
-              <span>Games</span>
-            </Link>
-            <Link
-              className="text-white flex items-center gap-2 transition hover:text-white/75 py-5"
-              href="/content/commu"
-            >
-              <AiFillGift />
-              <span>Community</span>
-            </Link>
-            <Link
-              className="text-white flex items-center gap-2 transition hover:text-white/75 py-5"
-              href="/content/aboutus"
-            >
-              <IoGlasses />
-              <span>About Us</span>
-            </Link>
-            <Link
-              className="text-white flex items-center gap-2 transition hover:text-white/75 py-5"
-              href="/content/blog"
-            >
-              <BiAtom />
-              <span>Blog</span>
-            </Link>
-            {user ? (
-              <div className="text-white flex flex-col items-center gap-2">
-                <Link href="/account">
-                  <hr className="bg-gray-300 mb-5" />
-                  <div className="flex items-center gap-3">
-                    <Image
+            <nav className="mt-10">
+              <Link
+                className="block py-3 hover:text-white/75"
+                href="/content/game"
+              >
+                <LiaGamepadSolid className="inline-block mr-2" />
+                Games
+              </Link>
+              <Link
+                className="block py-3 hover:text-white/75"
+                href="/content/commu"
+              >
+                <AiFillGift className="inline-block mr-2" />
+                Community
+              </Link>
+              <Link
+                className="block py-3 hover:text-white/75"
+                href="/content/aboutus"
+              >
+                <IoGlasses className="inline-block mr-2" />
+                About Us
+              </Link>
+              <Link
+                className="block py-3 hover:text-white/75"
+                href="/content/blog"
+              >
+                <BiAtom className="inline-block mr-2" />
+                Blog
+              </Link>
+              {user ? (
+                <>
+                  <hr className="my-4 border-gray-600" />
+                  <Link
+                    href="/account"
+                    className="block py-3 hover:text-white/75"
+                  >
+                    <img
                       src={
                         userImage ||
                         "https://static.vecteezy.com/system/resources/previews/001/840/612/non_2x/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg"
                       }
                       alt="User Profile"
-                      width={50}
-                      height={50}
-                      className="rounded-full"
+                      className="rounded-full inline-block mr-2  w-8 h-8 object-cover cursor-pointer"
                     />
-                    <span>My profile</span>
-                  </div>
-                  <hr className="bg-gray-300 mt-5" />
+                    My Profile
+                  </Link>
+                  <button
+                    onClick={handleSignOut}
+                    className="block w-full py-3 text-left hover:text-white/75"
+                  >
+                    Sign Out
+                  </button>
+                </>
+              ) : (
+                <Link href="/signin" className="block py-3 hover:text-white/75">
+                  Sign In
                 </Link>
-                <button
-                  onClick={handleSignOut}
-                  className="transition hover:text-white/75 p-5 bg-red-500 rounded-lg mt-5"
-                >
-                  Sign Out
-                </button>
-              </div>
-            ) : (
-              <Link
-                className="text-white flex items-center gap-2 transition hover:text-white/75 py-5"
-                href="/signin"
-              >
-                Sign In
-              </Link>
-            )}
+              )}
+            </nav>
           </div>
-        )}
+        </div>
       </header>
     </>
   );
