@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Trash2, Edit, PlusCircle, Loader2, Heart, MessageCircle } from "lucide-react";
+import { Trash2, Edit, PlusCircle, Loader2, Heart, MessageCircle, CheckCircle, XCircle } from "lucide-react";
 import Image from "next/image";
 import CommunityPage from "@/app/content/commu/page";
 
@@ -155,6 +155,58 @@ const Community = () => {
       await fetchPosts();
     } catch (err) {
       console.error("Delete error:", err);
+      setError(err.message);
+    }
+  };
+
+  // Handle approving a post
+  const handleApprove = async (postId) => {
+    try {
+      const userId = "logged-in-user-id"; // Replace with the logged-in user's ID
+      const response = await fetch(
+        `${API_BASE_URL}/users/${userId}/posts/${postId}/approve`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(error || "Failed to approve post");
+      }
+      await fetchPosts();
+    } catch (err) {
+      console.error("Approve error:", err);
+      setError(err.message);
+    }
+  };
+
+  // Handle disapproving a post
+  const handleDisapprove = async (postId) => {
+    try {
+      const userId = "logged-in-user-id"; // Replace with the logged-in user's ID
+      const response = await fetch(
+        `${API_BASE_URL}/users/${userId}/posts/${postId}/disapprove`,
+        {
+          method: "PUT", // Change method to PUT
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(error || "Failed to disapprove post");
+      }
+      await fetchPosts();
+    } catch (err) {
+      console.error("Disapprove error:", err);
       setError(err.message);
     }
   };
@@ -367,6 +419,18 @@ const Community = () => {
                   className="text-red-500 hover:text-red-700"
                 >
                   <Trash2 />
+                </button>
+                <button
+                  onClick={() => handleApprove(post._id)}
+                  className="text-green-500 hover:text-green-700"
+                >
+                  <CheckCircle />
+                </button>
+                <button
+                  onClick={() => handleDisapprove(post._id)}
+                  className="text-yellow-500 hover:text-yellow-700"
+                >
+                  <XCircle />
                 </button>
               </td>
             </tr>
