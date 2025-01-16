@@ -138,7 +138,7 @@ const AccountPage = () => {
           isDrawerOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0 md:static md:w-1/3 lg:w-1/4`}
       >
-        <div className="p-4 ">
+        <div className="p-4  hidden">
           <h2 className="text-2xl font-semibold mb-4">Settings</h2>
           <nav className="flex flex-col gap-2">
             <a

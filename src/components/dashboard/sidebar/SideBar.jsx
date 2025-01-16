@@ -41,6 +41,11 @@ const menuItems = [
         path: "/dashboard/community",
         icon: <PiGameControllerFill />,
       },
+      {
+        title: "Dialy Blog",
+        path: "/dashboard/dialyblog",
+        icon: <PiGameControllerFill />,
+      },
     ],
   },
   {

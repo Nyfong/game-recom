@@ -19,8 +19,8 @@ let Homepage = () => {
       {/* main content */}
       <main className="p-5 md:p-3 lg:p-0  gap-5 md:gap-3 max-w-screen-xl min-w-screen-80 mx-auto">
         <CategoryGrid />
-
-        <CarouselComponent />
+        {/* 
+        <CarouselComponent /> */}
         {/* grid display product */}
         <ProdCard sliceNumber={sliceNumber} />
 
