@@ -5,7 +5,7 @@ import Image from "next/image";
 const PLACEHOLDER_IMAGE =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==";
 
-const PostTable = ({ posts, handleEdit, handleDelete, handleApprove, handleDisapprove }) => (
+const PostTable = ({ posts, handleEdit, handleDelete, handleApprove, handleDisapprove, refreshPosts }) => (
   <div className="overflow-x-auto">
     <table className="w-full text-sm text-left">
       <thead className="bg-gray-100 text-gray-700">
@@ -32,7 +32,7 @@ const PostTable = ({ posts, handleEdit, handleDelete, handleApprove, handleDisap
                 />
               </div>
             </td>
-            <td className="p-3">{post.user.username}</td>
+            <td className="p-3">{post.user ? post.user.username : "Unknown User"}</td>
             <td className="p-3">{post.content.text}</td>
             <td className="p-3">
               {post.content.media && post.content.media.length > 0 && (
@@ -49,25 +49,25 @@ const PostTable = ({ posts, handleEdit, handleDelete, handleApprove, handleDisap
             <td className="p-3">{post.status.comments.length}</td>
             <td className="p-3 flex space-x-2">
               <button
-                onClick={() => handleEdit(post)}
+                onClick={() => { handleEdit(post); refreshPosts(); }}
                 className="text-blue-500 hover:text-blue-700"
               >
                 <Edit />
               </button>
               <button
-                onClick={() => handleDelete(post._id)}
+                onClick={() => { handleDelete(post._id); refreshPosts(); }}
                 className="text-red-500 hover:text-red-700"
               >
                 <Trash2 />
               </button>
               <button
-                onClick={() => handleApprove(post._id)}
+                onClick={() => { handleApprove(post._id); refreshPosts(); }}
                 className="text-green-500 hover:text-green-700"
               >
                 <CheckCircle />
               </button>
               <button
-                onClick={() => handleDisapprove(post._id)}
+                onClick={() => { handleDisapprove(post._id); refreshPosts(); }}
                 className="text-yellow-500 hover:text-yellow-700"
               >
                 <XCircle />

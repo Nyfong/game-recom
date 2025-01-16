@@ -43,7 +43,7 @@ export const handleAddNew = (setSelectedPost, setImageFile, setIsAddMode, setIsM
   setIsModalOpen(true);
 };
 
-export const handleSave = async (selectedPost, imageFile, setPosts, setIsModalOpen, setImageFile, setError) => {
+export const handleSave = async (selectedPost, imageFile, tags, setPosts, setIsModalOpen, setImageFile, setError, setIsLoading) => {
   try {
     if (!selectedPost.content.text || !selectedPost.userId) {
       throw new Error("Post content and user ID are required");
@@ -54,7 +54,7 @@ export const handleSave = async (selectedPost, imageFile, setPosts, setIsModalOp
         text: selectedPost.content.text,
         media: selectedPost.content.media || [],
       },
-      tags: selectedPost.tags || [],
+      tags: tags || [],
       userId: selectedPost.userId,
     };
 
@@ -91,7 +91,8 @@ export const handleSave = async (selectedPost, imageFile, setPosts, setIsModalOp
       throw new Error(errorData.message || "Failed to create post");
     }
 
-    await fetchPosts(setPosts, setIsLoading, setError);
+    const newPost = await response.json();
+    setPosts((prevPosts) => [newPost, ...prevPosts]);
     setIsModalOpen(false);
     setImageFile(null);
   } catch (err) {
