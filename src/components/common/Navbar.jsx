@@ -10,6 +10,7 @@ import { LiaGamepadSolid } from "react-icons/lia";
 import { AiFillGift } from "react-icons/ai";
 import { IoGlasses } from "react-icons/io5";
 import { BiAtom } from "react-icons/bi";
+import { MdDashboard } from "react-icons/md";
 
 const Navbar = () => {
   const router = useRouter();
@@ -17,13 +18,17 @@ const Navbar = () => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [userImage, setUserImage] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   // Fetch user data from localStorage and API
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
+    const adminStatus = localStorage.getItem("admin") === "true";
+    
     if (storedUser) {
       const parsedUser = JSON.parse(storedUser);
       setUser(parsedUser);
+      setIsAdmin(adminStatus);
 
       // Fetch user profile image from the backend
       fetch(`https://backend-apigame.onrender.com/api/users/${parsedUser._id}`)
@@ -43,8 +48,10 @@ const Navbar = () => {
   const handleSignOut = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("user");
+    localStorage.removeItem("admin");
     setUser(null);
     setUserImage(null);
+    setIsAdmin(false);
     router.push("/");
   };
 
@@ -54,6 +61,19 @@ const Navbar = () => {
 
   if (isLoading) {
     return null;
+  }
+
+  // Navigation items with conditional dashboard
+  const navigationItems = [
+    { href: "/content/game", icon: <LiaGamepadSolid />, text: "Games" },
+    { href: "/content/commu", icon: <AiFillGift />, text: "Community" },
+    { href: "/content/aboutus", icon: <IoGlasses />, text: "About Us" },
+    { href: "/content/blog", icon: <BiAtom />, text: "Blog" },
+  ];
+
+  // Add dashboard for admin users
+  if (isAdmin) {
+    navigationItems.push({ href: "/dashboard", icon: <MdDashboard />, text: "Dashboard" });
   }
 
   return (
@@ -71,42 +91,17 @@ const Navbar = () => {
             <div className="hidden md:block">
               <nav aria-label="Global">
                 <ul className="flex items-center gap-6 text-sm">
-                  <li>
-                    <Link
-                      className="text-white flex items-center gap-2 transition hover:text-white/75 py-5"
-                      href="/content/game"
-                    >
-                      <LiaGamepadSolid />
-                      <span>Games</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="text-white flex items-center gap-2 transition hover:text-white/75 py-5"
-                      href="/content/commu"
-                    >
-                      <AiFillGift />
-                      <span>Community</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="text-white flex items-center gap-2 transition hover:text-white/75 py-5"
-                      href="/content/aboutus"
-                    >
-                      <IoGlasses />
-                      <span>About Us</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="text-white flex items-center gap-2 transition hover:text-white/75 py-5"
-                      href="/content/blog"
-                    >
-                      <BiAtom />
-                      <span>Blog</span>
-                    </Link>
-                  </li>
+                  {navigationItems.map((item, index) => (
+                    <li key={index}>
+                      <Link
+                        className="text-white flex items-center gap-2 transition hover:text-white/75 py-5"
+                        href={item.href}
+                      >
+                        {item.icon}
+                        <span>{item.text}</span>
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </nav>
             </div>
@@ -126,7 +121,6 @@ const Navbar = () => {
                             alt="User Profile"
                             className="rounded-full w-8 h-8 object-cover cursor-pointer"
                           />
-                          {/* User name appears on hover */}
                           <div className="absolute top-full mt-2 text-white text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                             {user.username}
                           </div>
@@ -210,34 +204,17 @@ const Navbar = () => {
               </svg>
             </button>
             <nav className="mt-10">
-              <Link
-                className="block py-3 hover:text-white/75"
-                href="/content/game"
-              >
-                <LiaGamepadSolid className="inline-block mr-2" />
-                Games
-              </Link>
-              <Link
-                className="block py-3 hover:text-white/75"
-                href="/content/commu"
-              >
-                <AiFillGift className="inline-block mr-2" />
-                Community
-              </Link>
-              <Link
-                className="block py-3 hover:text-white/75"
-                href="/content/aboutus"
-              >
-                <IoGlasses className="inline-block mr-2" />
-                About Us
-              </Link>
-              <Link
-                className="block py-3 hover:text-white/75"
-                href="/content/blog"
-              >
-                <BiAtom className="inline-block mr-2" />
-                Blog
-              </Link>
+              {navigationItems.map((item, index) => (
+                <Link
+                  key={index}
+                  className="block py-3 hover:text-white/75"
+                  href={item.href}
+                >
+                  <span className="inline-block mr-2">{item.icon}</span>
+                  {item.text}
+                </Link>
+              ))}
+              
               {user ? (
                 <>
                   <hr className="my-4 border-gray-600" />
@@ -251,7 +228,7 @@ const Navbar = () => {
                         "https://static.vecteezy.com/system/resources/previews/001/840/612/non_2x/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg"
                       }
                       alt="User Profile"
-                      className="rounded-full inline-block mr-2  w-8 h-8 object-cover cursor-pointer"
+                      className="rounded-full inline-block mr-2 w-8 h-8 object-cover cursor-pointer"
                     />
                     My Profile
                   </Link>

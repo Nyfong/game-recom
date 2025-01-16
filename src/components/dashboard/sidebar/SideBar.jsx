@@ -4,22 +4,15 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Noavatar from "../../../../public/noavatar.png";
-import { MdCategory } from "react-icons/md";
 import {
   MdDashboard,
   MdSupervisedUserCircle,
-  MdShoppingBag,
-  MdAttachMoney,
   MdWork,
-  MdAnalytics,
-  MdPeople,
   MdOutlineSettings,
-  MdHelpCenter,
   MdLogout,
+  MdPeople,
 } from "react-icons/md";
 import { PiGameControllerFill } from "react-icons/pi";
-import { FaCartArrowDown } from "react-icons/fa";
-import { Section } from "lucide-react";
 
 const menuItems = [
   {
@@ -69,37 +62,71 @@ const menuItems = [
 ];
 
 const SideBar = () => {
-  // Dark mode state
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [adminData, setAdminData] = useState({
+    name: "",
+    profileImageUrl: null
+  });
+  const [imageError, setImageError] = useState(false);
 
-  // Dark mode effect
   useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [isDarkMode]);
+    const fetchAdminData = async () => {
+      try {
+        const response = await fetch("https://backend-apigame.onrender.com/api/users");
+        const result = await response.json();
+        
+        // Handle different possible response structures
+        const users = Array.isArray(result) ? result : 
+                     result.data ? result.data : 
+                     result.users ? result.users : [];
+        
+        const admin = users.find(user => 
+          user && typeof user === 'object' && user.role === "admin"
+        );
+
+        if (admin && admin.profile) {
+          setAdminData({
+            name: admin.profile.name || "Administrator",
+            profileImageUrl: admin.profile.profileImageUrl || null
+          });
+        } else {
+          // Set default values if no admin is found
+          setAdminData({
+            name: "Administrator",
+            profileImageUrl: null
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching admin data:", error);
+        setImageError(true);
+        // Set default values on error
+        setAdminData({
+          name: "Administrator",
+          profileImageUrl: null
+        });
+      }
+    };
+
+    fetchAdminData();
+  }, []);
 
   return (
-    //
-    //onClick={() => setIsDarkMode(!isDarkMode)} ${isDarkMode ? "bg-gray-800 text-white" : "bg-white text-black"
-
-    <section className={`p-10`}>
-      <nav
-        className={`text-black border-b border-slate-500 w-full max-h-screen sticky top-[0px] `}
-      >
+    <section className="p-10">
+      <nav className="text-black border-b border-slate-500 w-full max-h-screen sticky top-[0px]">
         <div className="flex items-center gap-[25px] mb-[20px]">
-          <Image
-            className="rounded-full object-cover w-[50px] h-[50px]"
-            src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZhY2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
-            alt="User Avatar"
-            width={50}
-            height={50}
-          />
+          <div className="relative w-[50px] h-[50px]">
+            <Image
+              className="rounded-full object-cover"
+              src={imageError || !adminData.profileImageUrl ? Noavatar : adminData.profileImageUrl}
+              alt="User Avatar"
+              fill
+              sizes="50px"
+              onError={() => setImageError(true)}
+              priority
+            />
+          </div>
 
           <div className="flex flex-col ml-2">
-            <span className="font-bold">Kuri kie</span>
+            <span className="font-bold">{adminData.name}</span>
             <span className="text-sm text-gray-400">Administrator</span>
           </div>
         </div>

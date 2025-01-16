@@ -9,8 +9,10 @@ const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
   const router = useRouter();
+
+  // List of admin emails
+  const adminEmails = ["admin2@example.com", "admin@example.com"]; // Add all admin emails here
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,9 +32,12 @@ const Signin = () => {
       const result = await response.json();
 
       if (response.ok) {
+        // Check if the email is in the admin list
+        const isAdmin = adminEmails.includes(email.toLowerCase());
+
         const userData = {
           profile: {
-            name: result.user.name,
+            name: result.user.name || "",
             profileImageUrl: result.user.profileImageUrl || "",
             bio: result.user.bio || "",
             location: result.user.location || "",
@@ -45,7 +50,7 @@ const Signin = () => {
             likes: result.user.likes || [],
           },
           settings: {
-            notifications: result.user.settings?.notifications || {
+            notifications: {
               email: true,
               push: true,
             },
@@ -55,27 +60,26 @@ const Signin = () => {
           _id: result.user._id,
           username: result.user.username,
           email: result.user.email,
+          role: isAdmin ? "admin" : "user", // Set role based on email check
           createdAt: result.user.createdAt,
           updatedAt: result.user.updatedAt,
           token: result.token,
           __v: result.user.__v,
         };
 
-        // Storing the entire user data in localStorage
+        // Store user data
         localStorage.setItem("user", JSON.stringify(userData));
 
-        // Redirecting based on role
-        if (result.user.role === "admin") {
-          if (!isAdmin) {
-            setError("Please use admin login for admin accounts");
-            return;
-          }
-          router.push("../../dashboard/layout.jsx");
+        // Handle admin redirect
+        if (isAdmin) {
+          localStorage.setItem("admin", "true");
+          console.log("Admin login detected, redirecting to dashboard...");
+          setTimeout(() => {
+            router.push("/dashboard");
+          }, 100);
         } else {
-          if (isAdmin) {
-            setError("Admin login required for admin accounts");
-            return;
-          }
+          localStorage.removeItem("admin");
+          console.log("Regular user login, redirecting to home...");
           router.push("/");
         }
       } else {
@@ -90,21 +94,7 @@ const Signin = () => {
   return (
     <div className="h-screen w-full flex justify-center items-center">
       <div className="w-[300px] sm:w-[390px] md:w-[500px] h-[450px] p-6 border border-gray-300 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold text-center mb-6">
-          {isAdmin ? "Admin Login" : "Sign In"}
-        </h2>
-
-        <div className="mb-4">
-          <label className="inline-flex items-center">
-            <input
-              type="checkbox"
-              checked={isAdmin}
-              onChange={(e) => setIsAdmin(e.target.checked)}
-              className="form-checkbox h-4 w-4 text-blue-600"
-            />
-            <span className="ml-2">Login as Admin</span>
-          </label>
-        </div>
+        <h2 className="text-2xl font-bold text-center mb-6">Sign In</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -132,32 +122,28 @@ const Signin = () => {
             type="submit"
             className="w-full p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
           >
-            {isAdmin ? "Admin Login" : "Sign In"}
+            Sign In
           </button>
 
-          {!isAdmin && (
-            <>
-              <div className="text-center">
-                <Link href="/signup" className="text-blue-500 hover:underline">
-                  Don't have an account? Sign Up
-                </Link>
-              </div>
+          <div className="text-center">
+            <Link href="/signup" className="text-blue-500 hover:underline">
+              Don't have an account? Sign Up
+            </Link>
+          </div>
 
-              <button
-                type="button"
-                onClick={() =>
-                  (window.location.href =
-                    "https://backend-apigame.onrender.com/auth/google")
-                }
-                className="w-full p-2 bg-green-500 text-white rounded-md hover:bg-green-600"
-              >
-                <span className="flex items-center justify-center gap-4">
-                  Sign In with Google
-                  <FcGoogle />
-                </span>
-              </button>
-            </>
-          )}
+          <button
+            type="button"
+            onClick={() =>
+              (window.location.href =
+                "https://backend-apigame.onrender.com/auth/google")
+            }
+            className="w-full p-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+          >
+            <span className="flex items-center justify-center gap-4">
+              Sign In with Google
+              <FcGoogle />
+            </span>
+          </button>
         </form>
       </div>
     </div>

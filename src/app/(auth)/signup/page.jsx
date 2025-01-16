@@ -30,7 +30,7 @@ const Signup = () => {
       email,
       password,
       name,
-      role: "user",
+      role: "user", // Ensure role is set to user
       profile: {
         name,
       },
@@ -77,7 +77,7 @@ const Signup = () => {
   return (
     <div className="h-screen w-full flex justify-center items-center">
       <div className="w-[300px] sm:w-[390px] md:w-[500px] h-[450px] p-6 border border-gray-300 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold text-center mb-6">Signup</h2>
+        <h2 className="text-2xl font-bold text-center mb-6">Sign Up</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-gray-700">Username</label>
@@ -125,7 +125,7 @@ const Signup = () => {
               type="submit"
               className="w-full p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
             >
-              Signup
+              Sign Up
             </button>
           </div>
           <div className="text-center mt-4">
