@@ -16,16 +16,18 @@ let HomeSection = () => {
                 <div className="relative h-full p-5 bg-white border-2 border-indigo-500 rounded-lg">
                   <div className="flex items-center -mt-1">
                     <h3 className="my-2 ml-3 text-lg font-bold text-gray-800">
-                      DAPP Development
+                      Games
                     </h3>
                   </div>
                   <p className="mt-3 mb-1 text-xs font-medium text-indigo-500 uppercase">
                     ------------
                   </p>
                   <p className="mb-2 text-gray-600">
-                    A decentralized application (dapp) is an application built
-                    on a decentralized network that combines a smart contract
-                    and a frontend user interface.
+                    Explore a world of exciting, high-quality games—all
+                    available for free! Whether you love action, strategy,
+                    puzzles, or multiplayer fun, we've got something for
+                    everyone. Start your gaming adventure without spending a
+                    dime.
                   </p>
                 </div>
               </div>
@@ -36,16 +38,18 @@ let HomeSection = () => {
                 <div className="relative h-full p-5 bg-white border-2 border-purple-500 rounded-lg">
                   <div className="flex items-center -mt-1">
                     <h3 className="my-2 ml-3 text-lg font-bold text-gray-800">
-                      Web 3.0 Development
+                      🎮 Unlimited Fun, Zero Cost 🎮
                     </h3>
                   </div>
                   <p className="mt-3 mb-1 text-xs font-medium text-purple-500 uppercase">
                     ------------
                   </p>
                   <p className="mb-2 text-gray-600">
-                    Web 3.0 is the third generation of Internet services that
-                    will focus on understanding and analyzing data to provide a
-                    semantic web.
+                    Step into a world of endless entertainment with our
+                    collection of free games! No subscriptions, no hidden
+                    charges—just pure gaming bliss. Whether you're a casual
+                    gamer or a hardcore enthusiast, there's something here for
+                    everyone.
                   </p>
                 </div>
               </div>
@@ -58,16 +62,16 @@ let HomeSection = () => {
                 <div className="relative h-full p-5 bg-white border-2 border-blue-400 rounded-lg">
                   <div className="flex items-center -mt-1">
                     <h3 className="my-2 ml-3 text-lg font-bold text-gray-800">
-                      Project Audit
+                      📱 Cross-Platform Fun 🖥️
                     </h3>
                   </div>
                   <p className="mt-3 mb-1 text-xs font-medium text-blue-400 uppercase">
                     ------------
                   </p>
                   <p className="mb-2 text-gray-600">
-                    A Project Audit is a formal review of a project, which is
-                    intended to assess the extent up to which project management
-                    standards are being upheld.
+                    Enjoy games on your PC, mobile, or tablet without limits.
+                    Our platform is optimized for seamless gameplay on any
+                    device, so you can have fun wherever you are.
                   </p>
                 </div>
               </div>
@@ -78,16 +82,16 @@ let HomeSection = () => {
                 <div className="relative h-full p-5 bg-white border-2 border-yellow-400 rounded-lg">
                   <div className="flex items-center -mt-1">
                     <h3 className="my-2 ml-3 text-lg font-bold text-gray-800">
-                      Hacking / RE
+                      🔒 Play with Peace of Mind 🔒
                     </h3>
                   </div>
                   <p className="mt-3 mb-1 text-xs font-medium text-yellow-400 uppercase">
                     ------------
                   </p>
                   <p className="mb-2 text-gray-600">
-                    A security hacker is someone who explores methods for
-                    breaching defenses and exploiting weaknesses in a computer
-                    system or network.
+                    All our games are free of malware, ads, and unwanted
+                    downloads. We prioritize your security so you can focus on
+                    what matters—having fun!
                   </p>
                 </div>
               </div>
@@ -98,16 +102,16 @@ let HomeSection = () => {
                 <div className="relative h-full p-5 bg-white border-2 border-green-500 rounded-lg">
                   <div className="flex items-center -mt-1">
                     <h3 className="my-2 ml-3 text-lg font-bold text-gray-800">
-                      Bot/Script Development
+                      ⏳ Always Something New ⏳
                     </h3>
                   </div>
                   <p className="mt-3 mb-1 text-xs font-medium text-green-500 uppercase">
                     ------------
                   </p>
                   <p className="mb-2 text-gray-600">
-                    Bot development frameworks were created as advanced software
-                    tools that eliminate a large amount of manual work and
-                    accelerate the development process.
+                    Stay entertained with fresh content! We update our library
+                    regularly with the latest free games, so there's always
+                    something exciting to explore.
                   </p>
                 </div>
               </div>

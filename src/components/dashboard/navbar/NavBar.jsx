@@ -5,9 +5,10 @@ import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { IoMdNotificationsOutline, IoMdNotifications } from "react-icons/io";
 import { BiSolidMessageDetail, BiMessageDetail } from "react-icons/bi";
 import { TfiSearch } from "react-icons/tfi";
+import Link from "next/link";
 
 // NavBar component
-const NavBar = () => {
+const NavBar = ({ menuItems = [] }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
   const [notifications, setNotifications] = useState([]);
@@ -18,6 +19,7 @@ const NavBar = () => {
   const [isMessagesOpen, setIsMessagesOpen] = useState(false);
 
   const [searchQuery, setSearchQuery] = useState("");
+  const [filteredMenuItems, setFilteredMenuItems] = useState(menuItems);
 
   const notificationsRef = useRef(null);
   const messagesRef = useRef(null);
@@ -35,7 +37,13 @@ const NavBar = () => {
   const handleSearch = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
-    console.log("Searching for:", query);
+    const filteredItems = menuItems.map((category) => ({
+      ...category,
+      list: category.list.filter((item) =>
+        item.title.toLowerCase().includes(query.toLowerCase())
+      ),
+    }));
+    setFilteredMenuItems(filteredItems);
   };
 
   // Toggle notifications dropdown
@@ -89,15 +97,21 @@ const NavBar = () => {
         </div>
         <div className="flex items-center space-x-6">
           <div className="relative">
-            <input
-              type="text"
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={handleSearch}
-              className="text-gray-800 dark:text-white dark:bg-gray-700 p-2 pl-10 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
-              aria-label="Search"
-            />
-            <TfiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-xl text-gray-500 dark:text-gray-300" />
+        
+           
+            {searchQuery && (
+              <div className="absolute left-0 mt-2 w-full bg-white dark:bg-gray-800 border rounded-md shadow-lg p-2 transition-all duration-300 z-10">
+                {filteredMenuItems.map((category) =>
+                  category.list.map((item) => (
+                    <Link key={item.path} href={item.path}>
+                      <div className="text-sm text-gray-800 dark:text-gray-300 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md cursor-pointer">
+                        {item.title}
+                      </div>
+                    </Link>
+                  ))
+                )}
+              </div>
+            )}
           </div>
           <div className="flex space-x-4 relative">
             {/* Notifications Icon */}

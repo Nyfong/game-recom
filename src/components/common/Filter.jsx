@@ -106,7 +106,7 @@ function FilterBtn({ games = [], onFilter }) {
                 <CommandItem
                   key={framework.value}
                   value={framework.value}
-                  onSelect={handleSelect}
+                  onSelect={() => handleSelect(framework.value)}
                 >
                   <Check
                     className={cn(

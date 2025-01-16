@@ -34,6 +34,11 @@ const menuItems = [
         path: "/dashboard/community",
         icon: <PiGameControllerFill />,
       },
+      {
+        title: "Blog",
+        path: "/dashboard/blogs",
+        icon: <PiGameControllerFill />,
+      },
     ],
   },
   {
@@ -51,7 +56,7 @@ const menuItems = [
         icon: <MdOutlineSettings />,
       },
       { title: "Logout", path: "/", icon: <MdLogout /> },
-      { title: "Team", path: "/dashboard/team", icon: <MdPeople /> },
+      // { title: "Team", path: "/dashboard/team", icon: <MdPeople /> },
     ],
   },
 ];

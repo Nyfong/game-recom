@@ -2,22 +2,23 @@
 
 import React, { useState, useEffect } from "react";
 import { PlusCircle } from "lucide-react";
-import UserTable from "./UserTable";
-import UserModal from "./UserModal";
+import BlogTable from "./BlogTable";
+import BlogModal from "./BlogModal";
 
 const API_BASE_URL = "https://backend-apigame.onrender.com/api";
 
-const Users = () => {
-  const [users, setUsers] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
+const DailyBlog = () => {
+  const [blogs, setBlogs] = useState([]);
+  const [selectedBlog, setSelectedBlog] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAddMode, setIsAddMode] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
 
-  const fetchUsers = async () => {
+  const fetchBlogs = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/users`, {
+      const response = await fetch(`${API_BASE_URL}/blog`, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -25,10 +26,10 @@ const Users = () => {
       });
       if (!response.ok) {
         const error = await response.text();
-        throw new Error(error || "Failed to fetch users");
+        throw new Error(error || "Failed to fetch blogs");
       }
       const data = await response.json();
-      setUsers(data.users || []);
+      setBlogs(data);
       setIsLoading(false);
     } catch (err) {
       console.error("Fetch error:", err);
@@ -38,21 +39,22 @@ const Users = () => {
   };
 
   useEffect(() => {
-    fetchUsers();
+    fetchBlogs();
   }, []);
 
-  const handleEdit = (user) => {
-    setSelectedUser({ ...user });
+  const handleEdit = (blog) => {
+    setSelectedBlog({ ...blog });
     setIsAddMode(false);
     setIsModalOpen(true);
   };
 
   const handleAddNew = () => {
-    setSelectedUser({
-      username: "",
-      email: "",
-      password: "",
+    setSelectedBlog({
+      title: "",
+      paragraph: "",
+      image: "",
     });
+    setImageFile(null);
     setIsAddMode(true);
     setIsModalOpen(true);
   };
@@ -60,36 +62,37 @@ const Users = () => {
   const handleSave = async () => {
     try {
       // Basic validation
-      if (!selectedUser.username || !selectedUser.email || (isAddMode && !selectedUser.password)) {
+      if (!selectedBlog.title || !selectedBlog.paragraph) {
         throw new Error("All fields are required");
       }
 
-      const userData = {
-        username: selectedUser.username,
-        email: selectedUser.email,
-        ...(isAddMode && { password: selectedUser.password }),
+      const blogData = {
+        title: selectedBlog.title,
+        paragraph: selectedBlog.paragraph,
+        image: selectedBlog.image || "",
       };
 
       const response = await fetch(
         isAddMode
-          ? `${API_BASE_URL}/register`
-          : `${API_BASE_URL}/users/${selectedUser._id}`,
+          ? `${API_BASE_URL}/blog`
+          : `${API_BASE_URL}/blog/${selectedBlog._id}`,
         {
           method: isAddMode ? "POST" : "PUT",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(userData),
+          body: JSON.stringify(blogData),
         }
       );
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || `Failed to ${isAddMode ? "add" : "update"} user`);
+        throw new Error(errorData.message || `Failed to ${isAddMode ? "add" : "update"} blog`);
       }
 
-      await fetchUsers();
+      await fetchBlogs();
       setIsModalOpen(false);
+      setImageFile(null);
     } catch (err) {
       setError(err.message);
       console.error("Save error:", err);
@@ -98,7 +101,7 @@ const Users = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/users/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/blog/${id}`, {
         method: "DELETE",
         headers: {
           Accept: "application/json",
@@ -108,12 +111,22 @@ const Users = () => {
 
       if (!response.ok) {
         const error = await response.text();
-        throw new Error(error || "Failed to delete user");
+        throw new Error(error || "Failed to delete blog");
       }
-      await fetchUsers();
+      await fetchBlogs();
     } catch (err) {
       console.error("Delete error:", err);
       setError(err.message);
+    }
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+      // Create preview URL
+      const previewUrl = URL.createObjectURL(file);
+      setSelectedBlog((prev) => ({ ...prev, image: previewUrl }));
     }
   };
 
@@ -128,32 +141,33 @@ const Users = () => {
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">User Management</h1>
+        <h1 className="text-2xl font-bold">Daily Blog</h1>
         <button
           onClick={handleAddNew}
           className="flex items-center bg-green-500 text-white p-2 rounded hover:bg-green-600"
         >
-          <PlusCircle className="mr-2" /> Add New User
+          <PlusCircle className="mr-2" /> Add New Blog
         </button>
       </div>
       <div className="overflow-x-auto bg-white rounded-lg shadow">
-        {users.length ? (
-          <UserTable users={users} handleEdit={handleEdit} handleDelete={handleDelete} />
+        {blogs.length ? (
+          <BlogTable blogs={blogs} handleEdit={handleEdit} handleDelete={handleDelete} />
         ) : (
-          <p className="p-4">No users available.</p>
+          <p className="p-4">No blogs available.</p>
         )}
       </div>
       {isModalOpen && (
-        <UserModal
+        <BlogModal
           isAddMode={isAddMode}
-          selectedUser={selectedUser}
-          setSelectedUser={setSelectedUser}
+          selectedBlog={selectedBlog}
+          setSelectedBlog={setSelectedBlog}
           handleSave={handleSave}
           setIsModalOpen={setIsModalOpen}
+          handleImageChange={handleImageChange}
         />
       )}
     </div>
   );
 };
 
-export default Users;
+export default DailyBlog;

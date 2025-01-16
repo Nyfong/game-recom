@@ -60,14 +60,14 @@ const SocialCard = () => {
 
       const postData = {
         content: {
-          text: formData.get('text'),
-          media: []
+          text: formData.get("text"),
+          media: [],
         },
-        tags: JSON.parse(formData.get('tags') || '[]'),
-        status: "active"
+        tags: JSON.parse(formData.get("tags") || "[]"),
+        status: "active",
       };
 
-      const mediaFile = formData.get('media');
+      const mediaFile = formData.get("media");
       if (mediaFile) {
         const base64 = await new Promise((resolve) => {
           const reader = new FileReader();
@@ -78,7 +78,7 @@ const SocialCard = () => {
         postData.content.media.push({
           type: "image",
           url: base64,
-          altText: "User uploaded image"
+          altText: "User uploaded image",
         });
       }
 
@@ -87,19 +87,25 @@ const SocialCard = () => {
         {
           method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(postData)
+          body: JSON.stringify(postData),
         }
       );
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => null);
-        throw new Error(errorData?.message || `Server error: ${response.status}`);
+        throw new Error(
+          errorData?.message || `Server error: ${response.status}`
+        );
       }
 
       const newPost = await response.json();
       setPosts((prevPosts) => [newPost, ...prevPosts]);
+
+      // Refresh the posts after successful creation
+      await fetchUserAndPosts();
+
       return newPost;
     } catch (error) {
       if (error.message.includes("Failed to fetch")) {
@@ -110,7 +116,7 @@ const SocialCard = () => {
       console.error("Create post error:", {
         message: error.message,
         stack: error.stack,
-        error
+        error,
       });
       throw error;
     }
@@ -134,16 +140,16 @@ const SocialCard = () => {
         {
           method: "PUT",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             content: {
               text: trimmedText,
-              media: updatedContent.content.media // Preserve existing media
+              media: updatedContent.content.media, // Preserve existing media
             },
             status: updatedContent.status,
-            tags: updatedContent.tags
-          })
+            tags: updatedContent.tags,
+          }),
         }
       );
 
@@ -156,6 +162,9 @@ const SocialCard = () => {
       setPosts((prevPosts) =>
         prevPosts.map((post) => (post._id === postId ? updatedPost : post))
       );
+
+      // Refresh the posts after successful edit
+      await fetchUserAndPosts();
     } catch (err) {
       if (err.message.includes("Failed to fetch")) {
         setError("Network error: Please check your internet connection.");
@@ -213,12 +222,16 @@ const SocialCard = () => {
   }
 
   const { profile = {}, username } = userData;
-  const profileImageUrl = profile.profileImageUrl || "https://via.placeholder.com/40?text=User";
+  const profileImageUrl =
+    profile.profileImageUrl || "https://via.placeholder.com/40?text=User";
 
   return (
     <div className="max-w-2xl mx-auto p-4">
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" role="alert">
+        <div
+          className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4"
+          role="alert"
+        >
           {error}
         </div>
       )}
@@ -230,14 +243,15 @@ const SocialCard = () => {
       />
 
       <div className="space-y-4">
-        {Array.isArray(posts) && posts.map((post) => (
-          <Post
-            key={post._id || Math.random().toString(36)}
-            post={post}
-            onEdit={handleEditPost}
-            onDelete={handleDeletePost}
-          />
-        ))}
+        {Array.isArray(posts) &&
+          posts.map((post) => (
+            <Post
+              key={post._id || Math.random().toString(36)}
+              post={post}
+              onEdit={handleEditPost}
+              onDelete={handleDeletePost}
+            />
+          ))}
       </div>
     </div>
   );
