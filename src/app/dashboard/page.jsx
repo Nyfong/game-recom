@@ -11,9 +11,9 @@ const Dashboard = () => {
       </div>
 
       {/* Right Section */}
-      <div className="lg:w-[300px]">
+      {/* <div className="lg:w-[300px]">
         <Rightbar />
-      </div>
+      </div> */}
     </div>
   );
 };
