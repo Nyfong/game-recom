@@ -10,9 +10,11 @@ import "./globals.css"; // Import once
 export default function RootLayout({ children }) {
   const pathname = usePathname();
 
-  // Conditionally render Navbar and Footer only if not on /signin or /signup
+  // Conditionally render Navbar and Footer only if not on /signin, /signup, or /live-chat
   const shouldHideNavAndFooter =
-    pathname === "/signin" || pathname === "/signup";
+    pathname === "/signin" ||
+    pathname === "/signup" ||
+    pathname === "/live-chat";
 
   return (
     <html lang="en">

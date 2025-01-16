@@ -174,7 +174,6 @@ const SocialCard = () => {
       throw err;
     }
   };
-
   const handleDeletePost = async (postId) => {
     try {
       const storedUser = localStorage.getItem("user");
