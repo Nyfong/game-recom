@@ -18,10 +18,10 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-const frameworks = [
+const categories = [
   {
     value: "",
-    label: "All game",
+    label: "All games",
   },
   {
     value: "Strategy",
@@ -59,21 +59,30 @@ const frameworks = [
 
 function FilterBtn({ games = [], onFilter }) {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
+  const [selectedCategory, setSelectedCategory] = React.useState("");
   const [searchQuery, setSearchQuery] = React.useState("");
 
-  // Handle category selection
-  const handleSelect = (currentValue) => {
-    const newValue = currentValue === value ? "" : currentValue;
-    setValue(newValue);
-    onFilter?.(newValue, searchQuery); // Pass both category and search query to parent
+  const handleCategorySelect = (categoryValue) => {
+    const newCategory = categoryValue === selectedCategory ? "" : categoryValue;
+    setSelectedCategory(newCategory);
+    filterGames(newCategory, searchQuery);
     setOpen(false);
   };
 
-  // Handle search input change
   const handleSearch = (query) => {
     setSearchQuery(query);
-    onFilter?.(value, query); // Pass both category and search query to parent
+    filterGames(selectedCategory, query);
+  };
+
+  const filterGames = (category, query) => {
+    const filteredGames = games.filter((game) => {
+      const matchesCategory = category ? game.genre === category : true;
+      const matchesSearch = game.title
+        .toLowerCase()
+        .includes(query.toLowerCase());
+      return matchesCategory && matchesSearch;
+    });
+    onFilter?.(filteredGames); // Pass filtered games to the parent
   };
 
   return (
@@ -85,8 +94,8 @@ function FilterBtn({ games = [], onFilter }) {
           aria-expanded={open}
           className="w-full justify-between"
         >
-          {value
-            ? frameworks.find((framework) => framework.value === value)?.label
+          {selectedCategory
+            ? categories.find((cat) => cat.value === selectedCategory)?.label
             : "Select Category..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -96,42 +105,42 @@ function FilterBtn({ games = [], onFilter }) {
           <CommandInput
             placeholder="Search Category or Game..."
             value={searchQuery}
-            onValueChange={handleSearch} // Update search query
+            onValueChange={handleSearch}
           />
           <CommandList>
             <CommandEmpty>No category or game found.</CommandEmpty>
             <CommandGroup>
-              {/* Render categories */}
-              {frameworks.map((framework) => (
+              {categories.map((category) => (
                 <CommandItem
-                  key={framework.value}
-                  value={framework.value}
-                  onSelect={() => handleSelect(framework.value)}
+                  key={category.value}
+                  value={category.value}
+                  onSelect={handleCategorySelect}
                 >
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === framework.value ? "opacity-100" : "opacity-0"
+                      selectedCategory === category.value
+                        ? "opacity-100"
+                        : "opacity-0"
                     )}
                   />
-                  {framework.label}
+                  {category.label}
                 </CommandItem>
               ))}
             </CommandGroup>
-            {/* Render filtered games */}
             {games
               .filter(
                 (game) =>
                   game.title
                     .toLowerCase()
                     .includes(searchQuery.toLowerCase()) &&
-                  (value === "" || game.genre === value)
+                  (selectedCategory === "" || game.genre === selectedCategory)
               )
               .map((game) => (
                 <CommandItem
                   key={game._id}
                   value={game.title}
-                  onSelect={() => handleSelect(game.genre)}
+                  onSelect={() => handleCategorySelect(game.genre)}
                 >
                   {game.title}
                 </CommandItem>
