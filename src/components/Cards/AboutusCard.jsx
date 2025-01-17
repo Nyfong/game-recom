@@ -31,7 +31,7 @@ let AboutUsCard = () => {
                       <div className="absolute -z-10 left-0 w-full h-28 opacity-0 duration-500 group-hover:opacity-50 group-hover:bg-blue-900"></div>
                       <span className="text-xl font-bold">Hover me!</span>
                       <p className="group-hover:opacity-100 w-56 duration-500 opacity-0">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        we are ITE 9th gen
                       </p>
                     </div>
                   </div>

@@ -44,11 +44,24 @@ let AboutUsPayCard = () => {
                       </div>
 
                       <p className="mt-4">
-                        Our second CXcon in October was dedicated to experience
-                        transformation. The free one-day virtual
-                        event&nbsp;brought together 230+ heads of digital,
-                        thought leaders, and UX practitioners to discuss all
-                        aspects of experience design..
+                        "Pay us a cup of coffee" is a simple and heartfelt
+                        expression that invites supporters to make a small,
+                        voluntary contribution as a token of appreciation for
+                        someone's work, creativity, or services. It symbolizes
+                        gratitude and support in an easily relatable way,
+                        likening the gesture to buying a friend or colleague a
+                        cup of coffee for their effort and dedication. This
+                        phrase resonates particularly well in the context of
+                        independent creators, freelancers, small businesses, and
+                        developers who pour their passion and energy into their
+                        projects, often with limited resources. By contributing
+                        the equivalent of the cost of a cup of coffee,
+                        supporters can show their encouragement and acknowledge
+                        the value of the work being done, helping to sustain and
+                        motivate the creators to continue their journey. It's a
+                        small act of kindness that can make a significant
+                        impact, fostering a sense of community and shared
+                        purpose between the creator and their audience.
                       </p>
                       <p className="mt-4">
                         In a jam-packed day filled with keynote sessions,

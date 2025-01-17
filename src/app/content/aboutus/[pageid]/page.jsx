@@ -1,3 +1,4 @@
+"use client";
 import HomeSection from "@/components/Home/section/Section";
 import CardPayCoffee from "@/components/paycoffeeStuff/Card.pay";
 import FElogo from "@/assets/logoITE.png";

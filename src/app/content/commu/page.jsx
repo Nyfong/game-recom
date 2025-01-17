@@ -3,17 +3,18 @@ import { useState } from "react";
 import SocialCard from "@/components/commuStuff/Card/crudCard/SocailCard";
 import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import Link from "next/link";
+import { MdOnlinePrediction } from "react-icons/md";
 
 export default function CommunityPage() {
   const [showThirdColumn, setShowThirdColumn] = useState(false);
 
   // Example community groups data
   const communityGroups = [
-    { id: 1, name: "Tech Enthusiasts", members: 1200 },
-    { id: 2, name: "Art Lovers", members: 800 },
-    { id: 3, name: "Fitness Freaks", members: 1500 },
-    { id: 4, name: "Book Club", members: 600 },
-    { id: 5, name: "Travel Buddies", members: 2000 },
+    { id: 1, name: "Mobile Legend team", members: "free to join" },
+    { id: 2, name: "Valorants Esport ", members: "free to join" },
+    { id: 3, name: "Dota 2 Lengendary", members: "free to join" },
+    { id: 4, name: "Ak2 Club", members: "free to join" },
+    { id: 5, name: "Genshin Impact gay", members: "free to join" },
   ];
 
   return (
@@ -23,7 +24,7 @@ export default function CommunityPage() {
         <div
           className={`bg-gray-100 sticky top-0 h-screen overflow-y-auto ${
             showThirdColumn ? "block" : "hidden"
-          } md:block md:col-span-2 lg:col-span-1`}
+          } md:block md:col-span-2 `}
         >
           <div className="p-4">
             <h2 className="text-2xl font-bold text-gray-800 mb-6">
@@ -31,31 +32,33 @@ export default function CommunityPage() {
             </h2>
             <ul className="space-y-4">
               {communityGroups.map((group) => (
-                <li
-                  key={group.id}
-                  className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer"
+                <Link
+                  href={`/live-chat/${group.id}?name=${encodeURIComponent(
+                    group.name
+                  )}`}
                 >
-                  <h3 className="text-lg font-semibold text-gray-700">
-                    {/* Update the Link to include the community ID */}
-                    <Link
-                      href={`/live-chat/${group.id}?name=${encodeURIComponent(
-                        group.name
-                      )}`}
-                    >
+                  <li
+                    key={group.id}
+                    className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer"
+                  >
+                    <h3 className="text-lg font-semibold text-gray-700">
+                      {/* Update the Link to include the community ID */}
+
                       {group.name}
-                    </Link>
-                  </h3>
-                  <p className="text-sm text-gray-500">
-                    {group.members.toLocaleString()} members
-                  </p>
-                </li>
+                    </h3>
+                    <p className="text-sm text-gray-500">
+                      <MdOnlinePrediction className="text-green-500 font-bold" />
+                      {group.members.toLocaleString()}
+                    </p>
+                  </li>
+                </Link>
               ))}
             </ul>
           </div>
         </div>
 
         {/* Second Column - Scrollable, full width on mobile */}
-        <div className="overflow-y-auto col-span-1 md:col-span-6 lg:col-span-7 px-4 md:px-20">
+        <div className="overflow-y-auto col-span-1 md:col-span-6  px-4 md:px-20">
           <SocialCard />
         </div>
 
