@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { PlusCircle, Loader2 } from "lucide-react";
 import PostTable from "./PostTable";
 import PostModal from "./PostModal";
-import { fetchPosts, handleSave, handleEdit, handleDelete, handleApprove, handleDisapprove, handleLike, handleAddComment, handleDeleteComment } from "./postHandlers";
+import { fetchPosts, handleSave, handleEdit, handleDelete, handleApprove, handleDisapprove } from "./postHandlers";
 
 const handleAddNew = (setSelectedPost, setImageFile, setIsAddMode, setIsModalOpen) => {
   setSelectedPost({
