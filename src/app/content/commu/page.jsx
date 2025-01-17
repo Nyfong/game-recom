@@ -3,7 +3,7 @@ import { useState } from "react";
 import SocialCard from "@/components/commuStuff/Card/crudCard/SocailCard";
 import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import Link from "next/link";
-// ./src/app/content/commu/page.jsx
+
 export default function CommunityPage() {
   const [showThirdColumn, setShowThirdColumn] = useState(false);
 
@@ -36,7 +36,14 @@ export default function CommunityPage() {
                   className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer"
                 >
                   <h3 className="text-lg font-semibold text-gray-700">
-                    <Link href="/live-chat">{group.name}</Link>
+                    {/* Update the Link to include the community ID */}
+                    <Link
+                      href={`/live-chat/${group.id}?name=${encodeURIComponent(
+                        group.name
+                      )}`}
+                    >
+                      {group.name}
+                    </Link>
                   </h3>
                   <p className="text-sm text-gray-500">
                     {group.members.toLocaleString()} members
@@ -48,7 +55,7 @@ export default function CommunityPage() {
         </div>
 
         {/* Second Column - Scrollable, full width on mobile */}
-        <div className="overflow-y-auto col-span-1 md:col-span-6  lg:col-span-7 px-4 md:px-20">
+        <div className="overflow-y-auto col-span-1 md:col-span-6 lg:col-span-7 px-4 md:px-20">
           <SocialCard />
         </div>
 
