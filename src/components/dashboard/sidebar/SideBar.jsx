@@ -35,8 +35,8 @@ const menuItems = [
         icon: <PiGameControllerFill />,
       },
       {
-        title: "Dialy Blog",
-        path: "/dashboard/dialyblog",
+        title: "Blog",
+        path: "/dashboard/blogs",
         icon: <PiGameControllerFill />,
       },
     ],
@@ -56,7 +56,7 @@ const menuItems = [
         icon: <MdOutlineSettings />,
       },
       { title: "Logout", path: "/", icon: <MdLogout /> },
-      { title: "Team", path: "/dashboard/team", icon: <MdPeople /> },
+      // { title: "Team", path: "/dashboard/team", icon: <MdPeople /> },
     ],
   },
 ];

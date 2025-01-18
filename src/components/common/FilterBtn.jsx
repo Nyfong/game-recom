@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import FilterButton from "@/components/common/Filter";
+// import FilterButton from "@/components/common/Filter";
 import SearchBar from "@/components/common/SearchBar";
 import ProdCard from "@/components/Home/prod/Card";
 
@@ -17,7 +17,7 @@ let FilterSection = () => {
     <>
       <section className="grid grid-cols-1 md:grid-cols-2 my-10 gap-4 ">
         <div className="flex items-center">
-          <FilterButton onFilter={handleFilterData} />
+          {/* <FilterButton onFilter={handleFilterData} /> */}
         </div>
       </section>
       <ProdCard data={selectedGenre} />

@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Trash2, Edit, PlusCircle } from "lucide-react";
-import Image from "next/image";
+import { PlusCircle } from "lucide-react";
+import GameTable from "./GameTable";
+import GameModal from "./GameModal";
 
 const PLACEHOLDER_IMAGE =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==";
@@ -43,19 +44,6 @@ const GameCRUDDashboard = () => {
     fetchGames();
   }, []);
 
-  // const handleDelete = async (id) => {
-  //   try {
-  //     const response = await fetch(`${API_BASE_URL}/deletegame/${id}`, {
-  //       method: "DELETE",
-  //     });
-
-  //     if (!response.ok) throw new Error("Failed to delete game");
-  //     await fetchGames();
-  //   } catch (err) {
-  //     setError(err.message);
-  //   }
-  // };
-
   const handleEdit = (game) => {
     setSelectedGame({ ...game });
     setIsAddMode(false);
@@ -79,6 +67,7 @@ const GameCRUDDashboard = () => {
     setIsAddMode(true);
     setIsModalOpen(true);
   };
+
   const handleSave = async () => {
     try {
       // Basic validation
@@ -97,7 +86,6 @@ const GameCRUDDashboard = () => {
         platform: selectedGame.platform,
         release_date: selectedGame.release_date,
         game_url: selectedGame.game_url,
-        // profile_url: selectedGame.profile_url,
         short_description: selectedGame.short_description,
         thumbnail: selectedGame.thumbnail || PLACEHOLDER_IMAGE
       };
@@ -128,6 +116,7 @@ const GameCRUDDashboard = () => {
       console.error("Save error:", err);
     }
   };
+
   const handleDelete = async (id) => {
     try {
       const response = await fetch(`${API_BASE_URL}/deletegame/${id}`, {
@@ -148,6 +137,7 @@ const GameCRUDDashboard = () => {
       setError(err.message);
     }
   };
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -158,147 +148,6 @@ const GameCRUDDashboard = () => {
     }
   };
 
-  const renderGameModal = () => {
-    if (!isModalOpen || !selectedGame) return null;
-
-    return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white p-6 rounded-lg w-96">
-          <h2 className="text-xl font-bold mb-4">
-            {isAddMode ? "Add New Game" : "Edit Game"}
-          </h2>
-          <div className="space-y-4">
-            <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2">
-                Game Image
-              </label>
-              <div className="flex items-center space-x-4">
-                <div className="w-20 h-20 relative">
-                  <Image
-                    src={selectedGame.thumbnail || PLACEHOLDER_IMAGE}
-                    alt="Game Preview"
-                    className="rounded-lg object-cover"
-                    fill
-                  />
-                </div>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="shadow appearance-none border rounded py-2 px-3 text-gray-700"
-                />
-              </div>
-            </div>
-            <input
-              type="text"
-              placeholder="Game Title *"
-              value={selectedGame.title}
-              onChange={(e) =>
-                setSelectedGame({ ...selectedGame, title: e.target.value })
-              }
-              className="w-full p-2 border rounded"
-            />
-            <input
-              type="text"
-              placeholder="Genre *"
-              value={selectedGame.genre}
-              onChange={(e) =>
-                setSelectedGame({ ...selectedGame, genre: e.target.value })
-              }
-              className="w-full p-2 border rounded"
-            />
-            <input
-              type="text"
-              placeholder="Developer *"
-              value={selectedGame.developer}
-              onChange={(e) =>
-                setSelectedGame({ ...selectedGame, developer: e.target.value })
-              }
-              className="w-full p-2 border rounded"
-            />
-            <input
-              type="text"
-              placeholder="Publisher *"
-              value={selectedGame.publisher}
-              onChange={(e) =>
-                setSelectedGame({ ...selectedGame, publisher: e.target.value })
-              }
-              className="w-full p-2 border rounded"
-            />
-            <input
-              type="text"
-              placeholder="Platform *"
-              value={selectedGame.platform}
-              onChange={(e) =>
-                setSelectedGame({ ...selectedGame, platform: e.target.value })
-              }
-              className="w-full p-2 border rounded"
-            />
-            <input
-              type="date"
-              placeholder="Release Date *"
-              value={selectedGame.release_date}
-              onChange={(e) =>
-                setSelectedGame({
-                  ...selectedGame,
-                  release_date: e.target.value,
-                })
-              }
-              className="w-full p-2 border rounded"
-            />
-            <input
-              type="text"
-              placeholder="Game URL *"
-              value={selectedGame.game_url}
-              onChange={(e) =>
-                setSelectedGame({ ...selectedGame, game_url: e.target.value })
-              }
-              className="w-full p-2 border rounded"
-            />
-            <input
-              type="text"
-              placeholder="Profile URL *"
-              value={selectedGame.profile_url}
-              onChange={(e) =>
-                setSelectedGame({
-                  ...selectedGame,
-                  profile_url: e.target.value,
-                })
-              }
-              className="w-full p-2 border rounded"
-            />
-            <textarea
-              placeholder="Short Description *"
-              value={selectedGame.short_description}
-              onChange={(e) =>
-                setSelectedGame({
-                  ...selectedGame,
-                  short_description: e.target.value,
-                })
-              }
-              className="w-full p-2 border rounded"
-              rows={3}
-            />
-            <div className="flex space-x-4">
-              <button
-                onClick={handleSave}
-                className="flex-1 bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
-              >
-                Save
-              </button>
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="flex-1 bg-gray-200 text-black p-2 rounded hover:bg-gray-300"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   if (isLoading) {
     return <div className="text-center py-4">Loading...</div>;
   }
@@ -306,59 +155,6 @@ const GameCRUDDashboard = () => {
   if (error) {
     return <div className="text-red-500 text-center py-4">{error}</div>;
   }
-
-  const renderGameTable = () => (
-    <table className="w-full text-sm text-left">
-      <thead className="bg-gray-100 text-gray-700">
-        <tr>
-          <th className="p-3">Game</th>
-          <th className="p-3">Genre</th>
-          <th className="p-3">Developer</th>
-          <th className="p-3">Publisher</th>
-          <th className="p-3">Platform</th>
-          <th className="p-3">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {games.map((game) => (
-          <tr key={game._id} className="border-b hover:bg-gray-50">
-            <td className="p-3 flex items-center">
-              <Image
-                src={game.thumbnail || PLACEHOLDER_IMAGE}
-                alt={game.title}
-                width={100}
-                height={100}
-                property="lazyloading"
-                className="rounded-lg object-cover w-[100px] h-[100px] mr-10"
-              />
-               <div className="ml-4">
-                <p className="font-bold">{game.title}</p>
-                {/* <p className="text-gray-500 text-sm">{game.short_description}</p> */}
-              </div>
-            </td>
-            <td className="p-3">{game.genre}</td>
-            <td className="p-3">{game.developer}</td>
-            <td className="p-3">{game.publisher}</td>
-            <td className="p-3">{game.platform}</td>
-            <td className="p-3 flex space-x-2">
-              <button
-                onClick={() => handleEdit(game)}
-                className="text-blue-500 hover:text-blue-700"
-              >
-                <Edit />
-              </button>
-              <button
-                onClick={() => handleDelete(game._id)}
-                className="text-red-500 hover:text-red-700"
-              >
-                <Trash2 />
-              </button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
 
   return (
     <div className="p-6">
@@ -372,9 +168,22 @@ const GameCRUDDashboard = () => {
         </button>
       </div>
       <div className="overflow-x-auto bg-white rounded-lg shadow">
-        {games.length ? renderGameTable() : <p className="p-4">No games available.</p>}
+        {games.length ? (
+          <GameTable games={games} handleEdit={handleEdit} handleDelete={handleDelete} />
+        ) : (
+          <p className="p-4">No games available.</p>
+        )}
       </div>
-      {renderGameModal()}
+      {isModalOpen && (
+        <GameModal
+          isAddMode={isAddMode}
+          selectedGame={selectedGame}
+          setSelectedGame={setSelectedGame}
+          handleSave={handleSave}
+          setIsModalOpen={setIsModalOpen}
+          handleImageChange={handleImageChange}
+        />
+      )}
     </div>
   );
 };

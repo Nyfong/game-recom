@@ -62,7 +62,6 @@ function FilterBtn({ games = [], onFilter }) {
   const [selectedCategory, setSelectedCategory] = React.useState("");
   const [searchQuery, setSearchQuery] = React.useState("");
 
-  // Handle category selection
   const handleCategorySelect = (categoryValue) => {
     const newCategory = categoryValue === selectedCategory ? "" : categoryValue;
     setSelectedCategory(newCategory);
@@ -70,13 +69,11 @@ function FilterBtn({ games = [], onFilter }) {
     setOpen(false);
   };
 
-  // Handle search input change
   const handleSearch = (query) => {
     setSearchQuery(query);
     filterGames(selectedCategory, query);
   };
 
-  // Filter games based on category and search query
   const filterGames = (category, query) => {
     const filteredGames = games.filter((game) => {
       const matchesCategory = category ? game.genre === category : true;
@@ -113,7 +110,6 @@ function FilterBtn({ games = [], onFilter }) {
           <CommandList>
             <CommandEmpty>No category or game found.</CommandEmpty>
             <CommandGroup>
-              {/* Render categories */}
               {categories.map((category) => (
                 <CommandItem
                   key={category.value}
@@ -132,7 +128,6 @@ function FilterBtn({ games = [], onFilter }) {
                 </CommandItem>
               ))}
             </CommandGroup>
-            {/* Render filtered games */}
             {games
               .filter(
                 (game) =>
