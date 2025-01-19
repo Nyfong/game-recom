@@ -22,22 +22,26 @@ const Signin = () => {
       script.async = true;
       script.defer = true;
       document.head.appendChild(script);
-      
+
       script.onload = () => {
         if (window.google) {
           initializeGoogleSignIn();
         }
       };
     };
-    
+
     loadGoogleScript();
   }, []);
 
   const initializeGoogleSignIn = () => {
     window.google.accounts.id.initialize({
-      client_id: "85531888519-3ns12d70tv91s7lklcj4mk6nrjrqoamv.apps.googleusercontent.com",
+      client_id:
+        "85531888519-3ns12d70tv91s7lklcj4mk6nrjrqoamv.apps.googleusercontent.com",
       callback: handleGoogleSignIn,
-      allowed_parent_origin: ["https://backend-apigame.onrender.com", "http://localhost:3000"]
+      allowed_parent_origin: [
+        "https://backend-apigame.onrender.com",
+        "http://localhost:3000",
+      ],
     });
 
     window.google.accounts.id.renderButton(
@@ -48,15 +52,18 @@ const Signin = () => {
 
   const handleGoogleSignIn = async (response) => {
     try {
-      const res = await fetch("https://backend-apigame.onrender.com/auth/google/callback", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ 
-          credential: response.credential
-        }),
-      });
+      const res = await fetch(
+        "https://backend-apigame.onrender.com/auth/google/callback",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            credential: response.credential,
+          }),
+        }
+      );
 
       const data = await res.json();
 
@@ -86,7 +93,9 @@ const Signin = () => {
           _id: data.user._id,
           username: data.user.username,
           email: data.user.email,
-          role: adminEmails.includes(data.user.email.toLowerCase()) ? "admin" : "user",
+          role: adminEmails.includes(data.user.email.toLowerCase())
+            ? "admin"
+            : "user",
           createdAt: data.user.createdAt,
           updatedAt: data.user.updatedAt,
           token: data.token,
@@ -182,7 +191,13 @@ const Signin = () => {
   };
 
   return (
-    <div className="h-screen w-full flex justify-center items-center">
+    <div className="h-screen w-full flex flex-col justify-center items-center">
+      <div className="w-[300px] p-3 bg-gray-200 rounded-lg flex flex-col items-center justify-center mb-5">
+        <p>sample credential ✨</p>
+        <p> email : seng@example.com</p>
+        <p>password: password123</p>
+        <p>អ្នកអាច signup បានដូចគ្នា</p>
+      </div>
       <div className="w-[300px] sm:w-[390px] md:w-[500px] h-auto p-6 border border-gray-300 rounded-lg shadow-lg">
         <h2 className="text-2xl font-bold text-center mb-6">Sign In</h2>
 
@@ -226,7 +241,9 @@ const Signin = () => {
               <div className="w-full border-t border-gray-300"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">Or continue with</span>
+              <span className="px-2 bg-white text-gray-500">
+                Or continue with
+              </span>
             </div>
           </div>
 
